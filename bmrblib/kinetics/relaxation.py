@@ -50,7 +50,7 @@ class Relaxation:
         self.heteronucl_T2_relaxation = HeteronuclT2Saveframe(datanodes)
 
 
-    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None, temp_calibration=None, temp_control=None):
+    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, peak_intensity_type=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None):
         """Add relaxation data to the data nodes.
 
         @keyword data_type:                 The relaxation data type (one of 'NOE', 'R1', or 'R2').
@@ -59,6 +59,12 @@ class Relaxation:
         @type sample_cond_list_id:          str
         @keyword sample_cond_list_label:    The sample conditions list label.
         @type sample_cond_list_label:       str
+        @keyword temp_calibration:          The temperature calibration method (unused).
+        @type temp_calibration:             str
+        @keyword temp_control:              The temperature control method (unused).
+        @type temp_control:                 str
+        @keyword peak_intensity_type:       The peak intensity type - one of 'height' or 'volume'.
+        @type peak_intensity_type:          str
         @keyword frq:                       The spectrometer proton frequency, in Hz.
         @type frq:                          float
         @keyword details:                   The details tag.
@@ -99,10 +105,6 @@ class Relaxation:
         @type data:                         list of float
         @keyword errors:                    The errors associated with the relaxation data.
         @type errors:                       list of float
-        @keyword temp_calibration:          The temperature calibration method (unused).
-        @type temp_calibration:             str
-        @keyword temp_control:              The temperature control method (unused).
-        @type temp_control:                 str
         """
 
         # Pack specific the data.
@@ -218,7 +220,7 @@ class Relaxation_v3_2(Relaxation_v3_1):
         self.general_relaxation = GeneralRelaxationSaveframe(datanodes)
 
 
-    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None, temp_calibration=None, temp_control=None):
+    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, peak_intensity_type=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None):
         """Add relaxation data to the data nodes.
 
         @keyword data_type:                 The relaxation data type (one of 'NOE', 'R1', or 'R2').
@@ -227,6 +229,12 @@ class Relaxation_v3_2(Relaxation_v3_1):
         @type sample_cond_list_id:          str
         @keyword sample_cond_list_label:    The sample conditions list label.
         @type sample_cond_list_label:       str
+        @keyword temp_calibration:          The temperature calibration method.
+        @type temp_calibration:             str
+        @keyword temp_control:              The temperature control method.
+        @type temp_control:                 str
+        @keyword peak_intensity_type:       The peak intensity type - one of 'height' or 'volume'.
+        @type peak_intensity_type:          str
         @keyword frq:                       The spectrometer proton frequency, in Hz.
         @type frq:                          float
         @keyword details:                   The details tag.
@@ -267,10 +275,6 @@ class Relaxation_v3_2(Relaxation_v3_1):
         @type data:                         list of float
         @keyword errors:                    The errors associated with the relaxation data.
         @type errors:                       list of float
-        @keyword temp_calibration:          The temperature calibration method.
-        @type temp_calibration:             str
-        @keyword temp_control:              The temperature control method.
-        @type temp_control:                 str
         """
 
         # Pack specific the data.
@@ -278,6 +282,9 @@ class Relaxation_v3_2(Relaxation_v3_1):
             self.general_relaxation.add(data_type=data_type,
                                         sample_cond_list_id=sample_cond_list_id,
                                         sample_cond_list_label=sample_cond_list_label,
+                                        temp_calibration=temp_calibration,
+                                        temp_control=temp_control,
+                                        peak_intensity_type=peak_intensity_type,
                                         frq=frq,
                                         details=details,
                                         assembly_atom_ids=assembly_atom_ids,
@@ -290,12 +297,13 @@ class Relaxation_v3_2(Relaxation_v3_1):
                                         atom_types=atom_types,
                                         isotope=isotope,
                                         data=data,
-                                        errors=errors,
-                                        temp_calibration=temp_calibration,
-                                        temp_control=temp_control)
+                                        errors=errors)
         elif data_type == 'NOE':
             self.heteronucl_NOEs.add(sample_cond_list_id=sample_cond_list_id,
                                      sample_cond_list_label=sample_cond_list_label,
+                                     temp_calibration=temp_calibration,
+                                     temp_control=temp_control,
+                                     peak_intensity_type=peak_intensity_type,
                                      frq=frq,
                                      details=details,
                                      assembly_atom_ids=assembly_atom_ids,
@@ -317,9 +325,7 @@ class Relaxation_v3_2(Relaxation_v3_1):
                                      atom_types_2=atom_types_2,
                                      isotope_2=isotope_2,
                                      data=data,
-                                     errors=errors,
-                                     temp_calibration=temp_calibration,
-                                     temp_control=temp_control)
+                                     errors=errors)
 
 
     def loop(self):

@@ -34,13 +34,19 @@ from bmrblib.pystarlib.TagTable import TagTable
 class HeteronuclNOESaveframe_v3_2(HeteronuclNOESaveframe_v3_1):
     """The v3.2 Heteronuclear NOE data saveframe class."""
 
-    def add(self, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None, temp_calibration=None, temp_control=None):
+    def add(self, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, peak_intensity_type=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None):
         """Add relaxation data to the data nodes.
 
         @keyword sample_cond_list_id:       The sample conditions list ID number.
         @type sample_cond_list_id:          str
         @keyword sample_cond_list_label:    The sample conditions list label.
         @type sample_cond_list_label:       str
+        @keyword temp_calibration:          The temperature calibration method.
+        @type temp_calibration:             str
+        @keyword temp_control:              The temperature control method.
+        @type temp_control:                 str
+        @keyword peak_intensity_type:       The peak intensity type - one of 'height' or 'volume'.
+        @type peak_intensity_type:          str
         @keyword frq:                       The spectrometer proton frequency, in Hz.
         @type frq:                          float
         @keyword details:                   The details tag.
@@ -81,10 +87,6 @@ class HeteronuclNOESaveframe_v3_2(HeteronuclNOESaveframe_v3_1):
         @type data:                         list of float
         @keyword errors:                    The errors associated with the relaxation data.
         @type errors:                       list of float
-        @keyword temp_calibration:          The temperature calibration method.
-        @type temp_calibration:             str
-        @keyword temp_control:              The temperature control method.
-        @type temp_control:                 str
         """
 
         # Check the args.
@@ -92,10 +94,13 @@ class HeteronuclNOESaveframe_v3_2(HeteronuclNOESaveframe_v3_1):
             raise NameError("The temperature calibration method has not been specified.")
         if not temp_control:
             raise NameError("The temperature control method has not been specified.")
+        if not peak_intensity_type:
+            raise NameError("The peak intensity type has not been specified.")
 
         # Place the args into the namespace.
         self.temp_calibration = translate(temp_calibration)
         self.temp_control = translate(temp_control)
+        self.peak_intensity_type = translate(peak_intensity_type)
 
         # Execute the v3.1 add method.
         HeteronuclNOESaveframe_v3_1.add(self,
@@ -158,6 +163,7 @@ class HeteronuclNOEList_v3_2(HeteronuclNOEList_v3_1):
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['TempCalibrationMethod']], tagvalues=[[self.sf.temp_calibration]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['TempControlMethod']], tagvalues=[[self.sf.temp_control]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SpectrometerFrequency1H']], tagvalues=[[str(self.sf.frq/1e6)]]))
+        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['HeteronuclearNOEValType']], tagvalues=[[self.sf.peak_intensity_type]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Details']], tagvalues=[[self.sf.details]]))
 
 
@@ -176,6 +182,7 @@ class HeteronuclNOEList_v3_2(HeteronuclNOEList_v3_1):
         # Tag names for the relaxation data.
         self.tag_names['TempCalibrationMethod'] = 'Temp_calibration_method'
         self.tag_names['TempControlMethod'] = 'Temp_control_method'
+        self.tag_names['HeteronuclearNOEValType'] = 'Heteronuclear_NOE_val_type'
 
 
 

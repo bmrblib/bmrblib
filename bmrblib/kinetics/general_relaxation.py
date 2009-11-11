@@ -56,7 +56,7 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
         self.add_tag_categories()
 
 
-    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, data=None, errors=None, rex_val=None, rex_err=None):
+    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, peak_intensity_type=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, data=None, errors=None, rex_val=None, rex_err=None):
         """Add relaxation data to the data nodes.
 
         Note that units of 1/s are actually rad/s in NMR.  This is the hidden radian unit, which if not present would mean that the units would be Hz.  For more details, see https://mail.gna.org/public/relax-users/2009-01/msg00000.html.
@@ -66,6 +66,12 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
         @type sample_cond_list_id:          str
         @keyword sample_cond_list_label:    The sample conditions list label.
         @type sample_cond_list_label:       str
+        @keyword temp_calibration:          The temperature calibration method.
+        @type temp_calibration:             str
+        @keyword temp_control:              The temperature control method.
+        @type temp_control:                 str
+        @keyword peak_intensity_type:       The peak intensity type - one of 'height' or 'volume'.
+        @type peak_intensity_type:          str
         @keyword data_type:                 The relaxation data type (one of 'R1' or 'R2').
         @type data_type:                    str
         @keyword frq:                       The spectrometer proton frequency, in Hz.
@@ -92,10 +98,6 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
         @type data:                         list of float
         @keyword errors:                    The errors associated with the relaxation data.
         @type errors:                       list of float
-        @keyword temp_calibration:          The temperature calibration method.
-        @type temp_calibration:             str
-        @keyword temp_control:              The temperature control method.
-        @type temp_control:                 str
         """
 
         # Check the ID info.
@@ -109,6 +111,8 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
             raise NameError("The temperature calibration method has not been specified.")
         if not temp_control:
             raise NameError("The temperature control method has not been specified.")
+        if not peak_intensity_type:
+            raise NameError("The peak intensity type has not been specified.")
 
         # The number of elements.
         N = len(res_nums)
@@ -118,6 +122,7 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
         self.sample_cond_list_label = translate(sample_cond_list_label)
         self.temp_calibration = translate(temp_calibration)
         self.temp_control = translate(temp_control)
+        self.peak_intensity_type = translate(peak_intensity_type)
         self.frq = frq
         self.details = translate(details)
 
@@ -248,6 +253,7 @@ class GeneralRelaxationList(HeteronuclRxList):
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationCoherenceType']], tagvalues=[[self.variables['coherence']]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationTypeCommonName']], tagvalues=[[self.variables['coherence_common_name']]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationValUnits']], tagvalues=[['s-1']]))
+        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationValType']], tagvalues=[[self.sf.peak_intensity_type]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Details']], tagvalues=[[self.sf.details]]))
 
 
@@ -300,6 +306,7 @@ class GeneralRelaxationList(HeteronuclRxList):
         self.tag_names['RelaxationCoherenceType'] = 'Relaxation_coherence_type'
         self.tag_names['RelaxationTypeCommonName'] = 'Relaxation_type_common_name'
         self.tag_names['RelaxationValUnits'] = 'Relaxation_val_units'
+        self.tag_names['RelaxationValType'] = 'Relaxation_val_type'
         self.tag_names['Details'] = 'Details'
 
 
