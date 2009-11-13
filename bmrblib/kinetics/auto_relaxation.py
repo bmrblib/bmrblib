@@ -251,7 +251,7 @@ class AutoRelaxationList(HeteronuclRxList):
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['TempControlMethod']], tagvalues=[[self.sf.temp_control]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SpectrometerFrequency1H']], tagvalues=[[str(self.sf.frq/1e6)]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationCoherenceType']], tagvalues=[[self.variables['coherence']]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationTypeCommonName']], tagvalues=[[self.variables['coherence_common_name']]]))
+        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['CommonRelaxationTypeName']], tagvalues=[[self.variables['coherence_common_name']]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationValUnits']], tagvalues=[['s-1']]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['RelaxationValType']], tagvalues=[[self.sf.peak_intensity_type]]))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Details']], tagvalues=[[self.sf.details]]))
@@ -304,7 +304,7 @@ class AutoRelaxationList(HeteronuclRxList):
         self.tag_names['SampleConditionListLabel'] = 'Sample_condition_list_label'
         self.tag_names['SpectrometerFrequency1H'] = 'Spectrometer_frequency_1H'
         self.tag_names['RelaxationCoherenceType'] = 'Relaxation_coherence_type'
-        self.tag_names['RelaxationTypeCommonName'] = 'Relaxation_type_common_name'
+        self.tag_names['CommonRelaxationTypeName'] = 'Common_relaxation_type_name'
         self.tag_names['RelaxationValUnits'] = 'Relaxation_val_units'
         self.tag_names['RelaxationValType'] = 'Relaxation_val_type'
         self.tag_names['Details'] = 'Details'
