@@ -292,7 +292,7 @@ class AutoRelaxationList(HeteronuclRxList):
         """
 
         # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Auto_Relaxation_list', sep=sep)
+        TagCategory.tag_setup(self, tag_category_label='Auto_relaxation_list', sep=sep)
 
         # Tag names for the relaxation data.
         self.tag_names['SfCategory'] = 'Sf_category'
@@ -331,7 +331,7 @@ class AutoRelaxationExperiment(TagCategory):
         """
 
         # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Auto_Relaxation_experiment', sep=sep)
+        TagCategory.tag_setup(self, tag_category_label='Auto_relaxation_experiment', sep=sep)
 
         # Tag names for the relaxation data.
         self.tag_names['SampleLabel'] = 'Sample_label'
@@ -353,7 +353,7 @@ class AutoRelaxationSoftware(TagCategory):
         """
 
         # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Auto_Relaxation_software', sep=sep)
+        TagCategory.tag_setup(self, tag_category_label='Auto_relaxation_software', sep=sep)
 
 
 class AutoRelaxation(Rx):
@@ -399,7 +399,7 @@ class AutoRelaxation(Rx):
         """
 
         # Execute the base class tag_setup() method.
-        Rx.tag_setup(self, tag_category_label='Auto_Relaxation', sep=sep)
+        Rx.tag_setup(self, tag_category_label='Auto_relaxation', sep=sep)
 
         # Tag names for the auto relaxation data.
         self.tag_names['RxID'] = 'ID'
