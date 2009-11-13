@@ -20,9 +20,9 @@
 #############################################################################
 
 # Module docstring.
-"""The General Relaxation data saveframe category.
+"""The Auto relaxation data saveframe category.
 
-For example, see http://www.bmrb.wisc.edu/dictionary/3.2html/SaveFramePage.html#general_relaxation.
+For example, see http://www.bmrb.wisc.edu/dictionary/3.2html/SaveFramePage.html#auto_relaxation.
 """
 
 # relax module imports.
@@ -33,11 +33,11 @@ from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
 
 
-class GeneralRelaxationSaveframe(RelaxSaveframe):
-    """The General Relaxation data saveframe class."""
+class AutoRelaxationSaveframe(RelaxSaveframe):
+    """The Auto relaxation data saveframe class."""
 
     # Saveframe variables.
-    label = 'general'
+    label = 'auto'
 
     def __init__(self, datanodes):
         """Initialise the class, placing the pystarlib data nodes into the namespace.
@@ -149,16 +149,16 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
 
         # The operators of the relaxation superoperator.
         if data_type == 'R1':
-            self.GeneralRelaxationlist.variables['coherence'] = 'Iz'
-            self.GeneralRelaxationlist.variables['coherence_common_name'] = 'R1'
+            self.AutoRelaxationlist.variables['coherence'] = 'Iz'
+            self.AutoRelaxationlist.variables['coherence_common_name'] = 'R1'
         elif data_type == 'R2':
-            self.GeneralRelaxationlist.variables['coherence'] = 'I+'
-            self.GeneralRelaxationlist.variables['coherence_common_name'] = 'R2'
+            self.AutoRelaxationlist.variables['coherence'] = 'I+'
+            self.AutoRelaxationlist.variables['coherence_common_name'] = 'R2'
         else:
             raise NameError("The data type '%s' is not one of ['R1', 'R2']." % data_type)
 
         # The label.
-        self.sf_label = 'general relaxation ' + repr(self.rx_inc)
+        self.sf_label = 'auto relaxation ' + repr(self.rx_inc)
 
         # Set up the version specific variables.
         self.specific_setup()
@@ -167,10 +167,10 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
         self.frame = SaveFrame(title=self.label + '_relaxation')
 
         # Create the tag categories.
-        self.GeneralRelaxationlist.create()
-        self.GeneralRelaxationexperiment.create()
-        self.GeneralRelaxationsoftware.create()
-        self.GeneralRelaxation.create()
+        self.AutoRelaxationlist.create()
+        self.AutoRelaxationexperiment.create()
+        self.AutoRelaxationsoftware.create()
+        self.AutoRelaxation.create()
 
         # Add the saveframe to the data nodes.
         self.datanodes.append(self.frame)
@@ -180,14 +180,14 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
         """Create the tag categories."""
 
         # The tag category objects.
-        self.GeneralRelaxationlist = GeneralRelaxationList(self)
-        self.GeneralRelaxationexperiment = GeneralRelaxationExperiment(self)
-        self.GeneralRelaxationsoftware = GeneralRelaxationSoftware(self)
-        self.GeneralRelaxation = GeneralRelaxation(self)
+        self.AutoRelaxationlist = AutoRelaxationList(self)
+        self.AutoRelaxationexperiment = AutoRelaxationExperiment(self)
+        self.AutoRelaxationsoftware = AutoRelaxationSoftware(self)
+        self.AutoRelaxation = AutoRelaxation(self)
 
 
     def loop(self):
-        """Loop over the GeneralRelaxation saveframes, yielding the relaxation data.
+        """Loop over the AutoRelaxation saveframes, yielding the relaxation data.
 
         @return:    The relaxation data consisting of the proton frequency, residue numbers, residue
                     names, atom names, values, and errors.
@@ -203,11 +203,11 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
 
         # Loop over all datanodes.
         for datanode in self.datanodes:
-            # Find the GeneralRelaxation saveframes via the SfCategory tag index.
+            # Find the AutoRelaxation saveframes via the SfCategory tag index.
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.GeneralRelaxationlist.create_tag_label(self.GeneralRelaxationlist.tag_names['SfCategory']):
+                if datanode.tagtables[0].tagnames[index] == self.AutoRelaxationlist.create_tag_label(self.AutoRelaxationlist.tag_names['SfCategory']):
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == sf_name:
                         found = True
@@ -218,29 +218,29 @@ class GeneralRelaxationSaveframe(RelaxSaveframe):
                 continue
 
             # Get general info.
-            data_type, frq = self.GeneralRelaxationlist.read(datanode.tagtables[0])
+            data_type, frq = self.AutoRelaxationlist.read(datanode.tagtables[0])
 
             # Get the Rx info.
-            entity_ids, res_nums, res_names, atom_names, values, errors = self.GeneralRelaxation.read(datanode.tagtables[1])
+            entity_ids, res_nums, res_names, atom_names, values, errors = self.AutoRelaxation.read(datanode.tagtables[1])
 
             # Yield the data.
             yield data_type, frq, entity_ids, res_nums, res_names, atom_names, values, errors
 
 
 
-class GeneralRelaxationList(HeteronuclRxList):
-    """Base class for the GeneralRelaxationList tag category."""
+class AutoRelaxationList(HeteronuclRxList):
+    """Base class for the AutoRelaxationList tag category."""
 
     def create(self):
-        """Create the GeneralRelaxationList tag category."""
+        """Create the AutoRelaxationList tag category."""
 
         # The save frame category.
         self.sf.frame.tagtables.append(self.create_tag_table([['SfCategory', 'cat_name']], free=True))
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SfFramecode']], tagvalues=[[self.sf.sf_label]]))
 
-        # GeneralRelaxation ID number.
-        if 'GeneralRelaxationListID' in self.tag_names:
-            self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['GeneralRelaxationListID']], tagvalues=[[str(self.sf.rx_inc)]]))
+        # AutoRelaxation ID number.
+        if 'AutoRelaxationListID' in self.tag_names:
+            self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['AutoRelaxationListID']], tagvalues=[[str(self.sf.rx_inc)]]))
 
         # Sample info.
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleConditionListID']], tagvalues=[[self.sf.sample_cond_list_id]]))
@@ -258,9 +258,9 @@ class GeneralRelaxationList(HeteronuclRxList):
 
 
     def read(self, tagtable):
-        """Extract the GeneralRelaxationList tag category info.
+        """Extract the AutoRelaxationList tag category info.
 
-        @param tagtable:    The GeneralRelaxationList tagtable.
+        @param tagtable:    The AutoRelaxationList tagtable.
         @type tagtable:     Tagtable instance
         @return:            The relaxation data type and the proton frequency in Hz.
         @rtype:             str, float
@@ -292,12 +292,12 @@ class GeneralRelaxationList(HeteronuclRxList):
         """
 
         # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='General_Relaxation_list', sep=sep)
+        TagCategory.tag_setup(self, tag_category_label='Auto_Relaxation_list', sep=sep)
 
         # Tag names for the relaxation data.
         self.tag_names['SfCategory'] = 'Sf_category'
         self.tag_names['SfFramecode'] = 'Sf_framecode'
-        self.tag_names['GeneralRelaxationListID'] = 'ID'
+        self.tag_names['AutoRelaxationListID'] = 'ID'
         self.tag_names['TempCalibrationMethod'] = 'Temp_calibration_method'
         self.tag_names['TempControlMethod'] = 'Temp_control_method'
         self.tag_names['SampleConditionListID'] = 'Sample_condition_list_ID'
@@ -311,11 +311,11 @@ class GeneralRelaxationList(HeteronuclRxList):
 
 
 
-class GeneralRelaxationExperiment(TagCategory):
-    """Base class for the GeneralRelaxationExperiment tag category."""
+class AutoRelaxationExperiment(TagCategory):
+    """Base class for the AutoRelaxationExperiment tag category."""
 
     def create(self, frame=None):
-        """Create the GeneralRelaxationExperiment tag category."""
+        """Create the AutoRelaxationExperiment tag category."""
 
         # Sample info.
         self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleLabel']], tagvalues=[['$sample_1']]))
@@ -331,17 +331,17 @@ class GeneralRelaxationExperiment(TagCategory):
         """
 
         # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='General_Relaxation_experiment', sep=sep)
+        TagCategory.tag_setup(self, tag_category_label='Auto_Relaxation_experiment', sep=sep)
 
         # Tag names for the relaxation data.
         self.tag_names['SampleLabel'] = 'Sample_label'
 
 
-class GeneralRelaxationSoftware(TagCategory):
-    """Base class for the GeneralRelaxationSoftware tag category."""
+class AutoRelaxationSoftware(TagCategory):
+    """Base class for the AutoRelaxationSoftware tag category."""
 
     def create(self):
-        """Create the GeneralRelaxationSoftware tag category."""
+        """Create the AutoRelaxationSoftware tag category."""
 
     def tag_setup(self, tag_category_label=None, sep=None):
         """Replacement method for setting up the tag names.
@@ -353,11 +353,11 @@ class GeneralRelaxationSoftware(TagCategory):
         """
 
         # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='General_Relaxation_software', sep=sep)
+        TagCategory.tag_setup(self, tag_category_label='Auto_Relaxation_software', sep=sep)
 
 
-class GeneralRelaxation(Rx):
-    """Base class for the GeneralRelaxation tag category."""
+class AutoRelaxation(Rx):
+    """Base class for the AutoRelaxation tag category."""
 
     def create(self):
         """Create the Rx tag category."""
@@ -378,7 +378,7 @@ class GeneralRelaxation(Rx):
             ['ValErr',                  'errors'],
             ['RexVal',                  'rex_val'],
             ['RexErr',                  'rex_err'],
-            ['GeneralRelaxationListID', 'rx_inc_list']
+            ['AutoRelaxationListID', 'rx_inc_list']
         ]
 
         # Get the TabTable.
@@ -399,9 +399,9 @@ class GeneralRelaxation(Rx):
         """
 
         # Execute the base class tag_setup() method.
-        Rx.tag_setup(self, tag_category_label='General_Relaxation', sep=sep)
+        Rx.tag_setup(self, tag_category_label='Auto_Relaxation', sep=sep)
 
-        # Tag names for the general relaxation data.
+        # Tag names for the auto relaxation data.
         self.tag_names['RxID'] = 'ID'
         self.tag_names['AssemblyAtomID'] = 'Assembly_atom_ID'
         self.tag_names['EntityAssemblyID'] = 'Entity_assembly_ID'
@@ -412,8 +412,8 @@ class GeneralRelaxation(Rx):
         self.tag_names['AtomID'] = 'Atom_ID'
         self.tag_names['AtomType'] = 'Atom_type'
         self.tag_names['AtomIsotopeNumber'] = 'Atom_isotope_number'
-        self.tag_names['Val'] = 'General_relaxation_val'
-        self.tag_names['ValErr'] = 'General_relaxation_val_err'
+        self.tag_names['Val'] = 'Auto_relaxation_val'
+        self.tag_names['ValErr'] = 'Auto_relaxation_val_err'
         self.tag_names['RexVal'] = 'Rex_val'
         self.tag_names['RexErr'] = 'Rex_err'
-        self.tag_names['GeneralRelaxationListID'] = 'General_relaxation_list_ID'
+        self.tag_names['AutoRelaxationListID'] = 'Auto_relaxation_list_ID'

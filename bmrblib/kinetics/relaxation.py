@@ -24,7 +24,7 @@
 
 
 # relax module imports.
-from bmrblib.kinetics.general_relaxation import GeneralRelaxationSaveframe
+from bmrblib.kinetics.auto_relaxation import AutoRelaxationSaveframe
 from bmrblib.kinetics.heteronucl_NOEs import HeteronuclNOESaveframe
 from bmrblib.kinetics.heteronucl_NOEs_v3_1 import HeteronuclNOESaveframe_v3_1
 from bmrblib.kinetics.heteronucl_NOEs_v3_2 import HeteronuclNOESaveframe_v3_2
@@ -217,7 +217,7 @@ class Relaxation_v3_2(Relaxation_v3_1):
 
         # Initialise the kinetic saveframe supergroups.
         self.heteronucl_NOEs = HeteronuclNOESaveframe_v3_2(datanodes)
-        self.general_relaxation = GeneralRelaxationSaveframe(datanodes)
+        self.auto_relaxation = AutoRelaxationSaveframe(datanodes)
 
 
     def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, peak_intensity_type=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None):
@@ -279,25 +279,25 @@ class Relaxation_v3_2(Relaxation_v3_1):
 
         # Pack specific the data.
         if data_type in ['R1', 'R2']:
-            self.general_relaxation.add(data_type=data_type,
-                                        sample_cond_list_id=sample_cond_list_id,
-                                        sample_cond_list_label=sample_cond_list_label,
-                                        temp_calibration=temp_calibration,
-                                        temp_control=temp_control,
-                                        peak_intensity_type=peak_intensity_type,
-                                        frq=frq,
-                                        details=details,
-                                        assembly_atom_ids=assembly_atom_ids,
-                                        entity_assembly_ids=entity_assembly_ids,
-                                        entity_ids=entity_ids,
-                                        res_nums=res_nums,
-                                        seq_id=seq_id,
-                                        res_names=res_names,
-                                        atom_names=atom_names,
-                                        atom_types=atom_types,
-                                        isotope=isotope,
-                                        data=data,
-                                        errors=errors)
+            self.auto_relaxation.add(data_type=data_type,
+                                     sample_cond_list_id=sample_cond_list_id,
+                                     sample_cond_list_label=sample_cond_list_label,
+                                     temp_calibration=temp_calibration,
+                                     temp_control=temp_control,
+                                     peak_intensity_type=peak_intensity_type,
+                                     frq=frq,
+                                     details=details,
+                                     assembly_atom_ids=assembly_atom_ids,
+                                     entity_assembly_ids=entity_assembly_ids,
+                                     entity_ids=entity_ids,
+                                     res_nums=res_nums,
+                                     seq_id=seq_id,
+                                     res_names=res_names,
+                                     atom_names=atom_names,
+                                     atom_types=atom_types,
+                                     isotope=isotope,
+                                     data=data,
+                                     errors=errors)
         elif data_type == 'NOE':
             self.heteronucl_NOEs.add(sample_cond_list_id=sample_cond_list_id,
                                      sample_cond_list_label=sample_cond_list_label,
@@ -336,5 +336,5 @@ class Relaxation_v3_2(Relaxation_v3_1):
             yield "NOE", frq, entity_ids, res_nums, res_names, spin_names, val, err
 
         # The R1 and R2 data.
-        for data in self.general_relaxation.loop():
+        for data in self.auto_relaxation.loop():
             yield data
