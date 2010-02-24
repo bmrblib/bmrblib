@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -20,7 +20,7 @@
 #############################################################################
 
 # Module docstring.
-"""Supergroup 6 - Kinetic data.
+"""Supergroup 3 - Molecular assembly.
 
 This is a collection of NMR-STAR dictionary saveframes as defined at, for example,
 http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
