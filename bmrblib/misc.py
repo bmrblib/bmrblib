@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -24,6 +24,29 @@
 
 # Python module imports.
 from numpy import ndarray
+from warnings import warn
+
+
+class MissingSaveframe:
+    """Special class for when BMRB saveframes are non-existent in certain NMR-STAR versions."""
+
+    def __init__(self, name):
+        """Initialise the special class.
+
+        @param name:    The name of the missing Saveframe.
+        @type name:     str
+        """
+
+        # Store the arg.
+        self.name = name
+
+
+    def add(self, *args, **keywords):
+        """Special function for giving a warning."""
+
+        # The warning.
+        warn(Warning("The %s saveframe does not exist in this NMR-STAR version." % self.name))
+
 
 
 def no_missing(data, name):
