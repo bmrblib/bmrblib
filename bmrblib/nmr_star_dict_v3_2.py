@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -32,9 +32,11 @@ from bmrblib.citations.citations import CitationsSaveframe
 from bmrblib.experimental_details.method import MethodSaveframe
 from bmrblib.experimental_details.software import SoftwareSaveframe
 from bmrblib.kinetics.relaxation import Relaxation_v3_2
+from bmrblib.misc import MissingSaveframe
 from bmrblib.NMR_parameters.chem_shift_anisotropy_v3_1 import ChemShiftAnisotropySaveframe_v3_1
-from bmrblib.thermodynamics.model_free_v3_2 import ModelFreeSaveframe_v3_2
 from bmrblib.nmr_star_dict import NMR_STAR
+from bmrblib.structure.tensor import TensorSaveframe
+from bmrblib.thermodynamics.model_free_v3_2 import ModelFreeSaveframe_v3_2
 
 
 class NMR_STAR_v3_2(NMR_STAR):
@@ -65,3 +67,6 @@ class NMR_STAR_v3_2(NMR_STAR):
 
         # Initialise Supergroup 7:  The thermodynamics saveframe API.
         self.model_free = ModelFreeSaveframe_v3_2(self.data.datanodes)
+
+        # Initialise Supergroup 8:  The structure determination saveframes.
+        self.tensor = TensorSaveframe(self.data.datanodes)
