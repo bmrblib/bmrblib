@@ -205,7 +205,7 @@ class AutoRelaxationSaveframe(RelaxSaveframe):
         self.AutoRelaxation.tag_setup()
 
         # Get the saveframe name.
-        sf_name = getattr(self, 'sf_label')[0]
+        sf_name = getattr(self, 'sf_label')
 
         # Loop over all datanodes.
         for datanode in self.datanodes:
@@ -227,7 +227,7 @@ class AutoRelaxationSaveframe(RelaxSaveframe):
             data_type, frq = self.AutoRelaxationlist.read(datanode.tagtables[0])
 
             # Get the Rx info.
-            entity_ids, res_nums, res_names, atom_names, values, errors = self.AutoRelaxation.read(datanode.tagtables[1])
+            entity_ids, res_nums, res_names, atom_names, values, errors = self.AutoRelaxation.read(datanode.tagtables[2])
 
             # Yield the data.
             yield data_type, frq, entity_ids, res_nums, res_names, atom_names, values, errors

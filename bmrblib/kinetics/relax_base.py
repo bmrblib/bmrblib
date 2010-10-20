@@ -40,9 +40,10 @@ class RelaxSaveframe(BaseSaveframe):
 
         # Set up the tag information.
         self.heteronuclRxlist.tag_setup()
+        self.Rx.tag_setup()
 
         # Get the saveframe name.
-        sf_name = getattr(self, 'sf_label')[0]
+        sf_name = getattr(self, 'sf_label')
 
         # Loop over all datanodes.
         for datanode in self.datanodes:
@@ -64,7 +65,7 @@ class RelaxSaveframe(BaseSaveframe):
             frq = self.heteronuclRxlist.read(datanode.tagtables[0])
 
             # Get the Rx info.
-            entity_ids, res_nums, res_names, atom_names, values, errors = self.Rx.read(datanode.tagtables[1])
+            entity_ids, res_nums, res_names, atom_names, values, errors = self.Rx.read(datanode.tagtables[2])
 
             # Yield the data.
             yield frq, entity_ids, res_nums, res_names, atom_names, values, errors
