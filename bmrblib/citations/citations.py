@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,7 +26,7 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#
 """
 
 # relax module imports.
-from bmrblib.base_classes import BaseSaveframe, TagCategory
+from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 from bmrblib.misc import translate
 from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
@@ -35,9 +35,9 @@ from bmrblib.pystarlib.TagTable import TagTable
 class CitationsSaveframe(BaseSaveframe):
     """The citations saveframe class."""
 
-    # Saveframe variables.
+    # Class variables.
     label = 'citation'
-
+    sf_label = 'citations'
 
     def __init__(self, datanodes):
         """Initialise the class, placing the pystarlib data nodes into the namespace.
@@ -50,13 +50,13 @@ class CitationsSaveframe(BaseSaveframe):
         self.datanodes = datanodes
 
         # The number of entities.
-        self.citation_num = 0
+        self.citation_num = '0'
 
         # Add the specific tag category objects.
         self.add_tag_categories()
 
 
-    def add(self, citation_label='citation', authors=None, doi=None, pubmed_id=None, full_citation=None, title=None, status='published', type='journal', journal_abbrev=None, journal_full=None, volume=None, issue=None, page_first=None, page_last=None, year=None):
+    def add(self, citation_label='citation', cas_abstract_code=None, medline_ui_code=None, authors=None, doi=None, pubmed_id=None, full_citation=None, title=None, status='published', type='journal', journal_abbrev=None, journal_full=None, volume=None, issue=None, page_first=None, page_last=None, year=None):
         """Add the citation information to the data nodes.
 
         @keyword citation_label:    A label to call the saveframe.  If left at 'citation', then the citation ID number will be appended.
@@ -106,6 +106,8 @@ class CitationsSaveframe(BaseSaveframe):
         self.page_last = translate(page_last)
         self.year = translate(year)
         self.citation_label = translate(citation_label)
+        self.cas_abstract_code = translate(cas_abstract_code)
+        self.medline_ui_code = translate(medline_ui_code)
 
         # The author info.
         self.author_given_name = []
@@ -127,7 +129,7 @@ class CitationsSaveframe(BaseSaveframe):
         self.generate_data_ids(len(authors))
 
         # Increment the number of entities.
-        self.citation_num = self.citation_num + 1
+        self.citation_num = str(int(self.citation_num) + 1)
         self.citation_id_num = [str(translate(self.citation_num))]
 
         # Modify the citation label.
@@ -154,142 +156,117 @@ class CitationsSaveframe(BaseSaveframe):
 
 
 
-class Citations(TagCategory):
+class Citations(TagCategoryFree):
     """Base class for the Citations tag category."""
 
-    # Class variables.
-    label = 'citations'
+    def __init__(self, sf):
+        """Setup the Citations tag category.
 
-    def create(self):
-        """Create the Citations tag category."""
-
-        # All the tags.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SfCategory']], tagvalues=[[self.label]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SfFramecode']], tagvalues=[[self.sf.citation_label]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['CitationID']], tagvalues=[[str(self.sf.citation_num)]]))
-        #self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['CASAbstractCode']], tagvalues=[[self.sf.cas_abstract_code]]))
-        #self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['MEDLINEUICode']], tagvalues=[[self.sf.medline_ui_code]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['DOI']], tagvalues=[[self.sf.doi]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['PubMedID']], tagvalues=[[self.sf.pubmed_id]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['FullCitation']], tagvalues=[[self.sf.full_citation]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Title']], tagvalues=[[self.sf.title]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Status']], tagvalues=[[self.sf.status]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Type']], tagvalues=[[self.sf.type]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['JournalAbbrev']], tagvalues=[[self.sf.journal_abbrev]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['JournalNameFull']], tagvalues=[[self.sf.journal_full]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['JournalVolume']], tagvalues=[[self.sf.volume]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['JournalIssue']], tagvalues=[[self.sf.issue]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['PageFirst']], tagvalues=[[self.sf.page_first]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['PageLast']], tagvalues=[[self.sf.page_last]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Year']], tagvalues=[[self.sf.year]]))
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Citation'
+        # Initialise the baseclass.
+        super(Citations, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The tag category label.
+        self.tag_category_label = 'Citation'
 
-        # Tag names for the citations.
-        self.tag_names['SfCategory'] =                  'Sf_category'
-        self.tag_names['SfFramecode'] =                 'Sf_framecode'
-        self.tag_names['CitationID'] =                  'ID'
-        self.tag_names['CASAbstractCode'] =             'CAS_abstract_code'
-        self.tag_names['MEDLINEUICode'] =               'MEDLINE_UI_code'
-        self.tag_names['DOI'] =                         'DOI'
-        self.tag_names['PubMedID'] =                    'PubMed_ID'
-        self.tag_names['FullCitation'] =                'Full_citation'
-        self.tag_names['Title'] =                       'Title'
-        self.tag_names['Status'] =                      'Status'
-        self.tag_names['Type'] =                        'Type'
-        self.tag_names['JournalAbbrev'] =               'Journal_abbrev'
-        self.tag_names['JournalNameFull'] =             'Journal_name_full'
-        self.tag_names['JournalVolume'] =               'Journal_volume'
-        self.tag_names['JournalIssue'] =                'Journal_issue'
-        self.tag_names['JournalASTM'] =                 'Journal_ASTM'
-        self.tag_names['JournalISSN'] =                 'Journal_ISSN'
-        self.tag_names['JournalCSD'] =                  'Journal_CSD'
-        self.tag_names['BookTitle'] =                   'Book_title'
-        self.tag_names['BookChapterTitle'] =            'Book_chapter_title'
-        self.tag_names['BookVolume'] =                  'Book_volume'
-        self.tag_names['BookSeries'] =                  'Book_series'
-        self.tag_names['BookPublisher'] =               'Book_publisher'
-        self.tag_names['BookPublisherCity'] =           'Book_publisher_city'
-        self.tag_names['BookISBN'] =                    'Book_ISBN'
-        self.tag_names['ConferenceTitle'] =             'Conference_title'
-        self.tag_names['ConferenceSite'] =              'Conference_site'
-        self.tag_names['ConferenceStateProvince'] =     'Conference_state_province'
-        self.tag_names['ConferenceCountry'] =           'Conference_country'
-        self.tag_names['ConferenceStartDate'] =         'Conference_start_date'
-        self.tag_names['ConferenceEndDate'] =           'Conference_end_date'
-        self.tag_names['ConferenceAbstractNumber'] =    'Conference_abstract_number'
-        self.tag_names['ThesisInstitution'] =           'Thesis_institution'
-        self.tag_names['ThesisInstitutionCity'] =       'Thesis_institution_city'
-        self.tag_names['ThesisInstitutionCountry'] =    'Thesis_institution_country'
-        self.tag_names['WWWURL'] =                      'WWW_URL'
-        self.tag_names['PageFirst'] =                   'Page_first'
-        self.tag_names['PageLast'] =                    'Page_last'
-        self.tag_names['Year'] =                        'Year'
-        self.tag_names['Details'] =                     'Details'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['SfFramecode',        'citation_label'])
+        self.data_to_var_name.append(['CitationID',         'citation_id_num'])
+        self.data_to_var_name.append(['CASAbstractCode',    'cas_abstract_code'])
+        self.data_to_var_name.append(['MEDLINEUICode',      'medline_ui_code'])
+        self.data_to_var_name.append(['DOI',                'doi'])
+        self.data_to_var_name.append(['PubMedID',           'pubmed_id'])
+        self.data_to_var_name.append(['FullCitation',       'full_citation'])
+        self.data_to_var_name.append(['Title',              'title'])
+        self.data_to_var_name.append(['Status',             'status'])
+        self.data_to_var_name.append(['Type',               'type'])
+        self.data_to_var_name.append(['JournalAbbrev',      'journal_abbrev'])
+        self.data_to_var_name.append(['JournalNameFull',    'journal_full'])
+        self.data_to_var_name.append(['JournalVolume',      'volume'])
+        self.data_to_var_name.append(['JournalIssue',       'issue'])
+        self.data_to_var_name.append(['PageFirst',          'page_first'])
+        self.data_to_var_name.append(['PageLast',           'page_last'])
+        self.data_to_var_name.append(['Year',               'year'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] =                  'Sf_category'
+        self.data_to_tag_name['SfFramecode'] =                 'Sf_framecode'
+        self.data_to_tag_name['CitationID'] =                  'ID'
+        self.data_to_tag_name['CASAbstractCode'] =             'CAS_abstract_code'
+        self.data_to_tag_name['MEDLINEUICode'] =               'MEDLINE_UI_code'
+        self.data_to_tag_name['DOI'] =                         'DOI'
+        self.data_to_tag_name['PubMedID'] =                    'PubMed_ID'
+        self.data_to_tag_name['FullCitation'] =                'Full_citation'
+        self.data_to_tag_name['Title'] =                       'Title'
+        self.data_to_tag_name['Status'] =                      'Status'
+        self.data_to_tag_name['Type'] =                        'Type'
+        self.data_to_tag_name['JournalAbbrev'] =               'Journal_abbrev'
+        self.data_to_tag_name['JournalNameFull'] =             'Journal_name_full'
+        self.data_to_tag_name['JournalVolume'] =               'Journal_volume'
+        self.data_to_tag_name['JournalIssue'] =                'Journal_issue'
+        self.data_to_tag_name['JournalASTM'] =                 'Journal_ASTM'
+        self.data_to_tag_name['JournalISSN'] =                 'Journal_ISSN'
+        self.data_to_tag_name['JournalCSD'] =                  'Journal_CSD'
+        self.data_to_tag_name['BookTitle'] =                   'Book_title'
+        self.data_to_tag_name['BookChapterTitle'] =            'Book_chapter_title'
+        self.data_to_tag_name['BookVolume'] =                  'Book_volume'
+        self.data_to_tag_name['BookSeries'] =                  'Book_series'
+        self.data_to_tag_name['BookPublisher'] =               'Book_publisher'
+        self.data_to_tag_name['BookPublisherCity'] =           'Book_publisher_city'
+        self.data_to_tag_name['BookISBN'] =                    'Book_ISBN'
+        self.data_to_tag_name['ConferenceTitle'] =             'Conference_title'
+        self.data_to_tag_name['ConferenceSite'] =              'Conference_site'
+        self.data_to_tag_name['ConferenceStateProvince'] =     'Conference_state_province'
+        self.data_to_tag_name['ConferenceCountry'] =           'Conference_country'
+        self.data_to_tag_name['ConferenceStartDate'] =         'Conference_start_date'
+        self.data_to_tag_name['ConferenceEndDate'] =           'Conference_end_date'
+        self.data_to_tag_name['ConferenceAbstractNumber'] =    'Conference_abstract_number'
+        self.data_to_tag_name['ThesisInstitution'] =           'Thesis_institution'
+        self.data_to_tag_name['ThesisInstitutionCity'] =       'Thesis_institution_city'
+        self.data_to_tag_name['ThesisInstitutionCountry'] =    'Thesis_institution_country'
+        self.data_to_tag_name['WWWURL'] =                      'WWW_URL'
+        self.data_to_tag_name['PageFirst'] =                   'Page_first'
+        self.data_to_tag_name['PageLast'] =                    'Page_last'
+        self.data_to_tag_name['Year'] =                        'Year'
+        self.data_to_tag_name['Details'] =                     'Details'
+
 
 
 class CitationsAuthor(TagCategory):
     """Base class for the CitationsAuthor tag category."""
 
-    def create(self):
-        """Create the Citations tag category."""
+    def __init__(self, sf):
+        """Setup the CitationsAuthor tag category.
 
-        # Keys and objects.
-        info = [
-            ['Ordinal',         'data_ids'],
-            ['GivenName',       'author_given_name'],
-            ['FamilyName',      'author_family_name'],
-            ['FirstInitial',    'author_first_init'],
-            ['MiddleInitials',  'author_mid_init'],
-            ['FamilyTitle',     'author_family_title'],
-            ['CitationID',      'citation_id_num']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Citation_author'
+        # Initialise the baseclass.
+        super(CitationsAuthor, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The tag category label.
+        self.tag_category_label = 'Citation_author'
 
-        # Tag names for the relaxation data.
-        self.tag_names['Ordinal'] =         'Ordinal'
-        self.tag_names['GivenName'] =       'Given_name'
-        self.tag_names['FamilyName'] =      'Family_name'
-        self.tag_names['FirstInitial'] =    'First_initial'
-        self.tag_names['MiddleInitials'] =  'Middle_initials'
-        self.tag_names['FamilyTitle'] =     'Family_title'
-        self.tag_names['SfID'] =            'Sf_ID'
-        self.tag_names['EntryID'] =         'Entry_ID'
-        self.tag_names['CitationID'] =      'Citation_ID'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['Ordinal',         'data_ids'])
+        self.data_to_var_name.append(['GivenName',       'author_given_name'])
+        self.data_to_var_name.append(['FamilyName',      'author_family_name'])
+        self.data_to_var_name.append(['FirstInitial',    'author_first_init'])
+        self.data_to_var_name.append(['MiddleInitials',  'author_mid_init'])
+        self.data_to_var_name.append(['FamilyTitle',     'author_family_title'])
+        self.data_to_var_name.append(['CitationID',      'citation_id_num'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['Ordinal'] =         'Ordinal'
+        self.data_to_tag_name['GivenName'] =       'Given_name'
+        self.data_to_tag_name['FamilyName'] =      'Family_name'
+        self.data_to_tag_name['FirstInitial'] =    'First_initial'
+        self.data_to_tag_name['MiddleInitials'] =  'Middle_initials'
+        self.data_to_tag_name['FamilyTitle'] =     'Family_title'
+        self.data_to_tag_name['SfID'] =            'Sf_ID'
+        self.data_to_tag_name['EntryID'] =         'Entry_ID'
+        self.data_to_tag_name['CitationID'] =      'Citation_ID'

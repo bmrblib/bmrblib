@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,7 +26,7 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFra
 """
 
 # relax module imports.
-from bmrblib.base_classes import BaseSaveframe, TagCategory
+from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 from bmrblib.misc import no_missing, translate
 from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
@@ -34,6 +34,11 @@ from bmrblib.pystarlib.TagTable import TagTable
 
 class ChemShiftAnisotropySaveframe(BaseSaveframe):
     """The chemical shift anisotropy data saveframe class."""
+
+    # Class variables.
+    label = 'Chem_shift_anisotropy'
+    sf_label = 'chem_shift_anisotropy'
+    id = '1'
 
     def __init__(self, datanodes):
         """Initialise the class, placing the pystarlib data nodes into the namespace.
@@ -52,11 +57,13 @@ class ChemShiftAnisotropySaveframe(BaseSaveframe):
         self.add_tag_categories()
 
 
-    def add(self, data_file_name=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, csa=None, csa_error=None, units='ppm'):
+    def add(self, data_file_name=None, sample_label='$sample_1', sample_cond_list_id=None, sample_cond_list_label='$conditions_1', frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, csa=None, csa_error=None, units='ppm'):
         """Add relaxation data to the data nodes.
 
         @keyword data_file_name:            The name of the data file submitted with the deposition containing this data (should probably be left to None).
         @type data_file_name:               None or str
+        @keyword sample_label:              The sample label.
+        @type sample_label:                 str
         @keyword sample_cond_list_id:       The sample conditions list ID number.
         @type sample_cond_list_id:          str
         @keyword sample_cond_list_label:    The sample conditions list label.
@@ -96,6 +103,8 @@ class ChemShiftAnisotropySaveframe(BaseSaveframe):
 
         # Place the args into the namespace.
         self.file_name = translate(data_file_name)
+        self.sample_label = sample_label
+        self.sample_cond_list_label = sample_cond_list_label
         self.frq = frq
         self.units = units
         self.res_nums = translate(res_nums)
@@ -126,16 +135,13 @@ class ChemShiftAnisotropySaveframe(BaseSaveframe):
         self.csa_inc_list = translate([self.csa_inc] * N)
         self.generate_data_ids(N)
 
-        # Set up the version specific variables.
-        self.specific_setup()
-
         # Initialise the save frame.
         self.frame = SaveFrame(title='chem_shift_anisotropy')
 
         # Create the tag categories.
         self.Chem_shift_anisotropy.create()
         self.CS_anisotropy_experiment.create()
-        self.CS_anisotropy_software.create()
+        #self.CS_anisotropy_software.create()
         self.CS_anisotropy.create()
 
         # Add the saveframe to the data nodes.
@@ -161,8 +167,11 @@ class ChemShiftAnisotropySaveframe(BaseSaveframe):
                     float
         """
 
-        # Set up the version specific variables.
-        self.specific_setup()
+        # Set up the tag information.
+        self.Chem_shift_anisotropy.tag_setup()
+        self.CS_anisotropy_experiment.tag_setup()
+        self.CS_anisotropy_software.tag_setup()
+        self.CS_anisotropy.tag_setup()
 
         # Get the saveframe name.
         sf_name = getattr(self, 'cat_name')[0]
@@ -173,7 +182,7 @@ class ChemShiftAnisotropySaveframe(BaseSaveframe):
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.Chem_shift_anisotropy.create_tag_label(self.Chem_shift_anisotropy.tag_names['SfCategory']):
+                if datanode.tagtables[0].tagnames[index] == self.Chem_shift_anisotropy.data_to_tag_name_full['SfCategory']:
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == sf_name:
                         found = True
@@ -193,114 +202,105 @@ class ChemShiftAnisotropySaveframe(BaseSaveframe):
             yield frq, res_nums, res_names, atom_names, values, errors
 
 
-    def specific_setup(self):
-        """Method called by self.add() to set up any version specific data."""
-
         self.cat_name = ['Chem_shift_anisotropy']
 
 
 
-class ChemShiftAnisotropy(TagCategory):
+class ChemShiftAnisotropy(TagCategoryFree):
     """Base class for the ChemShiftAnisotropy tag category."""
 
-    def create(self):
-        """Create the ChemShiftAnisotropy tag category."""
+    def __init__(self, sf):
+        """Setup the ChemShiftAnisotropy tag category.
 
-        # The save frame category.
-        self.sf.frame.tagtables.append(self.create_tag_table([['SfCategory', 'cat_name']], free=True))
-
-        # CSA ID number.
-        if 'ChemShiftAnisotropyID' in self.tag_names:
-            self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['ChemShiftAnisotropyID']], tagvalues=[['1']]))
-
-        # Sample info.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['DataFileName']], tagvalues=[[self.sf.file_name]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleConditionListLabel']], tagvalues=[['$conditions_1']]))
-
-        # NMR info.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['ValUnits']], tagvalues=[[self.sf.units]]))
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # Initialise the baseclass.
+        super(ChemShiftAnisotropy, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Saveframe_category'
-        self.tag_names['DataFileName'] = 'Data_file_name'
-        self.tag_names['SampleConditionListLabel'] = 'Sample_conditions_label'
-        self.tag_names['ValUnits'] = 'Val_units'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['ChemShiftAnisotropyID',      'id'])
+        self.data_to_var_name.append(['DataFileName',               'file_name'])
+        self.data_to_var_name.append(['SampleConditionListLabel',   'sample_cond_list_label'])
+        self.data_to_var_name.append(['ValUnits',                   'units'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] =               'Saveframe_category'
+        self.data_to_tag_name['DataFileName'] =             'Data_file_name'
+        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_conditions_label'
+        self.data_to_tag_name['ValUnits'] =                 'Val_units'
+
 
 
 class CSAnisotropyExperiment(TagCategory):
     """Base class for the CSAnisotropyExperiment tag category."""
 
-    def create(self):
-        """Create the CSAnisotropyExperiment tag category."""
+    def __init__(self, sf):
+        """Setup the CSAnisotropyExperiment tag category.
 
-        # Sample info.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleLabel']], tagvalues=[['$sample_1']]))
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # Initialise the baseclass.
+        super(CSAnisotropyExperiment, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['SampleLabel'] = 'Sample_label'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['SampleLabel',    'sample_label'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SampleLabel'] = 'Sample_label'
+
 
 
 class CSAnisotropySoftware(TagCategory):
     """Base class for the CSAnisotropySoftware tag category."""
 
-    def create(self):
-        """Create the CSAnisotropySoftware tag category."""
 
 
 class CSAnisotropy(TagCategory):
     """Base class for the CSAnisotropy tag category."""
 
-    def create(self):
-        """Create the CSA tag category."""
+    def __init__(self, sf):
+        """Setup the CSAnisotropy tag category.
 
-        # Keys and objects.
-        info = [
-            ['CSAnisotropyID',          'data_ids'],
-            ['AssemblyAtomID',          'assembly_atom_ids'],
-            ['EntityAssemblyID',        'entity_assembly_ids'],
-            ['EntityID',                'entity_ids'],
-            ['CompIndexID',             'res_nums'],
-            ['SeqID',                   'seq_id'],
-            ['CompID',                  'res_names'],
-            ['AtomID',                  'atom_names'],
-            ['AtomType',                'atom_types'],
-            ['AtomIsotopeNumber',       'isotope'],
-            ['Val',                     'csa'],
-            ['ValErr',                  'csa_error'],
-            ['ChemShiftAnisotropyID',   'csa_inc_list']
-        ]
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
 
-        # Get the TabTable.
-        table = self.create_tag_table(info)
+        # Initialise the baseclass.
+        super(CSAnisotropy, self).__init__(sf)
 
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['CSAnisotropyID',          'data_ids'])
+        self.data_to_var_name.append(['AssemblyAtomID',          'assembly_atom_ids'])
+        self.data_to_var_name.append(['EntityAssemblyID',        'entity_assembly_ids'])
+        self.data_to_var_name.append(['EntityID',                'entity_ids'])
+        self.data_to_var_name.append(['CompIndexID',             'res_nums'])
+        self.data_to_var_name.append(['SeqID',                   'seq_id'])
+        self.data_to_var_name.append(['CompID',                  'res_names'])
+        self.data_to_var_name.append(['AtomID',                  'atom_names'])
+        self.data_to_var_name.append(['AtomType',                'atom_types'])
+        self.data_to_var_name.append(['AtomIsotopeNumber',       'isotope'])
+        self.data_to_var_name.append(['Val',                     'csa'])
+        self.data_to_var_name.append(['ValErr',                  'csa_error'])
+        self.data_to_var_name.append(['ChemShiftAnisotropyID',   'csa_inc_list'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['CSAnisotropyID'] = None
+        self.data_to_tag_name['AssemblyAtomID'] = 'Assembly_atom_ID'
+        self.data_to_tag_name['EntityAssemblyID'] = 'Entity_assembly_ID'
+        self.data_to_tag_name['EntityID'] = 'Entity_ID'
+        self.data_to_tag_name['CompIndexID'] = 'Residue_seq_code'
+        self.data_to_tag_name['SeqID'] = 'Seq_ID'
+        self.data_to_tag_name['CompID'] = 'Residue_label'
+        self.data_to_tag_name['AtomID'] = 'Atom_name'
+        self.data_to_tag_name['AtomType'] = 'Atom_type'
+        self.data_to_tag_name['AtomIsotopeNumber'] = 'Atom_isotope_number'
+        self.data_to_tag_name['Val'] = 'value'
+        self.data_to_tag_name['ValErr'] = 'value_error'
+        self.data_to_tag_name['ChemShiftAnisotropyID'] = 'Chem_shift_anisotropy_ID'
 
 
     def read(self, tagtable):
@@ -314,11 +314,11 @@ class CSAnisotropy(TagCategory):
         """
 
         # The entity info.
-        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['CompIndexID'])]
-        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['CompID'])]
-        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['AtomID'])]
-        values = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['Val'])]
-        errors = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['ValErr'])]
+        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name['CompIndexID'])]
+        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name['CompID'])]
+        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name['AtomID'])]
+        values = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name['Val'])]
+        errors = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name['ValErr'])]
 
         # Convert the residue numbers to ints and the values and errors to floats.
         for i in range(len(res_nums)):
@@ -328,31 +328,3 @@ class CSAnisotropy(TagCategory):
 
         # Return the data.
         return res_nums, res_names, atom_names, values, errors
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
-        """
-
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
-
-        # Tag names for the relaxation data.
-        self.tag_names['CSAnisotropyID'] = None
-        self.tag_names['AssemblyAtomID'] = 'Assembly_atom_ID'
-        self.tag_names['EntityAssemblyID'] = 'Entity_assembly_ID'
-        self.tag_names['EntityID'] = 'Entity_ID'
-        self.tag_names['CompIndexID'] = 'Residue_seq_code'
-        self.tag_names['SeqID'] = 'Seq_ID'
-        self.tag_names['CompID'] = 'Residue_label'
-        self.tag_names['AtomID'] = 'Atom_name'
-        self.tag_names['AtomType'] = 'Atom_type'
-        self.tag_names['AtomIsotopeNumber'] = 'Atom_isotope_number'
-        self.tag_names['Val'] = 'value'
-        self.tag_names['ValErr'] = 'value_error'
-        self.tag_names['ChemShiftAnisotropyID'] = 'Chem_shift_anisotropy_ID'

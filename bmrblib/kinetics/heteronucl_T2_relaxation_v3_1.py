@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -49,46 +49,66 @@ class HeteronuclT2Saveframe_v3_1(HeteronuclT2Saveframe):
         self.cat_name = ['heteronucl_T2_relaxation']
 
 
+
 class HeteronuclT2List_v3_1(HeteronuclT2List):
     """v3.1 HeteronuclT2List tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        HeteronuclT2List.tag_setup(self, tag_category_label='Heteronucl_T2_list', sep=sep)
+    # The category name.
+    tag_category_label = 'Heteronucl_T2_list'
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Sf_category'
-        self.tag_names['HeteronuclT2ListID'] = 'ID'
-        self.tag_names['SampleConditionListLabel'] = 'Sample_condition_list_label'
+    def __init__(self, sf):
+        """Setup the HeteronuclT2List_v3_1 tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(HeteronuclT2List_v3_1, self).__init__(sf)
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] =               'Sf_category'
+        self.data_to_tag_name['HeteronuclT2ListID'] =       'ID'
+        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_condition_list_label'
+
 
 
 class HeteronuclT2Experiment_v3_1(HeteronuclT2Experiment):
     """v3.1 HeteronuclT2Experiment tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        HeteronuclT2Experiment.tag_setup(self, tag_category_label='Heteronucl_T2_experiment', sep=sep)
+    # The category name.
+    tag_category_label = 'Heteronucl_T2_experiment'
+
 
 
 class HeteronuclT2Software_v3_1(HeteronuclT2Software):
     """v3.1 HeteronuclT2Software tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        HeteronuclT2Software.tag_setup(self, tag_category_label='Heteronucl_T2_software', sep=sep)
+    # The category name.
+    tag_category_label = 'Heteronucl_T2_software'
+
 
 
 class T2_v3_1(T2):
     """v3.1 T2 tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        T2.tag_setup(self, tag_category_label='T2', sep=sep)
+    # The category name.
+    tag_category_label = 'T2'
 
-        # Tag names for the relaxation data.
-        self.tag_names['RxID'] = 'ID'
-        self.tag_names['CompIndexID'] = 'Comp_index_ID'
-        self.tag_names['CompID'] = 'Comp_ID'
-        self.tag_names['AtomID'] = 'Atom_ID'
-        self.tag_names['Val'] = 'Val'
-        self.tag_names['ValErr'] = 'Val_err'
+    def __init__(self, sf):
+        """Setup the T2_v3_1 tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(T2_v3_1, self).__init__(sf)
+
+        # Database table names to class instance variables.
+        self.data_to_tag_name['RxID'] =         'ID'
+        self.data_to_tag_name['CompIndexID'] =  'Comp_index_ID'
+        self.data_to_tag_name['CompID'] =       'Comp_ID'
+        self.data_to_tag_name['AtomID'] =       'Atom_ID'
+        self.data_to_tag_name['Val'] =          'Val'
+        self.data_to_tag_name['ValErr'] =       'Val_err'

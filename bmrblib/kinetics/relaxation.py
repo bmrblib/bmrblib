@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -27,7 +27,6 @@
 from bmrblib.kinetics.auto_relaxation import AutoRelaxationSaveframe
 from bmrblib.kinetics.heteronucl_NOEs import HeteronuclNOESaveframe
 from bmrblib.kinetics.heteronucl_NOEs_v3_1 import HeteronuclNOESaveframe_v3_1
-from bmrblib.kinetics.heteronucl_NOEs_v3_2 import HeteronuclNOESaveframe_v3_2
 from bmrblib.kinetics.heteronucl_T1_relaxation import HeteronuclT1Saveframe
 from bmrblib.kinetics.heteronucl_T1_relaxation_v3_1 import HeteronuclT1Saveframe_v3_1
 from bmrblib.kinetics.heteronucl_T2_relaxation import HeteronuclT2Saveframe
@@ -169,6 +168,7 @@ class Relaxation:
             yield "R2", frq, entity_ids, res_nums, res_names, spin_names, val, err
 
 
+
 class Relaxation_v3_0(Relaxation):
     """Class for the relaxation data part of the BMRB API (v3.0)."""
 
@@ -181,6 +181,7 @@ class Relaxation_v3_0(Relaxation):
 
         # Execute the base class __init__() method.
         Relaxation.__init__(self, datanodes)
+
 
 
 class Relaxation_v3_1(Relaxation_v3_0):
@@ -198,25 +199,6 @@ class Relaxation_v3_1(Relaxation_v3_0):
 
         # Initialise the kinetic saveframe supergroups.
         self.heteronucl_NOEs = HeteronuclNOESaveframe_v3_1(datanodes)
-        self.heteronucl_T1_relaxation = HeteronuclT1Saveframe_v3_1(datanodes)
-        self.heteronucl_T2_relaxation = HeteronuclT2Saveframe_v3_1(datanodes)
-
-
-class Relaxation_v3_2(Relaxation_v3_1):
-    """Class for the relaxation data part of the BMRB API (v3.2)."""
-
-    def __init__(self, datanodes):
-        """Initialise the class, placing the pystarlib data nodes into the namespace.
-
-        @param datanodes:   The pystarlib data nodes object.
-        @type datanodes:    list
-        """
-
-        # Execute the base class __init__() method.
-        Relaxation_v3_1.__init__(self, datanodes)
-
-        # Initialise the kinetic saveframe supergroups.
-        self.heteronucl_NOEs = HeteronuclNOESaveframe_v3_2(datanodes)
         self.auto_relaxation = AutoRelaxationSaveframe(datanodes)
 
 

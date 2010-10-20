@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -43,46 +43,86 @@ class ChemShiftAnisotropySaveframe_v3_1(ChemShiftAnisotropySaveframe):
         self.CS_anisotropy = CSAnisotropy_v3_1(self)
 
 
+
 class ChemShiftAnisotropy_v3_1(ChemShiftAnisotropy):
     """v3.1 ChemShiftAnisotropy tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        ChemShiftAnisotropy.tag_setup(self, tag_category_label='Chem_shift_anisotropy', sep=sep)
+    def __init__(self, sf):
+        """Setup the ChemShiftAnisotropy_v3_1 tag category.
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Sf_category'
-        self.tag_names['ChemShiftAnisotropyID'] = 'ID'
-        self.tag_names['SampleConditionListLabel'] = 'Sample_condition_list_label'
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(ChemShiftAnisotropy_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Chem_shift_anisotropy'
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] =               'Sf_category'
+        self.data_to_tag_name['ChemShiftAnisotropyID'] =    'ID'
+        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_condition_list_label'
+
 
 
 class CSAnisotropyExperiment_v3_1(CSAnisotropyExperiment):
     """v3.1 CSAnisotropyExperiment tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        CSAnisotropyExperiment.tag_setup(self, tag_category_label='CS_anisotropy_experiment', sep=sep)
+    def __init__(self, sf):
+        """Setup the CSAnisotropyExperiment_v3_1 tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(CSAnisotropyExperiment_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'CS_anisotropy_experiment'
+
 
 
 class CSAnisotropySoftware_v3_1(CSAnisotropySoftware):
     """v3.1 CSAnisotropySoftware tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        CSAnisotropySoftware.tag_setup(self, tag_category_label='CS_anisotropy_software', sep=sep)
+    def __init__(self, sf):
+        """Setup the CSAnisotropySoftware_v3_1 tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(CSAnisotropySoftware_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'CS_anisotropy_software'
+
 
 
 class CSAnisotropy_v3_1(CSAnisotropy):
     """v3.1 CSAnisotropy tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        CSAnisotropy.tag_setup(self, tag_category_label='CS_anisotropy', sep=sep)
+    def __init__(self, sf):
+        """Setup the CSAnisotropy_v3_1 tag category.
 
-        # Tag names for the relaxation data.
-        self.tag_names['CSAnisotropyID'] = 'ID'
-        self.tag_names['CompIndexID'] = 'Comp_index_ID'
-        self.tag_names['CompID'] = 'Comp_ID'
-        self.tag_names['AtomID'] = 'Atom_ID'
-        self.tag_names['Val'] = 'Val'
-        self.tag_names['ValErr'] = 'Val_err'
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(CSAnisotropy_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'CS_anisotropy'
+
+        # Database table name to tag name.
+        self.data_to_tag_name['CSAnisotropyID'] = 'ID'
+        self.data_to_tag_name['CompIndexID'] = 'Comp_index_ID'
+        self.data_to_tag_name['CompID'] = 'Comp_ID'
+        self.data_to_tag_name['AtomID'] = 'Atom_ID'
+        self.data_to_tag_name['Val'] = 'Val'
+        self.data_to_tag_name['ValErr'] = 'Val_err'

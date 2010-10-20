@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,7 +26,7 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFra
 """
 
 # relax module imports.
-from bmrblib.base_classes import BaseSaveframe, TagCategory
+from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 from bmrblib.misc import no_missing, translate
 from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
@@ -36,7 +36,7 @@ class TensorSaveframe(BaseSaveframe):
     """The tensor saveframe class."""
 
     # Saveframe variables.
-    title = 'tensor'
+    sf_label = 'tensor'
 
     def __init__(self, datanodes):
         """Initialise the class, placing the pystarlib data nodes into the namespace.
@@ -122,6 +122,7 @@ class TensorSaveframe(BaseSaveframe):
 
         # Set up the tensor specific variables.
         self.tensor_inc = self.tensor_inc + 1
+        self.tensor_inc_str = str(self.tensor_inc)
         self.tensor_inc_list = translate([self.tensor_inc] * N)
         self.generate_data_ids(N)
 
@@ -129,7 +130,7 @@ class TensorSaveframe(BaseSaveframe):
         self.specific_setup()
 
         # Initialise the save frame.
-        self.frame = SaveFrame(title=self.title)
+        self.frame = SaveFrame(title=self.sf_label)
 
         # Create the tag categories.
         self.Tensor_list.create()
@@ -156,6 +157,10 @@ class TensorSaveframe(BaseSaveframe):
                     float
         """
 
+        # Set up the tag information.
+        self.Tensor_list.tag_setup()
+        self.Tensor.tag_setup()
+
         # Set up the version specific variables.
         self.specific_setup()
 
@@ -168,7 +173,7 @@ class TensorSaveframe(BaseSaveframe):
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.Tensor_list.create_tag_label(self.Tensor_list.tag_names['SfCategory']):
+                if datanode.tagtables[0].tagnames[index] == self.Tensor_list.data_to_tag_name_full['SfCategory']:
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == sf_name:
                         found = True
@@ -192,81 +197,81 @@ class TensorSaveframe(BaseSaveframe):
 
 
 
-class TensorList(TagCategory):
+class TensorList(TagCategoryFree):
     """Base class for the TensorList tag category."""
 
-    def create(self):
-        """Create the TensorList tag category."""
+    def __init__(self, sf):
+        """Setup the TensorList tag category.
 
-        # Keys and objects.
-        info = [
-            ['SfCategory',                  'cat_name'],
-            ['TensorID',                    'data_ids'],
-            ['SampleConditionListLabel',    'sample_conditions_label'],
-            ['DataFileName',                'file_name'],
-            ['Details',                     'details']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info, free=True)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Tensor_list'
+        # Initialise the baseclass.
+        super(TensorList, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The category name.
+        self.tag_category_label='Tensor_list'
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Sf_category'
-        self.tag_names['SfFramecode'] = 'Sf_framecode'
-        self.tag_names['EntryID'] = 'Entry_ID'
-        self.tag_names['SfID'] = 'Sf_ID'
-        self.tag_names['TensorID'] = 'ID'
-        self.tag_names['SampleConditionListLabel'] = 'Sample_conditions_label'
-        self.tag_names['DataFileName'] = 'Data_file_name'
-        self.tag_names['Details'] = 'Details'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['TensorID',                    'data_ids'])
+        self.data_to_var_name.append(['SampleConditionListLabel',    'sample_conditions_label'])
+        self.data_to_var_name.append(['DataFileName',                'file_name'])
+        self.data_to_var_name.append(['Details',                     'details'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] =               'Sf_category'
+        self.data_to_tag_name['SfFramecode'] =              'Sf_framecode'
+        self.data_to_tag_name['EntryID'] =                  'Entry_ID'
+        self.data_to_tag_name['SfID'] =                     'Sf_ID'
+        self.data_to_tag_name['TensorID'] =                 'ID'
+        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_conditions_label'
+        self.data_to_tag_name['DataFileName'] =             'Data_file_name'
+        self.data_to_tag_name['Details'] =                  'Details'
+
 
 
 class Tensor(TagCategory):
     """Base class for the Tensor tag category."""
 
-    def create(self):
-        """Create the Tensor tag category."""
+    def __init__(self, sf):
+        """Setup the Tensor tag category.
 
-        # Keys and objects.
-        info = [
-            ['TensorID',                'data_ids'],
-            ['AssemblyAtomID',          'assembly_atom_ids'],
-            ['EntityAssemblyID',        'entity_assembly_ids'],
-            ['EntityID',                'entity_ids'],
-            ['CompIndexID',             'res_nums'],
-            ['CompID',                  'res_names'],
-            ['AtomID',                  'atom_names'],
-            ['AtomType',                'atom_types'],
-            ['AtomIsotopeNumber',       'isotope'],
-            ['Val',                     'data'],
-            ['TensorListID',            'tensor_inc_list']
-        ]
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
 
-        # Get the TabTable.
-        table = self.create_tag_table(info)
+        # Initialise the baseclass.
+        super(Tensor, self).__init__(sf)
 
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
+        # The category name.
+        self.tag_category_label='Tensor'
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['TensorID',                'data_ids'])
+        self.data_to_var_name.append(['AssemblyAtomID',          'assembly_atom_ids'])
+        self.data_to_var_name.append(['EntityAssemblyID',        'entity_assembly_ids'])
+        self.data_to_var_name.append(['EntityID',                'entity_ids'])
+        self.data_to_var_name.append(['CompIndexID',             'res_nums'])
+        self.data_to_var_name.append(['CompID',                  'res_names'])
+        self.data_to_var_name.append(['AtomID',                  'atom_names'])
+        self.data_to_var_name.append(['AtomType',                'atom_types'])
+        self.data_to_var_name.append(['AtomIsotopeNumber',       'isotope'])
+        self.data_to_var_name.append(['Val',                     'data'])
+        self.data_to_var_name.append(['TensorListID',            'tensor_inc_list'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['TensorID'] =             'ID'
+        self.data_to_tag_name['AssemblyAtomID'] =       'Assembly_atom_ID'
+        self.data_to_tag_name['EntityAssemblyID'] =     'Entity_assembly_ID'
+        self.data_to_tag_name['EntityID'] =             'Entity_ID'
+        self.data_to_tag_name['CompIndexID'] =          'Comp_index_ID'
+        self.data_to_tag_name['CompID'] =               'Residue_label'
+        self.data_to_tag_name['AtomID'] =               'Atom_name'
+        self.data_to_tag_name['AtomType'] =             'Atom_type'
+        self.data_to_tag_name['AtomIsotopeNumber'] =    'Atom_isotope_number'
+        self.data_to_tag_name['Val'] =                  'value'
+        self.data_to_tag_name['TensorListID'] =         'Tensor_list_ID'
 
 
     def read(self, tagtable):
@@ -280,10 +285,10 @@ class Tensor(TagCategory):
         """
 
         # The entity info.
-        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['CompIndexID'])]
-        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['CompID'])]
-        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['AtomID'])]
-        values = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['Val'])]
+        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompIndexID'])]
+        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompID'])]
+        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['AtomID'])]
+        values = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['Val'])]
 
         # Convert the residue numbers to ints and the values to floats.
         for i in range(len(res_nums)):
@@ -292,33 +297,3 @@ class Tensor(TagCategory):
 
         # Return the data.
         return res_nums, res_names, atom_names, values
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
-        """
-
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Tensor'
-
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
-
-        # Tag names for the relaxation data.
-        self.tag_names['TensorID'] = 'ID'
-        self.tag_names['AssemblyAtomID'] = 'Assembly_atom_ID'
-        self.tag_names['EntityAssemblyID'] = 'Entity_assembly_ID'
-        self.tag_names['EntityID'] = 'Entity_ID'
-        self.tag_names['CompIndexID'] = 'Comp_index_ID'
-        self.tag_names['CompID'] = 'Residue_label'
-        self.tag_names['AtomID'] = 'Atom_name'
-        self.tag_names['AtomType'] = 'Atom_type'
-        self.tag_names['AtomIsotopeNumber'] = 'Atom_isotope_number'
-        self.tag_names['Val'] = 'value'
-        self.tag_names['TensorListID'] = 'Tensor_list_ID'

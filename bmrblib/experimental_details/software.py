@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,7 +26,7 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFra
 """
 
 # relax module imports.
-from bmrblib.base_classes import BaseSaveframe, TagCategory
+from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
 from bmrblib.misc import translate
@@ -34,6 +34,9 @@ from bmrblib.misc import translate
 
 class SoftwareSaveframe(BaseSaveframe):
     """The software saveframe class."""
+
+    # Class variables.
+    sf_label = ['software']
 
     def __init__(self, datanodes):
         """Initialise the class, placing the pystarlib data nodes into the namespace.
@@ -79,7 +82,7 @@ class SoftwareSaveframe(BaseSaveframe):
 
         # Place the args into the namespace.
         self.program_name = name
-        self.program_version = version
+        self.program_version = translate(version)
         self.vendor_name = translate(vendor_name)
         self.vendor_address = translate(vendor_address)
         self.vendor_eaddress = translate(vendor_eaddress)
@@ -88,10 +91,8 @@ class SoftwareSaveframe(BaseSaveframe):
 
         # Increment the ID number.
         self.software_num = self.software_num + 1
+        self.software_num_str = str(self.software_num)
         self.software_id_num = [str(translate(self.software_num))]
-
-        # The category name.
-        self.cat_name = ['Software']
 
         # Initialise the save frame.
         self.frame = SaveFrame(title=self.program_name)
@@ -120,157 +121,112 @@ class SoftwareSaveframe(BaseSaveframe):
 
 
 
-class Software(TagCategory):
+class Software(TagCategoryFree):
     """Base class for the Software tag category."""
 
-    def create(self):
-        """Create the Software tag category."""
+    def __init__(self, sf):
+        """Setup the Software tag category.
 
-        # The save frame category.
-        self.sf.frame.tagtables.append(self.create_tag_table([['SfCategory', 'cat_name']], free=True))
-
-        # Software ID number.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SoftwareID']], tagvalues=[[str(self.sf.software_num)]]))
-
-        # The program name.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Name']], tagvalues=[[self.sf.program_name]]))
-
-        # The program version.
-        if self.sf.program_version:
-            self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Version']], tagvalues=[[self.sf.program_version]]))
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Software', sep=sep)
+        # Initialise the baseclass.
+        super(Software, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Sf_category'
-        self.tag_names['SoftwareID'] = 'ID'
-        self.tag_names['Name'] = 'Name'
-        self.tag_names['Version'] = 'Version'
+        # The category name.
+        self.tag_category_label = 'Software'
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['SoftwareID', 'software_num_str'])
+        self.data_to_var_name.append(['Name',       'program_name'])
+        self.data_to_var_name.append(['Version',    'program_version'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] = 'Sf_category'
+        self.data_to_tag_name['SoftwareID'] = 'ID'
+        self.data_to_tag_name['Name'] = 'Name'
+        self.data_to_tag_name['Version'] = 'Version'
+
 
 
 class SoftwareCitation(TagCategory):
     """Base class for the SoftwareCitation tag category."""
 
 
-    def create(self):
-        """Create the Software tag category."""
+    def __init__(self, sf):
+        """Setup the SoftwareCitation tag category.
 
-        # Keys and objects.
-        info = [
-            ['CitationID',      'cite_ids'],
-            ['SoftwareID',      'software_id_num']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Software_citation'
+        # Initialise the baseclass.
+        super(SoftwareCitation, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The category name.
+        self.tag_category_label = 'Software_citation'
 
-        # Tag names for the relaxation data.
-        self.tag_names['CitationID'] = 'Citation_ID'
-        self.tag_names['SoftwareID'] = 'Software_ID'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['CitationID',      'cite_ids'])
+        self.data_to_var_name.append(['SoftwareID',      'software_id_num'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['CitationID'] = 'Citation_ID'
+        self.data_to_tag_name['SoftwareID'] = 'Software_ID'
+
 
 
 class Task(TagCategory):
     """Base class for the Task tag category."""
 
-    def create(self):
-        """Create the Task tag category."""
+    def __init__(self, sf):
+        """Setup the Task tag category.
 
-        # Keys and objects.
-        info = [
-            ['Task',                'task'],
-            ['SoftwareID',          'software_id_num']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Task', sep=sep)
+        # Initialise the baseclass.
+        super(Task, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['Task'] = 'Task'
-        self.tag_names['SoftwareID'] = 'SoftwareID'
+        # The category name.
+        self.tag_category_label = 'Task'
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['Task',                'task'])
+        self.data_to_var_name.append(['SoftwareID',          'software_id_num'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['Task'] = 'Task'
+        self.data_to_tag_name['SoftwareID'] = 'SoftwareID'
+
 
 
 class Vendor(TagCategory):
     """Base class for the Vendor tag category."""
 
-    def create(self):
-        """Create the Vendor tag category."""
+    def __init__(self, sf):
+        """Setup the Vendor tag category.
 
-        # Keys and objects.
-        info = [
-            ['Name',                'vendor_name'],
-            ['Address',             'vendor_address'],
-            ['ElectronicAddress',   'vendor_eaddress'],
-            ['SoftwareID',          'software_id_num']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Vendor', sep=sep)
+        # Initialise the baseclass.
+        super(Vendor, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['Name'] = 'Name'
-        self.tag_names['Address'] = 'Address'
-        self.tag_names['ElectronicAddress'] = 'Electronic_address'
-        self.tag_names['SoftwareID'] = 'SoftwareID'
+        # The category name.
+        self.tag_category_label = 'Vendor'
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['Name',                'vendor_name'])
+        self.data_to_var_name.append(['Address',             'vendor_address'])
+        self.data_to_var_name.append(['ElectronicAddress',   'vendor_eaddress'])
+        self.data_to_var_name.append(['SoftwareID',          'software_id_num'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['Name'] = 'Name'
+        self.data_to_tag_name['Address'] = 'Address'
+        self.data_to_tag_name['ElectronicAddress'] = 'Electronic_address'
+        self.data_to_tag_name['SoftwareID'] = 'SoftwareID'

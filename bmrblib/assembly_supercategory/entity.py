@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,7 +26,7 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#
 """
 
 # relax module imports.
-from bmrblib.base_classes import TagCategory
+from bmrblib.base_classes import TagCategory, TagCategoryFree
 from bmrblib.misc import translate
 from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
@@ -35,9 +35,9 @@ from bmrblib.pystarlib.TagTable import TagTable
 class EntitySaveframe:
     """The entity saveframe class."""
 
-    # Saveframe variables.
+    # Class variables.
     label = 'entity'
-
+    sf_label = 'entity'
 
     def __init__(self, datanodes):
         """Initialise the class, placing the pystarlib data nodes into the namespace.
@@ -89,15 +89,16 @@ class EntitySaveframe:
         # Place the args into the namespace.
         self.mol_name = mol_name
         self.mol_type = mol_type
-        self.polymer_type = polymer_type
-        self.polymer_seq_code = polymer_seq_code
-        self.thiol_state = thiol_state
+        self.polymer_type = translate(polymer_type)
+        self.polymer_seq_code = translate(polymer_seq_code)
+        self.thiol_state = translate(thiol_state)
         self.res_names = translate(res_names)
         self.res_nums = translate(res_nums)
         self.atom_names = translate(atom_names)
 
         # Increment the number of entities.
         self.entity_num = self.entity_num + 1
+        self.entity_num_str = str(self.entity_num)
 
         # The entity ID list.
         self.entity_ids = [str(self.entity_num)]*len(self.res_nums)
@@ -129,13 +130,17 @@ class EntitySaveframe:
         @rtype:     tuple of str, str, list of int, list of str
         """
 
+        # Set up the tag information.
+        self.entity.tag_setup()
+        self.entity_comp_index.tag_setup()
+
         # Loop over all datanodes.
         for datanode in self.datanodes:
             # Find the Entity saveframes via the SfCategory tag index.
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.entity.create_tag_label(self.entity.tag_names['SfCategory']):
+                if datanode.tagtables[0].tagnames[index] == self.entity.data_to_tag_name_full['SfCategory']:
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == 'entity':
                         found = True
@@ -155,20 +160,36 @@ class EntitySaveframe:
             yield mol_name, mol_type, res_nums, res_names
 
 
-class Entity(TagCategory):
+
+class Entity(TagCategoryFree):
     """Base class for the Entity tag category."""
 
-    def create(self):
-        """Create the Entity tag category."""
+    def __init__(self, sf):
+        """Setup the Entity tag category.
 
-        # The entity tags.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SfCategory']], tagvalues=[['entity']]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['EntityID']], tagvalues=[[str(self.sf.entity_num)]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Name']], tagvalues=[[self.sf.mol_name]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Type']], tagvalues=[[self.sf.mol_type]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['PolymerType']], tagvalues=[[self.sf.polymer_type]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['PolymerSeqOneLetterCode']], tagvalues=[[self.sf.polymer_seq_code]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['ThiolState']], tagvalues=[[self.sf.thiol_state]]))
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(Entity, self).__init__(sf)
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['EntityID',                   'entity_num_str'])
+        self.data_to_var_name.append(['Name',                       'mol_name'])
+        self.data_to_var_name.append(['Type',                       'mol_type'])
+        self.data_to_var_name.append(['PolymerType',                'polymer_type'])
+        self.data_to_var_name.append(['PolymerSeqOneLetterCode',    'polymer_seq_code'])
+        self.data_to_var_name.append(['ThiolState',                 'thiol_state'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] = 'Saveframe_category'
+        self.data_to_tag_name['EntityID'] = 'ID'
+        self.data_to_tag_name['Name'] = 'Name'
+        self.data_to_tag_name['Type'] = 'Type'
+        self.data_to_tag_name['PolymerType'] = 'Polymer_type'
+        self.data_to_tag_name['PolymerSeqOneLetterCode'] = 'Polymer_seq_one_letter_code'
+        self.data_to_tag_name['ThiolState'] = 'Thiol_state'
 
 
     def read(self, tagtable):
@@ -181,53 +202,36 @@ class Entity(TagCategory):
         """
 
         # The entity info.
-        mol_name = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['Name'])][0]
-        mol_type = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['Type'])][0]
+        mol_name = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['Name'])][0]
+        mol_type = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['Type'])][0]
 
         # Return the data.
         return mol_name, mol_type
 
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
-        """
-
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
-
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Saveframe_category'
-        self.tag_names['EntityID'] = 'ID'
-        self.tag_names['Name'] = 'Name'
-        self.tag_names['Type'] = 'Type'
-        self.tag_names['PolymerType'] = 'Polymer_type'
-        self.tag_names['PolymerSeqOneLetterCode'] = 'Polymer_seq_one_letter_code'
-        self.tag_names['ThiolState'] = 'Thiol_state'
-
 
 class EntityCompIndex(TagCategory):
     """Base class for the EntityCompIndex tag category."""
 
-    def create(self):
-        """Create the Entity tag category."""
+    def __init__(self, sf):
+        """Setup the Entity tag category.
 
-        # Keys and objects.
-        info = [
-            ['EntityCompIndexID',   'res_nums'],
-            ['CompID',              'res_names'],
-            ['EntityID',            'entity_ids']
-        ]
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
 
-        # Get the TabTable.
-        table = self.create_tag_table(info)
+        # Initialise the baseclass.
+        super(EntityCompIndex, self).__init__(sf)
 
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['EntityCompIndexID',   'res_nums'])
+        self.data_to_var_name.append(['CompID',              'res_names'])
+        self.data_to_var_name.append(['EntityID',            'entity_ids'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['EntityCompIndexID'] = 'ID'
+        self.data_to_tag_name['CompID'] = 'Comp_ID'
+        self.data_to_tag_name['EntityID'] = 'Entity_ID'
 
 
     def read(self, tagtable):
@@ -240,8 +244,8 @@ class EntityCompIndex(TagCategory):
         """
 
         # The entity info.
-        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['EntityCompIndexID'])]
-        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['CompID'])]
+        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['EntityCompIndexID'])]
+        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompID'])]
 
         # Convert the residue numbers to ints.
         for i in range(len(res_nums)):
@@ -249,22 +253,3 @@ class EntityCompIndex(TagCategory):
 
         # Return the data.
         return res_nums, res_names
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
-        """
-
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
-
-        # Tag names for the relaxation data.
-        self.tag_names['EntityCompIndexID'] = 'ID'
-        self.tag_names['CompID'] = 'Comp_ID'
-        self.tag_names['EntityID'] = 'Entity_ID'
-

@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -47,107 +47,136 @@ class ModelFreeSaveframe_v3_1(ModelFreeSaveframe):
         self.cat_name = ['order_parameters']
 
 
+
 class ModelFreeList_v3_1(ModelFreeList):
     """v3.1 ModelFreeList tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
+    def __init__(self, sf):
+        """Setup the ModelFreeList_v3_1 tag category.
 
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Order_parameter_list'
+        # Initialise the baseclass.
+        super(ModelFreeList_v3_1, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        ModelFreeList.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The category name.
+        self.tag_category_label = 'Model_free_list'
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Sf_category'
-        self.tag_names['ModelFreeListID'] = 'ID'
-        self.tag_names['SampleConditionListLabel'] = 'Sample_condition_list_label'
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] =               'Sf_category'
+        self.data_to_tag_name['ModelFreeListID'] =          'ID'
+        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_condition_list_label'
+
 
 
 class ModelFreeExperiment_v3_1(ModelFreeExperiment):
     """v3.1 ModelFreeExperiment tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
+    def __init__(self, sf):
+        """Setup the ModelFreeExperiment_v3_1 tag category.
 
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Order_parameter_experiment'
+        # Initialise the baseclass.
+        super(ModelFreeExperiment_v3_1, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        ModelFreeExperiment.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The category name.
+        self.tag_category_label = 'Model_free_list'
+
 
 
 class ModelFreeSoftware_v3_1(ModelFreeSoftware):
     """v3.1 ModelFreeSoftware tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
+    def __init__(self, sf):
+        """Setup the ModelFreeSoftware_v3_1 tag category.
 
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Order_parameter_software'
+        # Initialise the baseclass.
+        super(ModelFreeSoftware_v3_1, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        ModelFreeSoftware.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The category name.
+        self.tag_category_label = 'Model_free_software'
+
 
 
 class ModelFree_v3_1(ModelFree):
     """v3.1 ModelFree tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
+    def __init__(self, sf):
+        """Setup the ModelFree_v3_1 tag category.
 
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Order_param'
+        # Initialise the baseclass.
+        super(ModelFree_v3_1, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        ModelFree.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The category name.
+        self.tag_category_label = 'Model_free'
 
-        # Tag names for the relaxation data.
-        self.tag_names['ModelFreeID'] = 'ID'
-        self.tag_names['CompIndexID'] = 'Comp_index_ID'
-        self.tag_names['CompID'] = 'Comp_ID'
-        self.tag_names['AtomID'] = 'Atom_ID'
-        self.tag_names['S2Val'] = 'S2_val'
-        self.tag_names['S2ValErr'] = 'S2_val_err'
-        self.tag_names['S2fVal'] = 'S2f_val'
-        self.tag_names['S2fValErr'] = 'S2f_val_err'
-        self.tag_names['S2sVal'] = 'S2s_val'
-        self.tag_names['S2sValErr'] = 'S2s_val_err'
-        self.tag_names['TauEVal'] = 'Tau_e_val'
-        self.tag_names['TauEValErr'] = 'Tau_e_val_err'
-        self.tag_names['TauFVal'] = 'Tau_f_val'
-        self.tag_names['TauFValErr'] = 'Tau_f_val_err'
-        self.tag_names['TauSVal'] = 'Tau_s_val'
-        self.tag_names['TauSValErr'] = 'Tau_s_val_err'
-        self.tag_names['RexVal'] = 'Rex_val'
-        self.tag_names['RexValErr'] = 'Rex_val_err'
-        self.tag_names['ChiSquaredVal'] = 'Chi_squared_val'
+        # Database table names to class instance variables.
+        self.data_to_var_name = []
+        self.data_to_var_name.append(['ModelFreeID',         'data_ids'])
+        self.data_to_var_name.append(['AssemblyAtomID',      'assembly_atom_ids'])
+        self.data_to_var_name.append(['EntityAssemblyID',    'entity_assembly_ids'])
+        self.data_to_var_name.append(['EntityID',            'entity_ids'])
+        self.data_to_var_name.append(['CompIndexID',         'res_nums'])
+        self.data_to_var_name.append(['CompID',              'res_names'])
+        self.data_to_var_name.append(['AtomID',              'atom_names'])
+        self.data_to_var_name.append(['AtomType',            'atom_types'])
+        self.data_to_var_name.append(['AtomIsotopeNumber',   'isotope'])
+        self.data_to_var_name.append(['S2Val',               's2'])
+        self.data_to_var_name.append(['S2ValErr',            's2_err'])
+        self.data_to_var_name.append(['S2fVal',              's2f'])
+        self.data_to_var_name.append(['S2fValErr',           's2f_err'])
+        self.data_to_var_name.append(['S2sVal',              's2s'])
+        self.data_to_var_name.append(['S2sValErr',           's2s_err'])
+        self.data_to_var_name.append(['LocalTauCVal',        'local_tc'])
+        self.data_to_var_name.append(['LocalTauCValErr',     'local_tc_err'])
+        self.data_to_var_name.append(['TauEVal',             'te'])
+        self.data_to_var_name.append(['TauEValErr',          'te_err'])
+        self.data_to_var_name.append(['TauFVal',             'tf'])
+        self.data_to_var_name.append(['TauFValErr',          'tf_err'])
+        self.data_to_var_name.append(['TauSVal',             'ts'])
+        self.data_to_var_name.append(['TauSValErr',          'ts_err'])
+        self.data_to_var_name.append(['RexVal',              'rex'])
+        self.data_to_var_name.append(['RexValErr',           'rex_err'])
+        self.data_to_var_name.append(['ChiSquaredVal',       'chi2'])
+        self.data_to_var_name.append(['ModelFit',            'model_fit'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['ModelFreeID'] =       'ID'
+        self.data_to_tag_name['AssemblyAtomID'] =    'Assembly_atom_ID'
+        self.data_to_tag_name['EntityAssemblyID'] =  'Entity_assembly_ID'
+        self.data_to_tag_name['EntityID'] =          'Entity_ID'
+        self.data_to_tag_name['CompIndexID'] =       'Comp_index_ID'
+        self.data_to_tag_name['CompID'] =            'Comp_ID'
+        self.data_to_tag_name['AtomID'] =            'Obs_atom_ID'
+        self.data_to_tag_name['AtomType'] =          'Obs_atom_type'
+        self.data_to_tag_name['AtomIsotopeNumber'] = 'Obs_atom_isotope_number'
+        self.data_to_tag_name['S2Val'] =             'S2_val'
+        self.data_to_tag_name['S2ValErr'] =          'S2_val_err'
+        self.data_to_tag_name['S2fVal'] =            'S2f_val'
+        self.data_to_tag_name['S2fValErr'] =         'S2f_val_err'
+        self.data_to_tag_name['S2sVal'] =            'S2s_val'
+        self.data_to_tag_name['S2sValErr'] =         'S2s_val_err'
+        self.data_to_tag_name['LocalTauCVal'] =      'Local_tau_c_val'
+        self.data_to_tag_name['LocalTauCValErr'] =   'Local_tau_c_val_err'
+        self.data_to_tag_name['TauEVal'] =           'Tau_e_val'
+        self.data_to_tag_name['TauEValErr'] =        'Tau_e_val_err'
+        self.data_to_tag_name['TauFVal'] =           'Tau_f_val'
+        self.data_to_tag_name['TauFValErr'] =        'Tau_f_val_err'
+        self.data_to_tag_name['TauSVal'] =           'Tau_s_val'
+        self.data_to_tag_name['TauSValErr'] =        'Tau_s_val_err'
+        self.data_to_tag_name['RexVal'] =            'Rex_val'
+        self.data_to_tag_name['RexValErr'] =         'Rex_val_err'
+        self.data_to_tag_name['ChiSquaredVal'] =     'Chi_squared_val'

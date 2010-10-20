@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -40,22 +40,40 @@ class EntitySaveframe_v3_1(EntitySaveframe):
         self.entity_comp_index = EntityCompIndex_v3_1(self)
 
 
+
 class Entity_v3_1(Entity):
     """v3.1 Entity tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        Entity.tag_setup(self, tag_category_label='Entity', sep=sep)
+    def __init__(self, sf):
+        """Setup the Entity tag category.
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Sf_category'
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(Entity_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Entity'
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] = 'Sf_category'
+
 
 
 class EntityCompIndex_v3_1(EntityCompIndex):
     """v3.1 EntityCompIndex tag category."""
 
-    def tag_setup(self, tag_category_label=None, sep=None):
-        # Execute the base class tag_setup() method.
-        EntityCompIndex.tag_setup(self, tag_category_label='Entity_comp_index', sep=sep)
+    def __init__(self, sf):
+        """Setup the EntityCompIndex_v3_1 tag category.
 
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
 
+        # Initialise the baseclass.
+        super(EntityCompIndex_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Entity_comp_index'

@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -23,7 +23,7 @@
 """Base classes for the relaxation data."""
 
 # relax module imports.
-from bmrblib.base_classes import BaseSaveframe, TagCategory
+from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 
 
 class RelaxSaveframe(BaseSaveframe):
@@ -38,11 +38,11 @@ class RelaxSaveframe(BaseSaveframe):
                     float
         """
 
-        # Set up the version specific variables.
-        self.specific_setup()
+        # Set up the tag information.
+        self.heteronuclRxlist.tag_setup()
 
         # Get the saveframe name.
-        sf_name = getattr(self, 'cat_name')[0]
+        sf_name = getattr(self, 'sf_label')[0]
 
         # Loop over all datanodes.
         for datanode in self.datanodes:
@@ -50,7 +50,7 @@ class RelaxSaveframe(BaseSaveframe):
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.heteronuclRxlist.create_tag_label(self.heteronuclRxlist.tag_names['SfCategory']):
+                if datanode.tagtables[0].tagnames[index] == self.heteronuclRxlist.data_to_tag_name_full['SfCategory']:
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == sf_name:
                         found = True
@@ -70,14 +70,8 @@ class RelaxSaveframe(BaseSaveframe):
             yield frq, entity_ids, res_nums, res_names, atom_names, values, errors
 
 
-    def specific_setup(self):
-        """Method called by self.add() to set up any version specific data."""
 
-        self.cat_name = [self.label+'_relaxation']
-
-
-
-class HeteronuclRxList(TagCategory):
+class HeteronuclRxList(TagCategoryFree):
     """Base class for the HeteronuclRxList tag categories."""
 
     def read(self, tagtable):
@@ -90,40 +84,55 @@ class HeteronuclRxList(TagCategory):
         """
 
         # The general info.
-        frq = float(tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['SpectrometerFrequency1H'])][0]) * 1e6
+        frq = float(tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['SpectrometerFrequency1H'])][0]) * 1e6
 
         # Return the data.
         return frq
 
 
+
 class Rx(TagCategory):
     """Base class for the Rx tag categories."""
 
-    def create(self):
-        """Create the Rx tag category."""
+    def __init__(self, sf):
+        """Setup the Rx tag category.
 
-        # Keys and objects.
-        info = [
-            ['RxID',                'data_ids'],
-            ['AssemblyAtomID',      'assembly_atom_ids'],
-            ['EntityAssemblyID',    'entity_assembly_ids'],
-            ['EntityID',            'entity_ids'],
-            ['CompIndexID',         'res_nums'],
-            ['SeqID',               'seq_id'],
-            ['CompID',              'res_names'],
-            ['AtomID',              'atom_names'],
-            ['AtomType',            'atom_types'],
-            ['AtomIsotopeNumber',   'isotope'],
-            ['Val',                 'data'],
-            ['ValErr',              'errors'],
-            ['HeteronuclRxListID',  'rx_inc_list']
-        ]
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
 
-        # Get the TabTable.
-        table = self.create_tag_table(info)
+        # Initialise the baseclass.
+        super(Rx, self).__init__(sf)
 
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['RxID',                'data_ids'])
+        self.data_to_var_name.append(['AssemblyAtomID',      'assembly_atom_ids'])
+        self.data_to_var_name.append(['EntityAssemblyID',    'entity_assembly_ids'])
+        self.data_to_var_name.append(['EntityID',            'entity_ids'])
+        self.data_to_var_name.append(['CompIndexID',         'res_nums'])
+        self.data_to_var_name.append(['SeqID',               'seq_id'])
+        self.data_to_var_name.append(['CompID',              'res_names'])
+        self.data_to_var_name.append(['AtomID',              'atom_names'])
+        self.data_to_var_name.append(['AtomType',            'atom_types'])
+        self.data_to_var_name.append(['AtomIsotopeNumber',   'isotope'])
+        self.data_to_var_name.append(['Val',                 'data'])
+        self.data_to_var_name.append(['ValErr',              'errors'])
+        self.data_to_var_name.append(['HeteronuclRxListID',  'rx_inc_list'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['RxID'] = None
+        self.data_to_tag_name['AssemblyAtomID'] = 'Assembly_atom_ID'
+        self.data_to_tag_name['EntityAssemblyID'] = 'Entity_assembly_ID'
+        self.data_to_tag_name['EntityID'] = 'Entity_ID'
+        self.data_to_tag_name['CompIndexID'] = 'Residue_seq_code'
+        self.data_to_tag_name['SeqID'] = 'Seq_ID'
+        self.data_to_tag_name['CompID'] = 'Residue_label'
+        self.data_to_tag_name['AtomID'] = 'Atom_name'
+        self.data_to_tag_name['AtomType'] = 'Atom_type'
+        self.data_to_tag_name['AtomIsotopeNumber'] = 'Atom_isotope_number'
+        self.data_to_tag_name['Val'] = self.sf.name+'_value'
+        self.data_to_tag_name['ValErr'] = self.sf.name+'_value_error'
+        self.data_to_tag_name['HeteronuclRxListID'] = 'Heteronucl_'+self.sf.name+'_list_ID'
 
 
     def read(self, tagtable):
@@ -137,12 +146,12 @@ class Rx(TagCategory):
         """
 
         # The entity info.
-        entity_ids = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['EntityID'])]
-        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['CompIndexID'])]
-        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['CompID'])]
-        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['AtomID'])]
-        values = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['Val'])]
-        errors = tagtable.tagvalues[tagtable.tagnames.index(self.tag_names_full['ValErr'])]
+        entity_ids = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['EntityID'])]
+        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompIndexID'])]
+        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompID'])]
+        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['AtomID'])]
+        values = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['Val'])]
+        errors = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['ValErr'])]
 
         # Convert the residue numbers to ints and the values and errors to floats.
         for i in range(len(res_nums)):
@@ -158,31 +167,3 @@ class Rx(TagCategory):
 
         # Return the data.
         return entity_ids, res_nums, res_names, atom_names, values, errors
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
-        """
-
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
-
-        # Tag names for the relaxation data.
-        self.tag_names['RxID'] = None
-        self.tag_names['AssemblyAtomID'] = 'Assembly_atom_ID'
-        self.tag_names['EntityAssemblyID'] = 'Entity_assembly_ID'
-        self.tag_names['EntityID'] = 'Entity_ID'
-        self.tag_names['CompIndexID'] = 'Residue_seq_code'
-        self.tag_names['SeqID'] = 'Seq_ID'
-        self.tag_names['CompID'] = 'Residue_label'
-        self.tag_names['AtomID'] = 'Atom_name'
-        self.tag_names['AtomType'] = 'Atom_type'
-        self.tag_names['AtomIsotopeNumber'] = 'Atom_isotope_number'
-        self.tag_names['Val'] = self.sf.label+'_value'
-        self.tag_names['ValErr'] = self.sf.label+'_value_error'
-        self.tag_names['HeteronuclRxListID'] = 'Heteronucl_'+self.sf.label+'_list_ID'

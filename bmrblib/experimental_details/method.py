@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,7 +26,7 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFra
 """
 
 # relax module imports.
-from bmrblib.base_classes import BaseSaveframe, TagCategory
+from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
 from bmrblib.misc import no_missing, translate
@@ -34,6 +34,9 @@ from bmrblib.misc import no_missing, translate
 
 class MethodSaveframe(BaseSaveframe):
     """The method saveframe class."""
+
+    # Class variables.
+    sf_label = 'method'
 
     def __init__(self, datanodes):
         """Initialise the class, placing the pystarlib data nodes into the namespace.
@@ -94,17 +97,16 @@ class MethodSaveframe(BaseSaveframe):
 
         # Increment the ID number.
         self.method_num = self.method_num + 1
+        self.method_num_str = str(self.method_num)
         self.method_id_num = [str(translate(self.method_num))]
-
-        # The category name.
-        self.cat_name = ['method']
 
         # Initialise the save frame.
         self.frame = SaveFrame(title='method')
 
         # Create the tag categories.
         self.Method.create()
-        self.Method_citation.create()
+        if len(self.cite_ids):
+            self.Method_citation.create()
         self.Method_file.create()
         self.Method_parameter_file.create()
 
@@ -123,158 +125,115 @@ class MethodSaveframe(BaseSaveframe):
 
 
 
-class Method(TagCategory):
+class Method(TagCategoryFree):
     """Base class for the Method tag category."""
 
-    def create(self):
-        """Create the Method tag category."""
+    def __init__(self, sf):
+        """Setup the Method tag category.
 
-        # The tags.
-        self.sf.frame.tagtables.append(self.create_tag_table([['SfCategory', 'cat_name']], free=True))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SfFramecode']], tagvalues=[[str(self.sf.method_name)]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['MethodID']], tagvalues=[[str(self.sf.method_num)]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Details']], tagvalues=[[self.sf.details]]))
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Method', sep=sep)
+        # Initialise the baseclass.
+        super(Method, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Sf_category'
-        self.tag_names['SfFramecode'] = 'Sf_framecode'
-        self.tag_names['MethodID'] = 'ID'
-        self.tag_names['Details'] = 'Details'
+        # The category name.
+        self.tag_category_label = 'Method'
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['SfFramecode',    'method_name'])
+        self.data_to_var_name.append(['MethodID',       'method_num_str'])
+        self.data_to_var_name.append(['Details',        'details'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] =   'Sf_category'
+        self.data_to_tag_name['SfFramecode'] =  'Sf_framecode'
+        self.data_to_tag_name['MethodID'] =     'ID'
+        self.data_to_tag_name['Details'] =      'Details'
+
 
 
 class MethodCitation(TagCategory):
     """Base class for the MethodCitation tag category."""
 
+    def __init__(self, sf):
+        """Setup the MethodCitation tag category.
 
-    def create(self):
-        """Create the Method tag category."""
-
-        # Skip this tag category if no citations are present.
-        if not self.sf.cite_ids:
-            return
-
-        # Keys and objects.
-        info = [
-            ['CitationID',      'cite_ids'],
-            ['MethodID',        'method_id_num']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Category label.
-        if not tag_category_label:
-            tag_category_label='Method_citation'
+        # Initialise the baseclass.
+        super(MethodCitation, self).__init__(sf)
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # The category name.
+        self.tag_category_label = 'Method_citation'
 
-        # Tag names for the relaxation data.
-        self.tag_names['CitationID'] = 'Citation_ID'
-        self.tag_names['MethodID'] = 'Method_ID'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['CitationID',      'cite_ids'])
+        self.data_to_var_name.append(['MethodID',        'method_id_num'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['CitationID'] =   'Citation_ID'
+        self.data_to_tag_name['MethodID'] =     'Method_ID'
+
 
 
 class MethodFile(TagCategory):
     """Base class for the MethodFile tag category."""
 
-    def create(self):
-        """Create the MethodFile tag category."""
+    def __init__(self, sf):
+        """Setup the MethodFile tag category.
 
-        # Keys and objects.
-        info = [
-            ['Name',                'file_name'],
-            ['TextFormat',          'text_format'],
-            ['Text',                'file_text'],
-            ['MethodID',            'method_id_num']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Method_file', sep=sep)
+        # Initialise the baseclass.
+        super(MethodFile, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['Name'] =        'Name'
-        self.tag_names['TextFormat'] =  'Text_format'
-        self.tag_names['Text'] =        'Text'
-        self.tag_names['MethodID'] =    'Method_ID'
+        # The category name.
+        self.tag_category_label = 'Method_file'
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['Name',                'file_name'])
+        self.data_to_var_name.append(['TextFormat',          'text_format'])
+        self.data_to_var_name.append(['Text',                'file_text'])
+        self.data_to_var_name.append(['MethodID',            'method_id_num'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['Name'] =        'Name'
+        self.data_to_tag_name['TextFormat'] =  'Text_format'
+        self.data_to_tag_name['Text'] =        'Text'
+        self.data_to_tag_name['MethodID'] =    'Method_ID'
+
 
 
 class MethodParam(TagCategory):
     """Base class for the MethodParam tag category."""
 
-    def create(self):
-        """Create the MethodParam tag category."""
+    def __init__(self, sf):
+        """Setup the MethodParam tag category.
 
-        # Keys and objects.
-        info = [
-            ['FileName',            'param_file_name'],
-            ['TextFormat',          'text_format'],
-            ['Text',                'param_file_text'],
-            ['MethodID',            'method_id_num']
-        ]
-
-        # Get the TabTable.
-        table = self.create_tag_table(info)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label='Method_param', sep=sep)
+        # Initialise the baseclass.
+        super(MethodParam, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['FileName'] =    'File_name'
-        self.tag_names['TextFormat'] =  'Text_format'
-        self.tag_names['Text'] =        'Text'
-        self.tag_names['MethodID'] =    'Method_ID'
+        # The category name.
+        self.tag_category_label = 'Method_param'
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['FileName',            'param_file_name'])
+        self.data_to_var_name.append(['TextFormat',          'text_format'])
+        self.data_to_var_name.append(['Text',                'param_file_text'])
+        self.data_to_var_name.append(['MethodID',            'method_id_num'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['FileName'] =    'File_name'
+        self.data_to_tag_name['TextFormat'] =  'Text_format'
+        self.data_to_tag_name['Text'] =        'Text'
+        self.data_to_tag_name['MethodID'] =    'Method_ID'

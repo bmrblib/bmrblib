@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -42,51 +42,63 @@ class BaseSaveframe:
 
 
 
-class TagCategory:
+class TagCategory(object):
     """The base class for tag category classes."""
+
+    # The category name.
+    tag_category_label = None
+
+    # The base category is not free.
+    free = False
 
     def __init__(self, sf):
         """Initialise the tag category object, placing the saveframe into its namespace.
 
-        @param sf:                      The saveframe object.
-        @type sf:                       saveframe instance
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
         # Place the saveframe and tag info into the namespace.
         self.sf = sf
 
-        # The tag name dictionary.
-        self.tag_names = {}
-        self.tag_names_full = {}
+        # The translation tables.
+        self.data_to_var_name = []
+        self.data_to_tag_name = {}
+        self.data_to_tag_name_full = {}
 
         # The specific variables dictionary.
         self.variables = {}
 
+        # The tag category name.
+        self.tag_category_label = None
+
+
+    def create(self):
+        """Create the TensorList tag category."""
+
         # Set up the tag information.
         self.tag_setup()
 
-        # Generate the full names.
-        for key, name in self.tag_names.items():
-            self.tag_names_full[key] = self.create_tag_label(name) 
+        # Create the TabTable.
+        table = self.create_tag_table(self.data_to_var_name, free=self.free)
+
+        # Add the tagtable to the save frame.
+        self.sf.frame.tagtables.append(table)
 
 
-    def create_tag_label(self, tag_name):
-        """Generate the full NMR-STAR tag name.
+    def create_full_tag_names(self):
+        """Generate the full NMR-STAR tag names."""
 
-        @param tag_name:    The name of the tag, without the tag category label prefix.
-        @type tag_name:     str
-        """
-
-        # The full tag name.
-        if tag_name:
-            return self.tag_category_label_full + tag_name
+        # Loop over each tag name.
+        for key, name in self.data_to_tag_name.items():
+            self.data_to_tag_name_full[key] = self.tag_category_label_full + name
 
 
     def create_tag_table(self, info, free=False):
         """Create and return a tag table based on the info structure.
 
         @param info:    The key and object pair list.  This consists of the keys of
-                        self.tag_names being the first element and the names of the objects being
+                        self.data_to_tag_name being the first element and the names of the objects being
                         the second element, both of the second dimension.  The fist dimension are
                         the different pairs.
         @type info:     list of list of str
@@ -97,20 +109,20 @@ class TagCategory:
         """
 
         # Init.
-        keys = list(self.tag_names.keys())
-        tag_names = []
+        keys = list(self.data_to_tag_name.keys())
+        data_to_tag_name = []
         tag_values = []
 
         # Loop over the keys and object names of the info structure.
         for key, name in info:
             # Key check.
             if key not in keys:
-                raise NameError("The key '%s' is not located in the self.tag_names structure." % key)
+                raise NameError("The key '%s' is not located in the self.data_to_tag_name structure." % key)
 
-            # The tag names and values (skipping empty entries in self.tag_names).
-            if self.tag_names[key] != None:
+            # The tag names and values (skipping empty entries in self.data_to_tag_name).
+            if self.data_to_tag_name[key] != None:
                 # The name.
-                tag_names.append(self.tag_names_full[key])
+                data_to_tag_name.append(self.data_to_tag_name_full[key])
 
                 # The value.
                 val = getattr(self.sf, name)
@@ -139,7 +151,7 @@ class TagCategory:
                 tag_values[i] = tag_values[i] * N
 
         # Add the data and return the table.
-        return TagTable(free=free, tagnames=tag_names, tagvalues=tag_values)
+        return TagTable(free=free, tagnames=data_to_tag_name, tagvalues=tag_values)
 
 
     def tag_setup(self, tag_category_label=None, sep=None):
@@ -152,7 +164,8 @@ class TagCategory:
         """
 
         # Place the args into the class namespace.
-        self.tag_category_label = tag_category_label
+        if tag_category_label:
+            self.tag_category_label = tag_category_label
         if sep:
             self.sep = sep
         else:
@@ -162,3 +175,26 @@ class TagCategory:
         self.tag_category_label_full = '_'
         if self.tag_category_label:
             self.tag_category_label_full = self.tag_category_label_full + self.tag_category_label + self.sep
+
+        # Generate the full tag names.
+        self.create_full_tag_names()
+
+
+
+class TagCategoryFree(TagCategory):
+
+    # The base category is free.
+    free = True
+
+    def __init__(self, sf):
+        """Setup the TagCategoryFree tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(TagCategoryFree, self).__init__(sf)
+
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['SfCategory',         'sf_label'])

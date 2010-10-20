@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009 Edward d'Auvergne                                      #
+# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -37,7 +37,7 @@ class HeteronuclT2Saveframe(RelaxSaveframe):
     """The Heteronuclear T2 data saveframe class."""
 
     # Saveframe variables.
-    label = 'T2'
+    name = 'T2'
 
 
     def __init__(self, datanodes):
@@ -157,50 +157,37 @@ class HeteronuclT2List(HeteronuclRxList):
     """Base class for the HeteronuclT2List tag category."""
 
 
-    def create(self):
-        """Create the HeteronuclT2List tag category."""
+    def __init__(self, sf):
+        """Setup the HeteronuclT2List tag category.
 
-        # The save frame category.
-        self.sf.frame.tagtables.append(self.create_tag_table([['SfCategory', 'cat_name']], free=True))
-
-        # T2 ID number.
-        if 'HeteronuclT2ListID' in self.tag_names:
-            self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['HeteronuclT2ListID']], tagvalues=[[str(self.sf.r2_inc)]]))
-
-        # Sample info.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleConditionListID']], tagvalues=[[self.sf.sample_cond_list_id]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleConditionListLabel']], tagvalues=[['$conditions_1']]))
-
-        # NMR info.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SpectrometerFrequency1H']], tagvalues=[[str(self.sf.frq/1e6)]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['T2CoherenceType']], tagvalues=[[self.variables['coherence']]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['T2ValUnits']], tagvalues=[['1/s']]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['Details']], tagvalues=[[self.sf.details]]))
-
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # Initialise the baseclass.
+        super(HeteronuclT2List, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['SfCategory'] = 'Saveframe_category'
-        self.tag_names['SampleConditionListID'] = 'Sample_condition_list_ID'
-        self.tag_names['SampleConditionListLabel'] = 'Sample_conditions_label'
-        self.tag_names['SpectrometerFrequency1H'] = 'Spectrometer_frequency_1H'
-        self.tag_names['T2CoherenceType'] = 'T2_coherence_type'
-        self.tag_names['T2ValUnits'] = 'T2_value_units'
-        self.tag_names['Details'] = 'Details'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['HeteronuclT2ListID',         'r2_inc'])
+        self.data_to_var_name.append(['SampleConditionListID',      'sample_cond_list_id'])
+        self.data_to_var_name.append(['SampleConditionListLabel',   'conditions'])
+        self.data_to_var_name.append(['SpectrometerFrequency1H',    'frq'])
+        self.data_to_var_name.append(['T2CoherenceType',            'coherence'])
+        self.data_to_var_name.append(['T2ValUnits',                 '1/s'])
+        self.data_to_var_name.append(['Details',                    'details'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SfCategory'] = 'Saveframe_category'
+        self.data_to_tag_name['SampleConditionListID'] = 'Sample_condition_list_ID'
+        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_conditions_label'
+        self.data_to_tag_name['SpectrometerFrequency1H'] = 'Spectrometer_frequency_1H'
+        self.data_to_tag_name['T2CoherenceType'] = 'T2_coherence_type'
+        self.data_to_tag_name['T2ValUnits'] = 'T2_value_units'
+        self.data_to_tag_name['Details'] = 'Details'
 
         # Class variables.
         self.variables['coherence'] = 'Ny'
+
 
 
 class HeteronuclT2Experiment(TagCategory):
@@ -209,31 +196,27 @@ class HeteronuclT2Experiment(TagCategory):
     def create(self, frame=None):
         """Create the HeteronuclT2Experiment tag category."""
 
-        # Sample info.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleLabel']], tagvalues=[['$sample_1']]))
+    def __init__(self, sf):
+        """Setup the HeteronuclT2Experiment tag category.
 
-
-    def tag_setup(self, tag_category_label=None, sep=None):
-        """Replacement method for setting up the tag names.
-
-        @keyword tag_category_label:    The tag name prefix specific for the tag category.
-        @type tag_category_label:       None or str
-        @keyword sep:                   The string separating the tag name prefix and suffix.
-        @type sep:                      str
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
         """
 
-        # Execute the base class tag_setup() method.
-        TagCategory.tag_setup(self, tag_category_label=tag_category_label, sep=sep)
+        # Initialise the baseclass.
+        super(HeteronuclT2Experiment, self).__init__(sf)
 
-        # Tag names for the relaxation data.
-        self.tag_names['SampleLabel'] = 'Sample_label'
+        # Database table names to class instance variables.
+        self.data_to_var_name.append(['SampleLabel', 'sample'])
+
+        # Database table name to tag name.
+        self.data_to_tag_name['SampleLabel'] = 'Sample_label'
+
 
 
 class HeteronuclT2Software(TagCategory):
     """Base class for the HeteronuclT2Software tag category."""
 
-    def create(self):
-        """Create the HeteronuclT2Software tag category."""
 
 
 class T2(Rx):
