@@ -95,6 +95,8 @@ class TensorSaveframe(BaseSaveframe):
 
         # Place the args into the namespace.
         self.file_name = translate(data_file_name)
+        self.sample_conditions_label = translate(sample_cond_list_label)
+        self.details = translate(details)
         self.res_nums = translate(res_nums)
         self.res_names = translate(res_names)
         self.atom_names = translate(atom_names)
@@ -118,7 +120,7 @@ class TensorSaveframe(BaseSaveframe):
             # Place the args into the namespace, translating for BMRB.
             setattr(self, name, translate(obj))
 
-        # Set up the CSA specific variables.
+        # Set up the tensor specific variables.
         self.tensor_inc = self.tensor_inc + 1
         self.tensor_inc_list = translate([self.tensor_inc] * N)
         self.generate_data_ids(N)
@@ -176,7 +178,7 @@ class TensorSaveframe(BaseSaveframe):
             if not found:
                 continue
 
-            # Get the CSA info.
+            # Get the tensor info.
             res_nums, res_names, atom_names, values = self.Tensor.read(datanode.tagtables[1])
 
             # Yield the data.
@@ -186,7 +188,7 @@ class TensorSaveframe(BaseSaveframe):
     def specific_setup(self):
         """Method called by self.add() to set up any version specific data."""
 
-        self.cat_name = ['Tensor']
+        self.cat_name = ['tensor']
 
 
 
@@ -196,16 +198,20 @@ class TensorList(TagCategory):
     def create(self):
         """Create the TensorList tag category."""
 
-        # The save frame category.
-        self.sf.frame.tagtables.append(self.create_tag_table([['SfCategory', 'cat_name']], free=True))
+        # Keys and objects.
+        info = [
+            ['SfCategory',                  'cat_name'],
+            ['TensorID',                    'data_ids'],
+            ['SampleConditionListLabel',    'sample_conditions_label'],
+            ['DataFileName',                'file_name'],
+            ['Details',                     'details']
+        ]
 
-        # CSA ID number.
-        if 'TensorListID' in self.tag_names:
-            self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['TensorListID']], tagvalues=[['1']]))
+        # Get the TabTable.
+        table = self.create_tag_table(info, free=True)
 
-        # Sample info.
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['DataFileName']], tagvalues=[[self.sf.file_name]]))
-        self.sf.frame.tagtables.append(TagTable(free=True, tagnames=[self.tag_names_full['SampleConditionListLabel']], tagvalues=[['$conditions_1']]))
+        # Add the tagtable to the save frame.
+        self.sf.frame.tagtables.append(table)
 
 
     def tag_setup(self, tag_category_label=None, sep=None):
@@ -227,17 +233,19 @@ class TensorList(TagCategory):
         # Tag names for the relaxation data.
         self.tag_names['SfCategory'] = 'Sf_category'
         self.tag_names['SfFramecode'] = 'Sf_framecode'
+        self.tag_names['EntryID'] = 'Entry_ID'
+        self.tag_names['SfID'] = 'Sf_ID'
         self.tag_names['TensorID'] = 'ID'
-        self.tag_names['DataFileName'] = 'Data_file_name'
         self.tag_names['SampleConditionListLabel'] = 'Sample_conditions_label'
-        self.tag_names['ValUnits'] = 'Val_units'
+        self.tag_names['DataFileName'] = 'Data_file_name'
+        self.tag_names['Details'] = 'Details'
 
 
 class Tensor(TagCategory):
     """Base class for the Tensor tag category."""
 
     def create(self):
-        """Create the CSA tag category."""
+        """Create the Tensor tag category."""
 
         # Keys and objects.
         info = [
@@ -262,9 +270,9 @@ class Tensor(TagCategory):
 
 
     def read(self, tagtable):
-        """Extract the CSA tag category info.
+        """Extract the Tensor tag category info.
 
-        @param tagtable:    The CSA tagtable.
+        @param tagtable:    The Tensor tagtable.
         @type tagtable:     Tagtable instance
         @return:            The residue numbers, residue names, atom names, and values.
         @rtype:             tuple of list of int, list of str, list of str, list of float, list of
