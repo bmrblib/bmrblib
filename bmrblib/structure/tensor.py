@@ -55,15 +55,29 @@ class TensorSaveframe(BaseSaveframe):
         self.add_tag_categories()
 
 
-    def add(self, data_file_name=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, data=None, errors=None):
+    def add(self, tensor_type=None, geometric_shape=None, tensor_symmetry=None, euler_type=None, matrix_val_units=None, angle_units=None, iso_val_formula=None, aniso_val_formula=None, rhomb_val_formula=None, data_file_name=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, data=None, errors=None):
         """Add relaxation data to the data nodes.
 
+        @keyword tensor_type:               The type of rank-2 tensor.  This can be one of 'diffusion', 'alignment', 'CS', or 'Saupe'.
+        @type tensor_type:                  None or str
+        @keyword geometric_shape:           The geometric shape of the rank-2 tensor.  This can be one of 'sphere', 'spheroid', 'oblate spheroid', 'prolate spheroid', or 'ellipsoid'.
+        @type geometric_shape:              None or str
+        @keyword tensor_symmetry:           The symmetry of the rank-2 tensor.  This can be one of 'isotropic', 'axial symmetry', 'oblate axial symmetry', 'prolate axial symmetry', or 'rhombic'.
+        @type tensor_symmetry:              None or str
+        @keyword euler_type:                The Euler angle definition.  I.e. 'xyx', 'zyz', 'zxz', 'ZYZ', etc.
+        @type euler_type:                   None or str
+        @keyword matrix_val_units:          The units of the matrix values.  Can be 's-1', 'ppm', etc.
+        @type matrix_val_units:             None or str
+        @keyword angle_units:               The units of the angles.  Either 'rad' or 'deg'.
+        @type angle_units:                  None or str
+        @keyword iso_val_formula:           The formula for the isotropic value.  For example, 'Diso = 1/(6.tm)'.
+        @type iso_val_formula:              None or str
+        @keyword aniso_val_formula:         The formula for the anisotropic value.  For example, 'Da = Dpar - Dper'.
+        @type aniso_val_formula:            None or str
+        @keyword rhomb_val_formula:         The formula for the rhombic value.  For example, 'Dr = (Dy - Dx)/2Da'.
+        @type rhomb_val_formula:            None or str
         @keyword data_file_name:            The name of the data file submitted with the deposition containing this data (should probably be left to None).
         @type data_file_name:               None or str
-        @keyword sample_cond_list_id:       The sample conditions list ID number.
-        @type sample_cond_list_id:          str
-        @keyword sample_cond_list_label:    The sample conditions list label.
-        @type sample_cond_list_label:       str
         @keyword details:                   The details tag.
         @type details:                      None or str
         @keyword assembly_atom_ids:         The assembly atom ID numbers.
@@ -90,12 +104,35 @@ class TensorSaveframe(BaseSaveframe):
         no_missing(res_names, 'residue names')
         no_missing(atom_names, 'atom names')
 
+        # Check the tensor shape.
+        allowed = ['sphere', 'spheroid', 'oblate spheroid', 'prolate spheroid', 'ellipsoid']
+        if geometric_shape not in allowed:
+            raise NameError("The geometric tensor shape of '%s' must be one of %s." % (geometric_shape, allowed))
+
+        # Check the tensor symmetry.
+        allowed = ['isotropic', 'anisotropic', 'axial symmetry', 'oblate axial symmetry', 'prolate axial symmetry', 'rhombic']
+        if tensor_symmetry not in allowed:
+            raise NameError("The tensor symmetry of '%s' must be one of %s." % (tensor_symmetry, allowed))
+
+        # Check the angle units.
+        angle_allowed = [None, 'deg', 'rad']
+        if angle_units not in angle_allowed:
+            raise NameError("The angle units of '%s' must be one of %s." % (angle_units, angle_allowed))
+
         # The number of elements.
         N = len(res_nums)
 
         # Place the args into the namespace.
+        self.tensor_type = translate(tensor_type)
+        self.geometric_shape = geometric_shape
+        self.tensor_symmetry = tensor_symmetry
+        self.euler_type = translate(euler_type)
+        self.matrix_val_units = translate(matrix_val_units)
+        self.angle_units = translate(angle_units)
+        self.iso_val_formula = translate(iso_val_formula)
+        self.aniso_val_formula = translate(aniso_val_formula)
+        self.rhomb_val_formula = translate(rhomb_val_formula)
         self.file_name = translate(data_file_name)
-        self.sample_conditions_label = translate(sample_cond_list_label)
         self.details = translate(details)
         self.res_nums = translate(res_nums)
         self.res_names = translate(res_names)
@@ -215,7 +252,15 @@ class TensorList(TagCategoryFree):
 
         # Database table names to class instance variables.
         self.data_to_var_name.append(['TensorID',                    'data_ids'])
-        self.data_to_var_name.append(['SampleConditionListLabel',    'sample_conditions_label'])
+        self.data_to_var_name.append(['TensorType',                  'tensor_type'])
+        self.data_to_var_name.append(['GeometricShape',              'geometric_shape'])
+        self.data_to_var_name.append(['TensorSymmetry',              'tensor_symmetry'])
+        self.data_to_var_name.append(['MatrixValUnits',              'matrix_val_units'])
+        self.data_to_var_name.append(['AngleUnits',                  'angle_units'])
+        self.data_to_var_name.append(['IsotropicValFormula',         'iso_val_formula'])
+        self.data_to_var_name.append(['AnisotropicValFormula',       'aniso_val_formula'])
+        self.data_to_var_name.append(['RhombicValFormula',           'rhomb_val_formula'])
+        self.data_to_var_name.append(['EulerAngleType',              'euler_type'])
         self.data_to_var_name.append(['DataFileName',                'file_name'])
         self.data_to_var_name.append(['Details',                     'details'])
 
@@ -225,7 +270,15 @@ class TensorList(TagCategoryFree):
         self.data_to_tag_name['EntryID'] =                  'Entry_ID'
         self.data_to_tag_name['SfID'] =                     'Sf_ID'
         self.data_to_tag_name['TensorID'] =                 'ID'
-        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_conditions_label'
+        self.data_to_tag_name['TensorType'] =               'Tensor_type'
+        self.data_to_tag_name['GeometricShape'] =           'Geometric_shape'
+        self.data_to_tag_name['TensorSymmetry'] =           'Tensor_symmetry'
+        self.data_to_tag_name['MatrixValUnits'] =           'Matrix_val_units'
+        self.data_to_tag_name['AngleUnits'] =               'Angle_units'
+        self.data_to_tag_name['IsotropicValFormula'] =      'Isotropic_val_formula'
+        self.data_to_tag_name['AnisotropicValFormula'] =    'Anisotropic_val_formula'
+        self.data_to_tag_name['RhombicValFormula'] =        'Rhombic_val_formula'
+        self.data_to_tag_name['EulerAngleType'] =           'Euler_angle_type'
         self.data_to_tag_name['DataFileName'] =             'Data_file_name'
         self.data_to_tag_name['Details'] =                  'Details'
 
