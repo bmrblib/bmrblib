@@ -165,6 +165,31 @@ class BaseSaveframe:
             yield self.read()
 
 
+    def read(self):
+        """Read all the data from the saveframe.
+
+        @return:    A dictionary of all the data.
+        @rtype:     dict
+        """
+
+        # Init.
+        data = {}
+
+        # Loop over the tag categories.
+        for cat in self.tag_categories:
+            # Loop over the keys.
+            for key in cat._key_list:
+                # No variable.
+                if not cat[key].var_name:
+                    continue
+
+                # Package the data.
+                data[cat[key].var_name] = getattr(self, cat[key].var_name)
+
+        # Return the data.
+        return data
+
+
 
 class CategoryList(list):
     """A special lits object for holding the different saveframe tag categories."""
