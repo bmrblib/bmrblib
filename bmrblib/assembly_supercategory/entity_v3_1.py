@@ -36,8 +36,8 @@ class EntitySaveframe_v3_1(EntitySaveframe):
         """Create the v3.1 tag categories."""
 
         # The tag category objects.
-        self.entity = Entity_v3_1(self)
-        self.entity_comp_index = EntityCompIndex_v3_1(self)
+        self.tag_categories.append(Entity_v3_1(self))
+        self.tag_categories.append(EntityCompIndex_v3_1(self))
 
 
 
@@ -56,9 +56,6 @@ class Entity_v3_1(Entity):
 
         # The category name.
         self.tag_category_label = 'Entity'
-
-        # Database table name to tag name.
-        self.data_to_tag_name['SfCategory'] = 'Sf_category'
 
 
 
