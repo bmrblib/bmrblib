@@ -240,14 +240,6 @@ class TagCategory(TagTranslationTable):
         self.sf.frame.tagtables.append(table)
 
 
-    def create_full_tag_names(self):
-        """Generate the full NMR-STAR tag names."""
-
-        # Loop over each tag name.
-        for key, name in self.data_to_tag_name.items():
-            self.data_to_tag_name_full[key] = self.tag_prefix + name
-
-
     def extract_tag_data(self, tagtable):
         """Extract all of the tag data from the tagtable, placing it into the designated variable names.
 
@@ -298,9 +290,6 @@ class TagCategory(TagTranslationTable):
         self.tag_prefix = '_'
         if self.tag_category_label:
             self.tag_prefix = self.tag_prefix + self.tag_category_label + self.sep
-
-        # Generate the full tag names.
-        self.create_full_tag_names()
 
 
 
