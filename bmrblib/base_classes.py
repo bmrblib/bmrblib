@@ -191,45 +191,14 @@ class TagCategory(TagTranslationTable):
     def create(self):
         """Create the TensorList tag category."""
 
-        # Set up the tag information.
-        self.tag_setup()
-
-        # Create the TabTable.
-        table = self.create_tag_table(self.data_to_var_name, free=self.free)
-
-        # Add the tagtable to the save frame.
-        self.sf.frame.tagtables.append(table)
-
-
-    def create_full_tag_names(self):
-        """Generate the full NMR-STAR tag names."""
-
-        # Loop over each tag name.
-        for key, name in self.data_to_tag_name.items():
-            self.data_to_tag_name_full[key] = self.tag_category_label_full + name
-
-
-    def create_tag_table(self, info, free=False):
-        """Create and return a tag table based on the info structure.
-
-        @param info:    The key and object pair list.  This consists of the keys of
-                        self.data_to_tag_name being the first element and the names of the objects being
-                        the second element, both of the second dimension.  The fist dimension are
-                        the different pairs.
-        @type info:     list of list of str
-        @keyword free:  Flag to create a free STAR table.
-        @type free:     bool
-        @return:        The tag table.
-        @rtype:         TagTable instance
-        """
-
         # Init.
+        self.tag_setup()
         keys = list(self.data_to_tag_name.keys())
         data_to_tag_name = []
         tag_values = []
 
-        # Loop over the keys and object names of the info structure.
-        for key, name in info:
+        # Loop over the keys and object names of the self.data_to_var_name structure.
+        for key, name in self.data_to_var_name:
             # Key check.
             if key not in keys:
                 raise NameError("The key '%s' is not located in the self.data_to_tag_name structure." % key)
@@ -265,8 +234,19 @@ class TagCategory(TagTranslationTable):
             if len(tag_values[i]) == 1:
                 tag_values[i] = tag_values[i] * N
 
-        # Add the data and return the table.
-        return TagTable(free=free, tagnames=data_to_tag_name, tagvalues=tag_values)
+        # Create the tagtable.
+        table = TagTable(free=self.free, tagnames=data_to_tag_name, tagvalues=tag_values)
+
+        # Add the tagtable to the save frame.
+        self.sf.frame.tagtables.append(table)
+
+
+    def create_full_tag_names(self):
+        """Generate the full NMR-STAR tag names."""
+
+        # Loop over each tag name.
+        for key, name in self.data_to_tag_name.items():
+            self.data_to_tag_name_full[key] = self.tag_category_label_full + name
 
 
     def extract_tag_data(self, tagtable):
