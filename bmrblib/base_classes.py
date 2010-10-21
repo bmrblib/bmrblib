@@ -102,7 +102,6 @@ class BaseSaveframe:
                 self.data_ids = translate(ids)
 
         # Initialise the save frame.
-        print self.data_ids
         self.frame = SaveFrame(title=self.sf_label)
 
         # Create the tag categories.
