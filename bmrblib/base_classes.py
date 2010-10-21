@@ -94,7 +94,47 @@ class BaseSaveframe:
 
 
 
-class TagCategory(object):
+class TagTranslationTable(dict):
+    """A special dictionary object for creating the tag translation tables."""
+
+    def add(self, key, var_name=None, tag_name=None, allowed=None, missing=True):
+        """Add an entry to the translation table.
+
+        @keyword key:       The dictionary key.  This is also the BMRB NMR-STAR database table name.
+        @type key:          str
+        @keyword var_name:  The saveframe variable name corresponding to the key.
+        @type var_name:     None or str
+        @keyword tag_name:  The BMRB NMR-STAR tag name corresponding to the key.
+        @type tag_name:     None or str
+        @keyword allowed:   A list of allowable values for the data.
+        @type allowed:      None or list
+        @keyword missing:   A flag which if True will allow the data to be set to None.
+        @type missing:      bool
+        """
+
+        # Add the tag object.
+        self[key] = TagObject(var_name=var_name, tag_name=tag_name, allowed=allowed, missing=missing)
+
+
+
+class TagObject(object):
+    """An object for filling the translation table."""
+
+    def __init__(self, var_name=None, tag_name=None, allowed=None, missing=True):
+        """Setup the internal variables.
+
+        This stores the variable name, BMRB NMR-STAR tag name, a list of allowable values, the missing flag, and any other tag specific information corresponding to the key.
+        """
+
+        # The default values.
+        self.allowed = allowed
+        self.missing = missing
+        self.tag_name = tag_name
+        self.var_name = var_name
+
+
+
+class TagCategory(TagTranslationTable):
     """The base class for tag category classes."""
 
     # The category name.
@@ -263,6 +303,7 @@ class TagCategory(object):
 
 
 class TagCategoryFree(TagCategory):
+    """The free version of the TagCategory class."""
 
     # The base category is free.
     free = True
