@@ -36,8 +36,8 @@ class CitationsSaveframe(BaseSaveframe):
     """The citations saveframe class."""
 
     # Class variables.
-    label = 'citation'
-    sf_label = 'citations'
+    label = 'citations'
+    sf_label = 'citation'
 
     def add_tag_categories(self):
         """Create the tag categories."""
@@ -132,4 +132,4 @@ class CitationsAuthor(TagCategory):
         self.add(key='FamilyTitle',     tag_name='Family_title',    var_name='author_family_title')
         self.add(key='SfID',            tag_name='Sf_ID',           var_name=None)
         self.add(key='EntryID',         tag_name='Entry_ID',        var_name=None)
-        self.add(key='CitationID',      tag_name='Citation_ID',     var_name='citation_id_num')
+        self.add(key='CitationID',      tag_name='Citation_ID',     var_name='count_str')
