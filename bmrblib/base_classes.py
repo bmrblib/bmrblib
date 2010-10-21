@@ -59,6 +59,9 @@ class BaseSaveframe:
         If the keywords are within the tag dictionary structure as the variable name, then the data will be checked, translated and stored in that variable.  If not, then a warning will be given.
         """
 
+        # Reset all data structures.
+        self.reset()
+
         # Loop over the keywords.
         for name, val in keywords.items():
             # Get the tag object.
@@ -189,6 +192,20 @@ class BaseSaveframe:
         # Return the data.
         return data
 
+
+    def reset(self):
+        """Reset all data structures to None."""
+
+        # Loop over the tag categories.
+        for cat in self.tag_categories:
+            # Loop over the keys.
+            for key in cat._key_list:
+                # No variable.
+                if not cat[key].var_name:
+                    continue
+
+                # Set to None.
+                setattr(self, cat[key].var_name, None)
 
 
 class CategoryList(list):
@@ -325,10 +342,6 @@ class TagCategory(TagTranslationTable):
         @return:    The length.
         @rtype:     int
         """
-
-        # Already determined!
-        if hasattr(self, 'N') and self.N:
-            return self.N
 
         # Loop over the objects until a variable is found in self.
         N = None
