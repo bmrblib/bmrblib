@@ -151,7 +151,7 @@ class AutoRelaxationSaveframe(RelaxSaveframe):
         self.rx_inc = self.rx_inc + 1
         self.rx_inc_str = str(self.rx_inc)
         self.rx_inc_list = translate([self.rx_inc] * N)
-        self.generate_data_ids(N)
+        #self.generate_data_ids(N)
 
         # The operators of the relaxation superoperator.
         if data_type == 'R1':

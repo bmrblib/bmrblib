@@ -250,7 +250,7 @@ class ModelFreeSaveframe(BaseSaveframe):
         self.model_free_id = translate([1] * len(self.software_ids))
 
         # The ID numbers.
-        self.generate_data_ids(N)
+        #self.generate_data_ids(N)
 
         # Initialise the save frame.
         self.frame = SaveFrame(title=self.sf_label)

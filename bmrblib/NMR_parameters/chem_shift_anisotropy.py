@@ -133,7 +133,7 @@ class ChemShiftAnisotropySaveframe(BaseSaveframe):
         # Set up the CSA specific variables.
         self.csa_inc = self.csa_inc + 1
         self.csa_inc_list = translate([self.csa_inc] * N)
-        self.generate_data_ids(N)
+        #self.generate_data_ids(N)
 
         # Initialise the save frame.
         self.frame = SaveFrame(title='chem_shift_anisotropy')

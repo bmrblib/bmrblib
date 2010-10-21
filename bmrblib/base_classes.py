@@ -22,8 +22,13 @@
 # Module docstring.
 """The TagCategory base class."""
 
+# Python module imports.
+from numpy import ndarray
+from warnings import warn
+
 # relax module imports.
-from bmrblib.misc import translate
+from bmrblib.misc import no_missing, translate
+from bmrblib.pystarlib.SaveFrame import SaveFrame
 from bmrblib.pystarlib.TagTable import TagTable
 
 
@@ -48,6 +53,67 @@ class BaseSaveframe:
         self.add_tag_categories()
 
 
+    def add(self, **keywords):
+        """Add data to the saveframe.
+
+        If the keywords are within the tag dictionary structure as the variable name, then the data will be checked, translated and stored in that variable.  If not, then a warning will be given.
+        """
+
+        # Loop over the keywords.
+        for name, val in keywords.items():
+            # Get the tag object.
+            info = self.tag_categories.get_tag(name)
+            if not info:
+                return
+            cat_index, key, obj = info
+
+            # Check that a value has been supplied.
+            if not obj.missing:
+                no_missing(val, name)
+
+            # Check that the value is allowed.
+            if obj.allowed != None and val not in obj.allowed:
+                raise NameError("The %s keyword argument of '%s' must be one of %s." % (name, val, obj.allowed))
+
+            # Length check of the non-free tag category elements (must be the same).
+            if (isinstance(val, list) or isinstance(val, ndarray)):
+                # Get the reference length.
+                N = self.tag_categories[cat_index]._N()
+
+                # No length yet.
+                if N == None:
+                    pass
+
+                # Mismatch.
+                if N != None and len(val) != N:
+                    raise NameError("The number of elements in the %s keyword argument should be N = %s." % (name, N))
+
+            # Store the argument.
+            setattr(self, name, translate(val))
+
+        # Saveframe counter updating.
+        self.count = self.count + 1
+        self.count_str = str(self.count)
+
+        # The data ID values.
+        for i in range(len(self.tag_categories)):
+            ids = self.tag_categories[i].generate_data_ids()
+            if ids:
+                self.data_ids = translate(ids)
+
+        # Initialise the save frame.
+        print self.data_ids
+        self.frame = SaveFrame(title=self.sf_label)
+
+        # Create the tag categories.
+        for i in range(len(self.tag_categories)):
+            self.tag_categories[i].create()
+
+        # Add the saveframe to the data nodes.
+        self.datanodes.append(self.frame)
+
+
+
     def extract_data(self, datanode):
         """Read all the tensor tags from the datanodes.
 
@@ -61,17 +127,6 @@ class BaseSaveframe:
         for i in range(len(self.tag_categories)):
             # Extract the data.
             self.tag_categories[i].extract_tag_data(datanode.tagtables[i])
-
-
-    def generate_data_ids(self, N):
-        """Generate the data ID structure.
-
-        @keyword N: The number of data points.
-        @type N:    int
-        """
-
-        # The data ID values.
-        self.data_ids = translate(range(1, N+1))
 
 
     def loop(self):
@@ -115,6 +170,25 @@ class BaseSaveframe:
 class CategoryList(list):
     """A special lits object for holding the different saveframe tag categories."""
 
+    def get_tag(self, var_name):
+        """Return the tag object possessing the given variable name.
+
+        @param var_name:    The variable name.
+        @type var_name:     str
+        @return:            The key and tag objects.
+        @rtype:             str, TagObject instance
+        """
+
+        # Loop over the categories.
+        for i in range(len(self)):
+            # Loop over the keys.
+            for key, obj in self[i].items():
+                if var_name == obj.var_name:
+                    return i, key, obj
+
+        # Warning.
+        warn(Warning("The tag object possessing the variable name '%s' could not be found." % var_name))
+
 
 
 class TagTranslationTable(dict):
@@ -125,6 +199,9 @@ class TagTranslationTable(dict):
 
         # Initialise the baseclass.
         super(TagTranslationTable, self).__init__()
+
+        # The length of the list variables.
+        self.N = None
 
         # The key ordering.
         self._key_list = []
@@ -202,6 +279,41 @@ class TagCategory(TagTranslationTable):
 
         # The tag category name.
         self.tag_category_label = None
+
+
+    def _N(self):
+        """Determine the length of the variables.
+
+        @return:    The length.
+        @rtype:     int
+        """
+
+        # Already determined!
+        if hasattr(self, 'N') and self.N:
+            return self.N
+
+        # Loop over the objects until a variable is found in self.
+        N = None
+        for key in self.keys():
+            # The variable exists.
+            if self[key].var_name and hasattr(self.sf, self[key].var_name):
+                # Get the object.
+                obj = getattr(self.sf, self[key].var_name)
+
+                # Is it a list?
+                if not isinstance(obj, list) and not isinstance(obj, ndarray):
+                    continue
+
+                # The length.
+                N = len(obj)
+                break
+
+        # Set the length in this class.
+        if N:
+            self.N = N
+
+        # Return N.
+        return N
 
 
     def create(self):
@@ -283,6 +395,24 @@ class TagCategory(TagTranslationTable):
 
             # Set the data.
             setattr(self.sf, var_name, data)
+
+
+    def generate_data_ids(self):
+        """Generate the data ID structure.
+
+        @keyword N: The number of data points.
+        @type N:    int
+        """
+
+        # The length.
+        N = self._N()
+
+        # If not 
+        if not N:
+            return
+
+        # The data ID values.
+        return range(1, N+1)
 
 
     def tag_setup(self, tag_category_label=None, sep=None):

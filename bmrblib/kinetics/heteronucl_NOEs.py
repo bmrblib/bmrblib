@@ -145,7 +145,7 @@ class HeteronuclNOESaveframe(RelaxSaveframe):
         self.noe_inc = self.noe_inc + 1
         self.noe_inc_str = str(self.noe_inc)
         self.rx_inc_list = translate([self.noe_inc] * self.N)
-        self.generate_data_ids(self.N)
+        #self.generate_data_ids(self.N)
 
         # The label.
         self.label = 'heteronuclear NOE ' + repr(self.noe_inc)

@@ -126,7 +126,7 @@ class CitationsSaveframe(BaseSaveframe):
         self.author_first_init = translate(self.author_first_init)
         self.author_mid_init = translate(self.author_mid_init)
         self.author_family_title = translate(self.author_family_title)
-        self.generate_data_ids(len(authors))
+        #self.generate_data_ids(len(authors))
 
         # Increment the number of entities.
         self.citation_num = str(int(self.citation_num) + 1)
