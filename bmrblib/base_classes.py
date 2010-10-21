@@ -67,9 +67,6 @@ class BaseSaveframe:
         for i in range(len(self.tag_categories)):
             self.tag_categories[i].tag_setup()
 
-        # Set up the version specific variables.
-        self.specific_setup()
-
         # Get the saveframe name.
         sf_name = getattr(self, 'sf_label')
 

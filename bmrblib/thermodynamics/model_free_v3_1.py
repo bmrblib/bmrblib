@@ -41,11 +41,6 @@ class ModelFreeSaveframe_v3_1(ModelFreeSaveframe):
         self.model_free_software = ModelFreeSoftware_v3_1(self)
         self.model_free = ModelFree_v3_1(self)
 
-    def specific_setup(self):
-        """Method called by self.add() to set up any version specific data."""
-
-        self.cat_name = ['order_parameters']
-
 
 
 class ModelFreeList_v3_1(ModelFreeList):

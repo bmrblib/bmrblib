@@ -225,9 +225,6 @@ class TensorSaveframe(BaseSaveframe):
         self.tensor_inc_list = translate([self.tensor_inc] * N)
         self.generate_data_ids(N)
 
-        # Set up the version specific variables.
-        self.specific_setup()
-
         # Initialise the save frame.
         self.frame = SaveFrame(title=self.sf_label)
 
@@ -246,12 +243,6 @@ class TensorSaveframe(BaseSaveframe):
         self.tag_categories = []
         self.tag_categories.append(TensorList(self))
         self.tag_categories.append(Tensor(self))
-
-
-    def specific_setup(self):
-        """Method called by self.add() to set up any version specific data."""
-
-        self.cat_name = ['tensor']
 
 
 

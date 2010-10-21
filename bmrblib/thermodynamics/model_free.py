@@ -162,9 +162,6 @@ class ModelFreeSaveframe(BaseSaveframe):
         @type model_free:                   str
         """
 
-        # Set up the version specific variables.
-        self.specific_setup()
-
         # Check the ID info.
         no_missing(res_nums, 'residue numbers of the model-free data')
         no_missing(res_names, 'residue names of the model-free data')
