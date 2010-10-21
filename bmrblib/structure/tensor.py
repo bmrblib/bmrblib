@@ -41,23 +41,6 @@ class TensorSaveframe(BaseSaveframe):
     # Saveframe variables.
     sf_label = 'tensor'
 
-    def __init__(self, datanodes):
-        """Initialise the class, placing the pystarlib data nodes into the namespace.
-
-        @param datanodes:   The pystarlib data nodes object.
-        @type datanodes:    list
-        """
-
-        # Place the data nodes into the namespace.
-        self.datanodes = datanodes
-
-        # The number of Tensor saveframes.
-        self.tensor_inc = 0
-
-        # Add the specific tag category objects.
-        self.add_tag_categories()
-
-
     def add(self, tensor_type=None, geometric_shape=None, tensor_symmetry=None, euler_type=None, matrix_val_units=None, angle_units=None, iso_val_formula=None, aniso_val_formula=None, rhomb_val_formula=None, data_file_name=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, axial_sym_axis_polar_angle=None, axial_sym_axis_azimuthal_angle=None, iso_val=None, aniso_val=None, rhombic_val=None, euler_alpha=None, euler_beta=None, euler_gamma=None, iso_comp_11=None, iso_comp_22=None, iso_comp_33=None, antisym_comp_12=None, antisym_comp_13=None, antisym_comp_23=None, full_tensor=None):
         """Add relaxation data to the data nodes.
 
@@ -220,9 +203,9 @@ class TensorSaveframe(BaseSaveframe):
             setattr(self, name, translate(obj))
 
         # Set up the tensor specific variables.
-        self.tensor_inc = self.tensor_inc + 1
-        self.tensor_inc_str = str(self.tensor_inc)
-        self.tensor_inc_list = translate([self.tensor_inc] * N)
+        self.count = self.count + 1
+        self.count_str = str(self.count)
+        self.count_list = translate([self.count] * N)
         self.generate_data_ids(N)
 
         # Initialise the save frame.
@@ -345,7 +328,7 @@ class Tensor(TagCategory):
         self.data_to_var_name.append(['ReduceableMatrix31Val',      'tensor_31'])
         self.data_to_var_name.append(['ReduceableMatrix32Val',      'tensor_32'])
         self.data_to_var_name.append(['ReduceableMatrix33Val',      'tensor_33'])
-        self.data_to_var_name.append(['TensorListID',               'tensor_inc_list'])
+        self.data_to_var_name.append(['TensorListID',               'count_list'])
 
         # Database table name to tag name.
         self.data_to_tag_name['TensorID'] =                     'ID'

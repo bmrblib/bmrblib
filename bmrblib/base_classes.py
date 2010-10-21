@@ -30,6 +30,23 @@ from bmrblib.pystarlib.TagTable import TagTable
 class BaseSaveframe:
     """The base class for the saveframe classes."""
 
+    def __init__(self, datanodes):
+        """Initialise the class, placing the pystarlib data nodes into the namespace.
+
+        @param datanodes:   The pystarlib data nodes object.
+        @type datanodes:    list
+        """
+
+        # Place the data nodes into the namespace.
+        self.datanodes = datanodes
+
+        # The saveframe counter.
+        self.count = 0
+
+        # Add the specific tag category objects.
+        self.add_tag_categories()
+
+
     def extract_data(self, datanode):
         """Read all the tensor tags from the datanodes.
 
