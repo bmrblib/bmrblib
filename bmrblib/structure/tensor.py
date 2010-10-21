@@ -242,7 +242,7 @@ class TensorList(TagCategoryFree):
         super(TensorList, self).__init__(sf)
 
         # The category name.
-        self.tag_category_label='Tensor_list'
+        self.tag_category_label = 'Tensor_list'
 
         # Add the tag info.
         self.add(key='EntryID',                 tag_name='Entry_ID',                var_name=None)
@@ -276,7 +276,7 @@ class Tensor(TagCategory):
         super(Tensor, self).__init__(sf)
 
         # The category name.
-        self.tag_category_label='Tensor'
+        self.tag_category_label = 'Tensor'
 
         # Add the tag info.
         self.add(key='TensorID',                    tag_name='ID',                              var_name='data_ids')
