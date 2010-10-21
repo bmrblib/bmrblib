@@ -30,6 +30,21 @@ from bmrblib.pystarlib.TagTable import TagTable
 class BaseSaveframe:
     """The base class for the saveframe classes."""
 
+    def extract_data(self, datanode):
+        """Read all the tensor tags from the datanodes.
+
+        @keyword datanode:  The tensor datanode.
+        @type datanode:     Datanode instance
+        @return:            The tensor data.
+        @rtype:             tuple
+        """
+
+        # Loop over the tag categories.
+        for i in range(len(self.tag_categories)):
+            # Extract the data.
+            self.tag_categories[i].extract_tag_data(datanode.tagtables[i])
+
+
     def generate_data_ids(self, N):
         """Generate the data ID structure.
 
@@ -49,17 +64,8 @@ class BaseSaveframe:
         """
 
         # Set up the tag information.
-        for name in dir(self):
-            # Get the object.
-            obj = getattr(self, name)
-
-            # Tag setup.
-            if hasattr(obj, 'tag_setup'):
-                obj.tag_setup()
-
-            # Find the saveframe category.
-            if hasattr(obj, 'data_to_tag_name_full') and obj.data_to_tag_name_full.has_key('SfCategory'):
-                sf_cat = obj.data_to_tag_name_full['SfCategory']
+        for i in range(len(self.tag_categories)):
+            self.tag_categories[i].tag_setup()
 
         # Set up the version specific variables.
         self.specific_setup()
@@ -73,7 +79,7 @@ class BaseSaveframe:
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == sf_cat:
+                if datanode.tagtables[0].tagnames[index] == self.tag_categories[0].data_to_tag_name_full['SfCategory']:
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == sf_name:
                         found = True
@@ -83,8 +89,11 @@ class BaseSaveframe:
             if not found:
                 continue
 
-            # Get the info.
-            yield self.read_tagtables(datanode)
+            # Extract the information.
+            self.extract_data(datanode)
+
+            # Return the saveframe info.
+            yield self.read()
 
 
 
@@ -198,6 +207,31 @@ class TagCategory(object):
 
         # Add the data and return the table.
         return TagTable(free=free, tagnames=data_to_tag_name, tagvalues=tag_values)
+
+
+    def extract_tag_data(self, tagtable):
+        """Extract all of the tag data from the tagtable, placing it into the designated variable names.
+
+        @param tagtable:    The Tensor tagtable.
+        @type tagtable:     Tagtable instance
+        """
+
+        # Loop over the variables.
+        for i in range(len(self.data_to_var_name)):
+            # The database table name.
+            table_name = self.data_to_var_name[i][0]
+
+            # The variable name.
+            var_name = self.data_to_var_name[i][1]
+
+            # The full tag name.
+            full_tag_name = self.data_to_tag_name_full[table_name]
+
+            # The data.
+            data = tagtable.tagvalues[tagtable.tagnames.index(full_tag_name)]
+
+            # Set the data.
+            setattr(self.sf, var_name, data)
 
 
     def tag_setup(self, tag_category_label=None, sep=None):
