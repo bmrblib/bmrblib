@@ -232,8 +232,8 @@ class TensorSaveframe(BaseSaveframe):
         self.frame = SaveFrame(title=self.sf_label)
 
         # Create the tag categories.
-        self.Tensor_list.create()
-        self.Tensor.create()
+        for i in range(len(self.tag_categories)):
+            self.tag_categories[i].create()
 
         # Add the saveframe to the data nodes.
         self.datanodes.append(self.frame)
@@ -243,24 +243,9 @@ class TensorSaveframe(BaseSaveframe):
         """Create the tag categories."""
 
         # The tag category objects.
-        self.Tensor_list = TensorList(self)
-        self.Tensor = Tensor(self)
-
-
-    def read_tagtables(self, datanode):
-        """Read all the tensor tags from the datanodes.
-
-        @keyword datanode:  The tensor datanode.
-        @type datanode:     Datanode instance
-        @return:            The tensor data.
-        @rtype:             tuple
-        """
-
-        # Get the tensor info.
-        res_nums, res_names, atom_names, values = self.Tensor.read(datanode.tagtables[1])
-
-        # Yield the data.
-        yield res_nums, res_names, atom_names, values
+        self.tag_categories = []
+        self.tag_categories.append(TensorList(self))
+        self.tag_categories.append(Tensor(self))
 
 
     def specific_setup(self):
@@ -419,27 +404,3 @@ class Tensor(TagCategory):
         self.data_to_tag_name['AuthAtomID'] =                   'Auth_atom_ID'
         self.data_to_tag_name['EntryID'] =                      'Entry_ID'
         self.data_to_tag_name['TensorListID'] =                 'Tensor_list_ID'
-
-
-    def read(self, tagtable):
-        """Extract the Tensor tag category info.
-
-        @param tagtable:    The Tensor tagtable.
-        @type tagtable:     Tagtable instance
-        @return:            The residue numbers, residue names, atom names, and values.
-        @rtype:             tuple of list of int, list of str, list of str, list of float, list of
-                            float
-        """
-
-        # The entity info.
-        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompIndexID'])]
-        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompID'])]
-        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['AtomID'])]
-
-        # Convert the residue numbers to ints and the values to floats.
-        for i in range(len(res_nums)):
-            res_nums[i] = int(res_nums[i])
-            values[i] = float(values[i])
-
-        # Return the data.
-        return res_nums, res_names, atom_names, values
