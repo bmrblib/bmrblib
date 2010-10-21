@@ -247,46 +247,20 @@ class TensorSaveframe(BaseSaveframe):
         self.Tensor = Tensor(self)
 
 
-    def loop(self):
-        """Loop over the tensor saveframes, yielding the data.
+    def read_tagtables(self, datanode):
+        """Read all the tensor tags from the datanodes.
 
-        @return:    The tensor data consisting of the proton frequency, residue numbers, residue
-                    names, atom names, values, and errors.
-        @rtype:     tuple of float, list of int, list of str, list of str, list of float, list of
-                    float
+        @keyword datanode:  The tensor datanode.
+        @type datanode:     Datanode instance
+        @return:            The tensor data.
+        @rtype:             tuple
         """
 
-        # Set up the tag information.
-        self.Tensor_list.tag_setup()
-        self.Tensor.tag_setup()
+        # Get the tensor info.
+        res_nums, res_names, atom_names, values = self.Tensor.read(datanode.tagtables[1])
 
-        # Set up the version specific variables.
-        self.specific_setup()
-
-        # Get the saveframe name.
-        sf_name = getattr(self, 'cat_name')[0]
-
-        # Loop over all datanodes.
-        for datanode in self.datanodes:
-            # Find the tensor saveframes via the SfCategory tag index.
-            found = False
-            for index in range(len(datanode.tagtables[0].tagnames)):
-                # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.Tensor_list.data_to_tag_name_full['SfCategory']:
-                    # Then the tag value.
-                    if datanode.tagtables[0].tagvalues[index][0] == sf_name:
-                        found = True
-                        break
-
-            # Skip the datanode.
-            if not found:
-                continue
-
-            # Get the tensor info.
-            res_nums, res_names, atom_names, values = self.Tensor.read(datanode.tagtables[1])
-
-            # Yield the data.
-            yield res_nums, res_names, atom_names, values
+        # Yield the data.
+        yield res_nums, res_names, atom_names, values
 
 
     def specific_setup(self):

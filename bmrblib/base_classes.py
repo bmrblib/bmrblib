@@ -41,6 +41,52 @@ class BaseSaveframe:
         self.data_ids = translate(range(1, N+1))
 
 
+    def loop(self):
+        """Loop over the saveframes, yielding the data.
+
+        @return:    The saveframe data.
+        @rtype:     tuple
+        """
+
+        # Set up the tag information.
+        for name in dir(self):
+            # Get the object.
+            obj = getattr(self, name)
+
+            # Tag setup.
+            if hasattr(obj, 'tag_setup'):
+                obj.tag_setup()
+
+            # Find the saveframe category.
+            if hasattr(obj, 'data_to_tag_name_full') and obj.data_to_tag_name_full.has_key('SfCategory'):
+                sf_cat = obj.data_to_tag_name_full['SfCategory']
+
+        # Set up the version specific variables.
+        self.specific_setup()
+
+        # Get the saveframe name.
+        sf_name = getattr(self, 'sf_label')
+
+        # Loop over all datanodes.
+        for datanode in self.datanodes:
+            # Find the saveframes via the SfCategory tag index.
+            found = False
+            for index in range(len(datanode.tagtables[0].tagnames)):
+                # First match the tag names.
+                if datanode.tagtables[0].tagnames[index] == sf_cat:
+                    # Then the tag value.
+                    if datanode.tagtables[0].tagvalues[index][0] == sf_name:
+                        found = True
+                        break
+
+            # Skip the datanode.
+            if not found:
+                continue
+
+            # Get the info.
+            yield self.read_tagtables(datanode)
+
+
 
 class TagCategory(object):
     """The base class for tag category classes."""
