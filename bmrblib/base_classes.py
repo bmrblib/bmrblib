@@ -245,7 +245,7 @@ class TagCategory(TagTranslationTable):
 
         # Loop over each tag name.
         for key, name in self.data_to_tag_name.items():
-            self.data_to_tag_name_full[key] = self.tag_category_label_full + name
+            self.data_to_tag_name_full[key] = self.tag_prefix + name
 
 
     def extract_tag_data(self, tagtable):
@@ -295,9 +295,9 @@ class TagCategory(TagTranslationTable):
             self.sep = '.'
 
         # Create the full tag label.
-        self.tag_category_label_full = '_'
+        self.tag_prefix = '_'
         if self.tag_category_label:
-            self.tag_category_label_full = self.tag_category_label_full + self.tag_category_label + self.sep
+            self.tag_prefix = self.tag_prefix + self.tag_category_label + self.sep
 
         # Generate the full tag names.
         self.create_full_tag_names()
