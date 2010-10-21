@@ -267,11 +267,20 @@ class TagTranslationTable(dict):
         @type missing:      bool
         """
 
-        # Add the tag object.
-        self[key] = TagObject(self, var_name=var_name, tag_name=tag_name, allowed=allowed, missing=missing)
+        # The key already exists.
+        if key in self._key_list:
+            self[key].allowed = allowed
+            self[key].missing = missing
+            self[key].tag_name = tag_name
+            self[key].var_name = var_name
 
-        # Add the key to the ordered list.
-        self._key_list.append(key)
+        # Otherwise add a new object.
+        else:
+            # Add the tag object.
+            self[key] = TagObject(self, var_name=var_name, tag_name=tag_name, allowed=allowed, missing=missing)
+
+            # Add the key to the ordered list.
+            self._key_list.append(key)
 
 
 
