@@ -44,6 +44,7 @@ class BaseSaveframe:
         self.count = 0
 
         # Add the specific tag category objects.
+        self.tag_categories = CategoryList()
         self.add_tag_categories()
 
 
@@ -108,6 +109,11 @@ class BaseSaveframe:
 
             # Return the saveframe info.
             yield self.read()
+
+
+
+class CategoryList(list):
+    """A special lits object for holding the different saveframe tag categories."""
 
 
 

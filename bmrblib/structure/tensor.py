@@ -223,7 +223,6 @@ class TensorSaveframe(BaseSaveframe):
         """Create the tag categories."""
 
         # The tag category objects.
-        self.tag_categories = []
         self.tag_categories.append(TensorList(self))
         self.tag_categories.append(Tensor(self))
 
