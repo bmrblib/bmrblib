@@ -148,7 +148,7 @@ class BaseSaveframe:
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.tag_categories[0].tag_prefix + self.tag_categories[0]['SfCategory'].tag_name:
+                if datanode.tagtables[0].tagnames[index] == self.tag_categories[0]['SfCategory'].tag_name_full():
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == sf_name:
                         found = True
@@ -342,7 +342,7 @@ class TagCategory(TagTranslationTable):
             # The tag names and values (skipping entries with no corresponding variable).
             if self[key].var_name != None:
                 # The name (adding the tag prefix).
-                tag_names.append(self.tag_prefix + self[key].tag_name)
+                tag_names.append(self[key].tag_name_full())
 
                 # The value.
                 if hasattr(self.sf, self[key].var_name):
