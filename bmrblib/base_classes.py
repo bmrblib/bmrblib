@@ -201,11 +201,15 @@ class BaseSaveframe:
             # Loop over the keys.
             for key in cat._key_list:
                 # No variable.
-                if not cat[key].var_name:
+                if not cat[key].var_name or not hasattr(self, cat[key].var_name):
+                    continue
+
+                # Skip special variables.
+                if cat[key].var_name in ['sf_label', 'count', 'count_str']:
                     continue
 
                 # Set to None.
-                setattr(self, cat[key].var_name, None)
+                setattr(self, cat[key].var_name, translate(None))
 
 
 class CategoryList(list):
