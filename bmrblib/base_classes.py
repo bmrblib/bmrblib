@@ -193,23 +193,18 @@ class TagCategory(TagTranslationTable):
 
         # Init.
         self.tag_setup()
-        keys = list(self.data_to_tag_name.keys())
-        data_to_tag_name = []
+        tag_names = []
         tag_values = []
 
-        # Loop over the keys and object names of the self.data_to_var_name structure.
-        for key, name in self.data_to_var_name:
-            # Key check.
-            if key not in keys:
-                raise NameError("The key '%s' is not located in the self.data_to_tag_name structure." % key)
-
-            # The tag names and values (skipping empty entries in self.data_to_tag_name).
-            if self.data_to_tag_name[key] != None:
-                # The name.
-                data_to_tag_name.append(self.data_to_tag_name_full[key])
+        # Loop over the keys of the class dictionary.
+        for key in self.keys():
+            # The tag names and values (skipping entries with no corresponding variable).
+            if self[key].var_name != None and hasattr(self.sf, self[key].var_name):
+                # The name (adding the tag prefix).
+                tag_names.append(self.tag_prefix + self[key].tag_name)
 
                 # The value.
-                val = getattr(self.sf, name)
+                val = getattr(self.sf, self[key].var_name)
 
                 # Convert to a list, if necessary.
                 if not isinstance(val, list):
@@ -217,6 +212,10 @@ class TagCategory(TagTranslationTable):
 
                 # Append the value list.
                 tag_values.append(val)
+
+        # No data, so don't add the table.
+        if not len(tag_names):
+            return
 
         # Check the input data to avoid cryptic pystarlib error messages.
         N = len(tag_values[0])
@@ -235,7 +234,7 @@ class TagCategory(TagTranslationTable):
                 tag_values[i] = tag_values[i] * N
 
         # Create the tagtable.
-        table = TagTable(free=self.free, tagnames=data_to_tag_name, tagvalues=tag_values)
+        table = TagTable(free=self.free, tagnames=tag_names, tagvalues=tag_values)
 
         # Add the tagtable to the save frame.
         self.sf.frame.tagtables.append(table)
