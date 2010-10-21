@@ -244,37 +244,21 @@ class TensorList(TagCategoryFree):
         # The category name.
         self.tag_category_label='Tensor_list'
 
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['TensorID',                    'data_ids'])
-        self.data_to_var_name.append(['TensorType',                  'tensor_type'])
-        self.data_to_var_name.append(['GeometricShape',              'geometric_shape'])
-        self.data_to_var_name.append(['TensorSymmetry',              'tensor_symmetry'])
-        self.data_to_var_name.append(['MatrixValUnits',              'matrix_val_units'])
-        self.data_to_var_name.append(['AngleUnits',                  'angle_units'])
-        self.data_to_var_name.append(['IsotropicValFormula',         'iso_val_formula'])
-        self.data_to_var_name.append(['AnisotropicValFormula',       'aniso_val_formula'])
-        self.data_to_var_name.append(['RhombicValFormula',           'rhomb_val_formula'])
-        self.data_to_var_name.append(['EulerAngleType',              'euler_type'])
-        self.data_to_var_name.append(['DataFileName',                'file_name'])
-        self.data_to_var_name.append(['Details',                     'details'])
-
-        # Database table name to tag name.
-        self.data_to_tag_name['SfCategory'] =               'Sf_category'
-        self.data_to_tag_name['SfFramecode'] =              'Sf_framecode'
-        self.data_to_tag_name['EntryID'] =                  'Entry_ID'
-        self.data_to_tag_name['SfID'] =                     'Sf_ID'
-        self.data_to_tag_name['TensorID'] =                 'ID'
-        self.data_to_tag_name['TensorType'] =               'Tensor_type'
-        self.data_to_tag_name['GeometricShape'] =           'Geometric_shape'
-        self.data_to_tag_name['TensorSymmetry'] =           'Tensor_symmetry'
-        self.data_to_tag_name['MatrixValUnits'] =           'Matrix_val_units'
-        self.data_to_tag_name['AngleUnits'] =               'Angle_units'
-        self.data_to_tag_name['IsotropicValFormula'] =      'Isotropic_val_formula'
-        self.data_to_tag_name['AnisotropicValFormula'] =    'Anisotropic_val_formula'
-        self.data_to_tag_name['RhombicValFormula'] =        'Rhombic_val_formula'
-        self.data_to_tag_name['EulerAngleType'] =           'Euler_angle_type'
-        self.data_to_tag_name['DataFileName'] =             'Data_file_name'
-        self.data_to_tag_name['Details'] =                  'Details'
+        # Add the tag info.
+        self.add(key='EntryID',                 tag_name='Entry_ID',                var_name=None)
+        self.add(key='SfID',                    tag_name='Sf_ID',                   var_name=None)
+        self.add(key='TensorID',                tag_name='ID',                      var_name='data_ids')
+        self.add(key='TensorType',              tag_name='Tensor_type',             var_name='tensor_type')
+        self.add(key='GeometricShape',          tag_name='Geometric_shape',         var_name='geometric_shape')
+        self.add(key='TensorSymmetry',          tag_name='Tensor_symmetry',         var_name='tensor_symmetry')
+        self.add(key='MatrixValUnits',          tag_name='Matrix_val_units',        var_name='matrix_val_units')
+        self.add(key='AngleUnits',              tag_name='Angle_units',             var_name='angle_units')
+        self.add(key='IsotropicValFormula',     tag_name='Isotropic_val_formula',   var_name='iso_val_formula')
+        self.add(key='AnisotropicValFormula',   tag_name='Anisotropic_val_formula', var_name='aniso_val_formula')
+        self.add(key='RhombicValFormula',       tag_name='Rhombic_val_formula',     var_name='rhomb_val_formula')
+        self.add(key='EulerAngleType',          tag_name='Euler_angle_type',        var_name='euler_type')
+        self.add(key='DataFileName',            tag_name='Data_file_name',          var_name='file_name')
+        self.add(key='Details',                 tag_name='Details',                 var_name='details')
 
 
 
@@ -294,86 +278,51 @@ class Tensor(TagCategory):
         # The category name.
         self.tag_category_label='Tensor'
 
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['TensorID',                   'data_ids'])
-        self.data_to_var_name.append(['AssemblyAtomID',             'assembly_atom_ids'])
-        self.data_to_var_name.append(['EntityAssemblyID',           'entity_assembly_ids'])
-        self.data_to_var_name.append(['EntityID',                   'entity_ids'])
-        self.data_to_var_name.append(['CompIndexID',                'res_nums'])
-        self.data_to_var_name.append(['CompID',                     'res_names'])
-        self.data_to_var_name.append(['AtomID',                     'atom_names'])
-        self.data_to_var_name.append(['AtomType',                   'atom_types'])
-        self.data_to_var_name.append(['AtomIsotopeNumber',          'isotope'])
-        self.data_to_var_name.append(['AxialSymAxisPolarAngle',     'axial_sym_axis_polar_angle'])
-        self.data_to_var_name.append(['AxialSymAxisAzimuthalAngle', 'axial_sym_axis_azimuthal_angle'])
-        self.data_to_var_name.append(['IsotropicVal',               'iso_val'])
-        self.data_to_var_name.append(['AnisotropicVal',             'aniso_val'])
-        self.data_to_var_name.append(['RhombicVal',                 'rhombic_val'])
-        self.data_to_var_name.append(['EulerAngleAlpha',            'euler_alpha'])
-        self.data_to_var_name.append(['EulerAngleBeta',             'euler_beta'])
-        self.data_to_var_name.append(['EulerAngleGamma',            'euler_gamma'])
-        self.data_to_var_name.append(['IsotropicComp11Val',         'iso_comp_11'])
-        self.data_to_var_name.append(['IsotropicComp22Val',         'iso_comp_22'])
-        self.data_to_var_name.append(['IsotropicComp33Val',         'iso_comp_33'])
-        self.data_to_var_name.append(['AntiSymComp12Val',           'antisym_comp_12'])
-        self.data_to_var_name.append(['AntiSymComp13Val',           'antisym_comp_13'])
-        self.data_to_var_name.append(['AntiSymComp23Val',           'antisym_comp_23'])
-        self.data_to_var_name.append(['ReduceableMatrix11Val',      'tensor_11'])
-        self.data_to_var_name.append(['ReduceableMatrix12Val',      'tensor_12'])
-        self.data_to_var_name.append(['ReduceableMatrix13Val',      'tensor_13'])
-        self.data_to_var_name.append(['ReduceableMatrix21Val',      'tensor_21'])
-        self.data_to_var_name.append(['ReduceableMatrix22Val',      'tensor_22'])
-        self.data_to_var_name.append(['ReduceableMatrix23Val',      'tensor_23'])
-        self.data_to_var_name.append(['ReduceableMatrix31Val',      'tensor_31'])
-        self.data_to_var_name.append(['ReduceableMatrix32Val',      'tensor_32'])
-        self.data_to_var_name.append(['ReduceableMatrix33Val',      'tensor_33'])
-        self.data_to_var_name.append(['TensorListID',               'count_list'])
-
-        # Database table name to tag name.
-        self.data_to_tag_name['TensorID'] =                     'ID'
-        self.data_to_tag_name['InteratomicDistanceListID'] =    'Interatomic_distance_list_ID'
-        self.data_to_tag_name['InteratomicDistSetID'] =         'Interatomic_dist_set_ID'
-        self.data_to_tag_name['CalcTypeID'] =                   'Calc_type_ID'
-        self.data_to_tag_name['AssemblyAtomID'] =               'Assembly_atom_ID'
-        self.data_to_tag_name['EntityAssemblyID'] =             'Entity_assembly_ID'
-        self.data_to_tag_name['EntityID'] =                     'Entity_ID'
-        self.data_to_tag_name['CompIndexID'] =                  'Comp_index_ID'
-        self.data_to_tag_name['SeqID'] =                        'Seq_ID'
-        self.data_to_tag_name['CompID'] =                       'Residue_label'
-        self.data_to_tag_name['AtomID'] =                       'Atom_name'
-        self.data_to_tag_name['AtomType'] =                     'Atom_type'
-        self.data_to_tag_name['AtomIsotopeNumber'] =            'Atom_isotope_number'
-        self.data_to_tag_name['AxialSymAxisPolarAngle'] =       'Axial_sym_axis_polar_angle'
-        self.data_to_tag_name['AxialSymAxisAzimuthalAngle'] =   'Axial_sym_axis_azimuthal_angle'
-        self.data_to_tag_name['IsotropicVal'] =                 'Isotropic_val'
-        self.data_to_tag_name['AnisotropicVal'] =               'Anisotropic_val'
-        self.data_to_tag_name['RhombicVal'] =                   'Rhombic_val'
-        self.data_to_tag_name['EulerAngleAlpha'] =              'Euler_angle_alpha'
-        self.data_to_tag_name['EulerAngleBeta'] =               'Euler_angle_beta'
-        self.data_to_tag_name['EulerAngleGamma'] =              'Euler_angle_gamma'
-        self.data_to_tag_name['IsotropicComp11Val'] =           'Isotropic_comp_1_1_val'
-        self.data_to_tag_name['IsotropicComp22Val'] =           'Isotropic_comp_2_2_val'
-        self.data_to_tag_name['IsotropicComp33Val'] =           'Isotropic_comp_3_3_val'
-        self.data_to_tag_name['AntiSymComp12Val'] =             'Anti_sym_comp_1_2_val'
-        self.data_to_tag_name['AntiSymComp13Val'] =             'Anti_sym_comp_1_3_val'
-        self.data_to_tag_name['AntiSymComp23Val'] =             'Anti_sym_comp_2_3_val'
-        self.data_to_tag_name['SymTracelessComp11Val'] =        'Sym_traceless_comp_1_1_val'
-        self.data_to_tag_name['SymTracelessComp12Val'] =        'Sym_traceless_comp_1_2_val'
-        self.data_to_tag_name['SymTracelessComp13Val'] =        'Sym_traceless_comp_1_3_val'
-        self.data_to_tag_name['SymTracelessComp22Val'] =        'Sym_traceless_comp_2_2_val'
-        self.data_to_tag_name['SymTracelessComp23Val'] =        'Sym_traceless_comp_2_3_val'
-        self.data_to_tag_name['ReduceableMatrix11Val'] =        'Reduceable_matrix_1_1_val'
-        self.data_to_tag_name['ReduceableMatrix12Val'] =        'Reduceable_matrix_1_2_val'
-        self.data_to_tag_name['ReduceableMatrix13Val'] =        'Reduceable_matrix_1_3_val'
-        self.data_to_tag_name['ReduceableMatrix21Val'] =        'Reduceable_matrix_2_1_val'
-        self.data_to_tag_name['ReduceableMatrix22Val'] =        'Reduceable_matrix_2_2_val'
-        self.data_to_tag_name['ReduceableMatrix23Val'] =        'Reduceable_matrix_2_3_val'
-        self.data_to_tag_name['ReduceableMatrix31Val'] =        'Reduceable_matrix_3_1_val'
-        self.data_to_tag_name['ReduceableMatrix32Val'] =        'Reduceable_matrix_3_2_val'
-        self.data_to_tag_name['ReduceableMatrix33Val'] =        'Reduceable_matrix_3_3_val'
-        self.data_to_tag_name['AuthEntityAssemblyID'] =         'Auth_entity_assembly_ID'
-        self.data_to_tag_name['AuthSeqID'] =                    'Auth_seq_ID'
-        self.data_to_tag_name['AuthCompID'] =                   'uth_comp_ID'
-        self.data_to_tag_name['AuthAtomID'] =                   'Auth_atom_ID'
-        self.data_to_tag_name['EntryID'] =                      'Entry_ID'
-        self.data_to_tag_name['TensorListID'] =                 'Tensor_list_ID'
+        # Add the tag info.
+        self.add(key='TensorID',                    tag_name='ID',                              var_name='data_ids')
+        self.add(key='InteratomicDistanceListID',   tag_name='Interatomic_distance_list_ID',    var_name=None)
+        self.add(key='InteratomicDistSetID',        tag_name='Interatomic_dist_set_ID',         var_name=None)
+        self.add(key='CalcTypeID',                  tag_name='Calc_type_ID',                    var_name=None)
+        self.add(key='AssemblyAtomID',              tag_name='Assembly_atom_ID',                var_name='assembly_atom_ids')
+        self.add(key='EntityAssemblyID',            tag_name='Entity_assembly_ID',              var_name='entity_assembly_ids')
+        self.add(key='EntityID',                    tag_name='Entity_ID',                       var_name='entity_ids')
+        self.add(key='CompIndexID',                 tag_name='Comp_index_ID',                   var_name='res_nums')
+        self.add(key='SeqID',                       tag_name='Seq_ID',                          var_name=None)
+        self.add(key='CompID',                      tag_name='Residue_label',                   var_name='res_names')
+        self.add(key='AtomID',                      tag_name='Atom_name',                       var_name='atom_names')
+        self.add(key='AtomType',                    tag_name='Atom_type',                       var_name='atom_types')
+        self.add(key='AtomIsotopeNumber',           tag_name='Atom_isotope_number',             var_name='isotope')
+        self.add(key='AxialSymAxisPolarAngle',      tag_name='Axial_sym_axis_polar_angle',      var_name='axial_sym_axis_polar_angle')
+        self.add(key='AxialSymAxisAzimuthalAngle',  tag_name='Axial_sym_axis_azimuthal_angle',  var_name='axial_sym_axis_azimuthal_angle')
+        self.add(key='IsotropicVal',                tag_name='Isotropic_val',                   var_name='iso_val')
+        self.add(key='AnisotropicVal',              tag_name='Anisotropic_val',                 var_name='aniso_val')
+        self.add(key='RhombicVal',                  tag_name='Rhombic_val',                     var_name='rhombic_val')
+        self.add(key='EulerAngleAlpha',             tag_name='Euler_angle_alpha',               var_name='euler_alpha')
+        self.add(key='EulerAngleBeta',              tag_name='Euler_angle_beta',                var_name='euler_beta')
+        self.add(key='EulerAngleGamma',             tag_name='Euler_angle_gamma',               var_name='euler_gamma')
+        self.add(key='IsotropicComp11Val',          tag_name='Isotropic_comp_1_1_val',          var_name='iso_comp_11')
+        self.add(key='IsotropicComp22Val',          tag_name='Isotropic_comp_2_2_val',          var_name='iso_comp_22')
+        self.add(key='IsotropicComp33Val',          tag_name='Isotropic_comp_3_3_val',          var_name='iso_comp_33')
+        self.add(key='AntiSymComp12Val',            tag_name='Anti_sym_comp_1_2_val',           var_name='antisym_comp_12')
+        self.add(key='AntiSymComp13Val',            tag_name='Anti_sym_comp_1_3_val',           var_name='antisym_comp_13')
+        self.add(key='AntiSymComp23Val',            tag_name='Anti_sym_comp_2_3_val',           var_name='antisym_comp_23')
+        self.add(key='SymTracelessComp11Val',       tag_name='Sym_traceless_comp_1_1_val',      var_name=None)
+        self.add(key='SymTracelessComp12Val',       tag_name='Sym_traceless_comp_1_2_val',      var_name=None)
+        self.add(key='SymTracelessComp13Val',       tag_name='Sym_traceless_comp_1_3_val',      var_name=None)
+        self.add(key='SymTracelessComp22Val',       tag_name='Sym_traceless_comp_2_2_val',      var_name=None)
+        self.add(key='SymTracelessComp23Val',       tag_name='Sym_traceless_comp_2_3_val',      var_name=None)
+        self.add(key='ReduceableMatrix11Val',       tag_name='Reduceable_matrix_1_1_val',       var_name='tensor_11')
+        self.add(key='ReduceableMatrix12Val',       tag_name='Reduceable_matrix_1_2_val',       var_name='tensor_12')
+        self.add(key='ReduceableMatrix13Val',       tag_name='Reduceable_matrix_1_3_val',       var_name='tensor_13')
+        self.add(key='ReduceableMatrix21Val',       tag_name='Reduceable_matrix_2_1_val',       var_name='tensor_21')
+        self.add(key='ReduceableMatrix22Val',       tag_name='Reduceable_matrix_2_2_val',       var_name='tensor_22')
+        self.add(key='ReduceableMatrix23Val',       tag_name='Reduceable_matrix_2_3_val',       var_name='tensor_23')
+        self.add(key='ReduceableMatrix31Val',       tag_name='Reduceable_matrix_3_1_val',       var_name='tensor_31')
+        self.add(key='ReduceableMatrix32Val',       tag_name='Reduceable_matrix_3_2_val',       var_name='tensor_32')
+        self.add(key='ReduceableMatrix33Val',       tag_name='Reduceable_matrix_3_3_val',       var_name='tensor_33')
+        self.add(key='AuthEntityAssemblyID',        tag_name='Auth_entity_assembly_ID',         var_name=None)
+        self.add(key='AuthSeqID',                   tag_name='Auth_seq_ID',                     var_name=None)
+        self.add(key='AuthCompID',                  tag_name='uth_comp_ID',                     var_name=None)
+        self.add(key='AuthAtomID',                  tag_name='Auth_atom_ID',                    var_name=None)
+        self.add(key='EntryID',                     tag_name='Entry_ID',                        var_name=None)
+        self.add(key='TensorListID',                tag_name='Tensor_list_ID',                  var_name='count_list')
