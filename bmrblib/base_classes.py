@@ -341,5 +341,9 @@ class TagCategoryFree(TagCategory):
         # Initialise the baseclass.
         super(TagCategoryFree, self).__init__(sf)
 
+        # Add some generic saveframe category tag.
+        self.add(key='SfCategory',  var_name='sf_label',        tag_name='Sf_category')
+        self.add(key='SfFramecode', var_name='sf_framecode',    tag_name='Sf_framecode')
+
         # Database table names to class instance variables.
         self.data_to_var_name.append(['SfCategory',         'sf_label'])
