@@ -227,6 +227,10 @@ class TagCategory(object):
             # The data.
             data = tagtable.tagvalues[tagtable.tagnames.index(full_tag_name)]
 
+            # Free tagtable data (collapse the list).
+            if self.free:
+                data = data[0]
+
             # Set the data.
             setattr(self.sf, var_name, data)
 
