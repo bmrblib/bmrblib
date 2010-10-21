@@ -327,12 +327,15 @@ class TagCategory(TagTranslationTable):
         # Loop over the keys of the class dictionary.
         for key in self._key_list:
             # The tag names and values (skipping entries with no corresponding variable).
-            if self[key].var_name != None and hasattr(self.sf, self[key].var_name):
+            if self[key].var_name != None:
                 # The name (adding the tag prefix).
                 tag_names.append(self.tag_prefix + self[key].tag_name)
 
                 # The value.
-                val = getattr(self.sf, self[key].var_name)
+                if hasattr(self.sf, self[key].var_name):
+                    val = getattr(self.sf, self[key].var_name)
+                else:
+                    val = translate(None)
 
                 # Convert to a list, if necessary.
                 if not isinstance(val, list):
