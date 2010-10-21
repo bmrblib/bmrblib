@@ -120,6 +120,16 @@ class CategoryList(list):
 class TagTranslationTable(dict):
     """A special dictionary object for creating the tag translation tables."""
 
+    def __init__(self):
+        """Set up the table."""
+
+        # Initialise the baseclass.
+        super(TagTranslationTable, self).__init__()
+
+        # The key ordering.
+        self._key_list = []
+
+
     def add(self, key, var_name=None, tag_name=None, allowed=None, missing=True):
         """Add an entry to the translation table.
 
@@ -137,6 +147,9 @@ class TagTranslationTable(dict):
 
         # Add the tag object.
         self[key] = TagObject(var_name=var_name, tag_name=tag_name, allowed=allowed, missing=missing)
+
+        # Add the key to the ordered list.
+        self._key_list.append(key)
 
 
 
@@ -173,6 +186,9 @@ class TagCategory(TagTranslationTable):
         @type sf:   saveframe instance
         """
 
+        # Initialise the baseclass.
+        super(TagCategory, self).__init__()
+
         # Place the saveframe and tag info into the namespace.
         self.sf = sf
 
@@ -197,7 +213,7 @@ class TagCategory(TagTranslationTable):
         tag_values = []
 
         # Loop over the keys of the class dictionary.
-        for key in self.keys():
+        for key in self._key_list:
             # The tag names and values (skipping entries with no corresponding variable).
             if self[key].var_name != None and hasattr(self.sf, self[key].var_name):
                 # The name (adding the tag prefix).
