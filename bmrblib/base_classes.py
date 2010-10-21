@@ -148,7 +148,7 @@ class BaseSaveframe:
             found = False
             for index in range(len(datanode.tagtables[0].tagnames)):
                 # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.tag_categories[0].data_to_tag_name_full['SfCategory']:
+                if datanode.tagtables[0].tagnames[index] == self.tag_categories[0].tag_prefix + self.tag_categories[0]['SfCategory'].tag_name:
                     # Then the tag value.
                     if datanode.tagtables[0].tagvalues[index][0] == sf_name:
                         found = True
@@ -222,7 +222,7 @@ class TagTranslationTable(dict):
         """
 
         # Add the tag object.
-        self[key] = TagObject(var_name=var_name, tag_name=tag_name, allowed=allowed, missing=missing)
+        self[key] = TagObject(self, var_name=var_name, tag_name=tag_name, allowed=allowed, missing=missing)
 
         # Add the key to the ordered list.
         self._key_list.append(key)
@@ -232,17 +232,31 @@ class TagTranslationTable(dict):
 class TagObject(object):
     """An object for filling the translation table."""
 
-    def __init__(self, var_name=None, tag_name=None, allowed=None, missing=True):
+    def __init__(self, category, var_name=None, tag_name=None, allowed=None, missing=True):
         """Setup the internal variables.
 
         This stores the variable name, BMRB NMR-STAR tag name, a list of allowable values, the missing flag, and any other tag specific information corresponding to the key.
         """
+
+        # Store the tag category object.
+        self.category = category
 
         # The default values.
         self.allowed = allowed
         self.missing = missing
         self.tag_name = tag_name
         self.var_name = var_name
+
+
+    def tag_name_full(self):
+        """Add the prefix to the tag name and return the full tag name.
+
+        @return:    The full tag name with prefix.
+        @rtype:     str
+        """
+
+        # Return the name.
+        return self.category.tag_prefix + self.tag_name
 
 
 
@@ -378,25 +392,23 @@ class TagCategory(TagTranslationTable):
         """
 
         # Loop over the variables.
-        for i in range(len(self.data_to_var_name)):
-            # The database table name.
-            table_name = self.data_to_var_name[i][0]
+        for key in self._key_list:
+            # No corresponding tag in the tagtable.
+            if self[key].tag_name_full() not in tagtable.tagnames:
+                continue
 
-            # The variable name.
-            var_name = self.data_to_var_name[i][1]
-
-            # The full tag name.
-            full_tag_name = self.data_to_tag_name_full[table_name]
+            # Find the index of the tag.
+            index = tagtable.tagnames.index(self[key].tag_name_full())
 
             # The data.
-            data = tagtable.tagvalues[tagtable.tagnames.index(full_tag_name)]
+            data = tagtable.tagvalues[index]
 
             # Free tagtable data (collapse the list).
             if self.free:
                 data = data[0]
 
             # Set the data.
-            setattr(self.sf, var_name, data)
+            setattr(self.sf, self[key].var_name, data)
 
 
     def generate_data_ids(self):
