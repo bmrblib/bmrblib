@@ -105,7 +105,7 @@ class BaseSaveframe:
                 self.data_ids = translate(ids)
 
         # Initialise the save frame.
-        self.frame = SaveFrame(title=self.sf_label)
+        self.frame = SaveFrame(title=self.create_title())
 
         # Create the tag categories.
         for i in range(len(self.tag_categories)):
@@ -114,6 +114,16 @@ class BaseSaveframe:
         # Add the saveframe to the data nodes.
         self.datanodes.append(self.frame)
 
+
+    def create_title(self):
+        """Create the saveframe title.
+
+        @return:    The title.
+        @rtype:     str
+        """
+
+        # Build and return the title.
+        return self.sf_label + '_' + self.count_str
 
 
     def extract_data(self, datanode):
