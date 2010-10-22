@@ -77,30 +77,62 @@ def no_missing(data, name):
         raise NameError("Data is missing from the " + name + '.')
 
 
-def translate(data):
-    """Translate all None values into the '?' string.
+def translate(data, format='str', reverse=False):
+    """Translate all values back-and-forth between Python structures and NMR-STAR strings.
 
-    @param data:    The data to translate.
-    @type data:     anything
+    @param data:        The data to translate.
+    @type data:         anything
+    @keyword format:    The format to convert to.  This can be 'str', 'int', or 'float'.
+    @type format:       str
     """
 
-    # List data (including numpy arrays).
-    if isinstance(data, list) or isinstance(data, ndarray):
-        # Loop over the data.
-        new_data = []
-        for i in range(len(data)):
-            if data[i] == None or data[i] == 'None':
-                new_data.append('?')
-            else:
-                new_data.append(str(data[i]))
+    # Conversion function.
+    if format == 'str':
+        convert = str
+    elif format == 'int':
+        convert = int
+    elif format == 'float':
+        convert = float
 
-    # None.
-    elif data == None:
-        new_data = '?'
+    # From Python to NMR-STAR.
+    if not reverse:
+        # List data (including numpy arrays).
+        if isinstance(data, list) or isinstance(data, ndarray):
+            # Loop over the data.
+            new_data = []
+            for i in range(len(data)):
+                if data[i] == None or data[i] == 'None':
+                    new_data.append('?')
+                else:
+                    new_data.append(convert(data[i]))
 
-    # Otherwise don't do anything (except convert to string).
+        # None.
+        elif data == None:
+            new_data = '?'
+
+        # Otherwise normal conversion.
+        else:
+            new_data = convert(data)
+
+    # From NMR-STAR to Python.
     else:
-        new_data = str(data)
+        # List data.
+        if isinstance(data, list):
+            # Loop over the data.
+            new_data = []
+            for i in range(len(data)):
+                if data[i] == '?':
+                    new_data.append(None)
+                else:
+                    new_data.append(convert(data[i]))
+
+        # None.
+        elif data == '?':
+            new_data = None
+
+        # Otherwise normal conversion.
+        else:
+            new_data = convert(data)
 
     # Return the translated result.
     return new_data
