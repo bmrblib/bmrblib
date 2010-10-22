@@ -124,14 +124,45 @@ class ModelFree(TagCategory):
         # Initialise the baseclass.
         super(ModelFree, self).__init__(sf)
 
+        # The list of allowed model-free models.
+        allowed_models = ['',
+                          'Rex',
+                          'S2',
+                          'S2, te',
+                          'S2, Rex',
+                          'S2, te, Rex',
+                          'S2f, S2, ts',
+                          'S2f, S2s, ts',
+                          'S2f, tf, S2, ts',
+                          'S2f, tf, S2s, ts',
+                          'S2f, S2, ts, Rex',
+                          'S2f, S2s, ts, Rex',
+                          'S2f, tf, S2, ts, Rex',
+                          'S2f, tf, S2s, ts, Rex'
+                          'tm',
+                          'tm, Rex',
+                          'tm, S2',
+                          'tm, S2, te',
+                          'tm, S2, Rex',
+                          'tm, S2, te, Rex',
+                          'tm, S2f, S2, ts',
+                          'tm, S2f, S2s, ts',
+                          'tm, S2f, tf, S2, ts',
+                          'tm, S2f, tf, S2s, ts',
+                          'tm, S2f, S2, ts, Rex',
+                          'tm, S2f, S2s, ts, Rex',
+                          'tm, S2f, tf, S2, ts, Rex',
+                          'tm, S2f, tf, S2s, ts, Rex'
+        ]
+
         # Add the tag info.
         self.add(key='ModelFreeID',         tag_name='id',                          var_name='data_ids')
         self.add(key='AssemblyAtomID',      tag_name='Assembly_atom_ID',            var_name='assembly_atom_ids')
         self.add(key='EntityAssemblyID',    tag_name='Entity_assembly_ID',          var_name='entity_assembly_ids')
-        self.add(key='EntityID',            tag_name='Entity_ID',                   var_name='entity_ids')
-        self.add(key='CompIndexID',         tag_name='Residue_seq_code',            var_name='res_nums')
-        self.add(key='CompID',              tag_name='Residue_label',               var_name='res_names')
-        self.add(key='AtomID',              tag_name='Atom_name',                   var_name='atom_names')
+        self.add(key='EntityID',            tag_name='Entity_ID',                   var_name='entity_ids',          missing=False)
+        self.add(key='CompIndexID',         tag_name='Residue_seq_code',            var_name='res_nums',            missing=False)
+        self.add(key='CompID',              tag_name='Residue_label',               var_name='res_names',           missing=False)
+        self.add(key='AtomID',              tag_name='Atom_name',                   var_name='atom_names',          missing=False)
         self.add(key='AtomType',            tag_name='Atom_type',                   var_name='atom_types')
         self.add(key='AtomIsotopeNumber',   tag_name='Atom_isotope_number',         var_name='isotope')
         self.add(key='S2Val',               tag_name='S2_value',                    var_name='s2')
@@ -140,6 +171,8 @@ class ModelFree(TagCategory):
         self.add(key='S2fValErr',           tag_name='S2f_value_fit_error',         var_name='s2f_err')
         self.add(key='S2sVal',              tag_name='S2s_value',                   var_name='s2s')
         self.add(key='S2sValErr',           tag_name='S2s_value_fit_error',         var_name='s2s_err')
+        self.add(key='LocalTauCVal',        tag_name=None,                          var_name=None)
+        self.add(key='LocalTauCValErr',     tag_name=None,                          var_name=None)
         self.add(key='TauEVal',             tag_name='Tau_e_value',                 var_name='te')
         self.add(key='TauEValErr',          tag_name='Tau_e_value_fit_error',       var_name='te_err')
         self.add(key='TauFVal',             tag_name='Tau_f_value',                 var_name='tf')
@@ -149,4 +182,4 @@ class ModelFree(TagCategory):
         self.add(key='RexVal',              tag_name='Rex_value',                   var_name='rex')
         self.add(key='RexValErr',           tag_name='Rex_value_fit_error',         var_name='rex_err')
         self.add(key='ChiSquaredVal',       tag_name='SSE_val',                     var_name='chi2')
-        self.add(key='ModelFit',            tag_name='Model_fit',                   var_name='model_fit')
+        self.add(key='ModelFit',            tag_name='Model_fit',                   var_name='model_fit',   allowed=allowed_models)

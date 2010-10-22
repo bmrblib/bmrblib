@@ -117,31 +117,31 @@ class ModelFree_v3_1(ModelFree):
         # The category name.
         self.tag_category_label = 'Model_free'
 
-        # Add the tag info.
-        self.add(key='ModelFreeID',         tag_name='ID',                      var_name='data_ids')
-        self.add(key='AssemblyAtomID',      tag_name='Assembly_atom_ID',        var_name='assembly_atom_ids')
-        self.add(key='EntityAssemblyID',    tag_name='Entity_assembly_ID',      var_name='entity_assembly_ids')
-        self.add(key='EntityID',            tag_name='Entity_ID',               var_name='entity_ids')
-        self.add(key='CompIndexID',         tag_name='Comp_index_ID',           var_name='res_nums')
-        self.add(key='CompID',              tag_name='Comp_ID',                 var_name='res_names')
-        self.add(key='AtomID',              tag_name='Obs_atom_ID',             var_name='atom_names')
-        self.add(key='AtomType',            tag_name='Obs_atom_type',           var_name='atom_types')
-        self.add(key='AtomIsotopeNumber',   tag_name='Obs_atom_isotope_number', var_name='isotope')
-        self.add(key='S2Val',               tag_name='S2_val',                  var_name='s2')
-        self.add(key='S2ValErr',            tag_name='S2_val_err',              var_name='s2_err')
-        self.add(key='S2fVal',              tag_name='S2f_val',                 var_name='s2f')
-        self.add(key='S2fValErr',           tag_name='S2f_val_err',             var_name='s2f_err')
-        self.add(key='S2sVal',              tag_name='S2s_val',                 var_name='s2s')
-        self.add(key='S2sValErr',           tag_name='S2s_val_err',             var_name='s2s_err')
-        self.add(key='LocalTauCVal',        tag_name='Local_tau_c_val',         var_name='local_tc')
-        self.add(key='LocalTauCValErr',     tag_name='Local_tau_c_val_err',     var_name='local_tc_err')
-        self.add(key='TauEVal',             tag_name='Tau_e_val',               var_name='te')
-        self.add(key='TauEValErr',          tag_name='Tau_e_val_err',           var_name='te_err')
-        self.add(key='TauFVal',             tag_name='Tau_f_val',               var_name='tf')
-        self.add(key='TauFValErr',          tag_name='Tau_f_val_err',           var_name='tf_err')
-        self.add(key='TauSVal',             tag_name='Tau_s_val',               var_name='ts')
-        self.add(key='TauSValErr',          tag_name='Tau_s_val_err',           var_name='ts_err')
-        self.add(key='RexVal',              tag_name='Rex_val',                 var_name='rex')
-        self.add(key='RexValErr',           tag_name='Rex_val_err',             var_name='rex_err')
-        self.add(key='ChiSquaredVal',       tag_name='Chi_squared_val',         var_name='chi2')
-        self.add(key='ModelFit',            tag_name='Model_fit',               var_name='model_fit')
+        # Change the tag names.
+        self['ModelFreeID'].tag_name =          'ID'
+        self['CompIndexID'].tag_name =          'Comp_index_ID'
+        self['CompID'].tag_name =               'Comp_ID'
+        self['AtomID'].tag_name =               'Obs_atom_ID'
+        self['AtomType'].tag_name =             'Obs_atom_type'
+        self['AtomIsotopeNumber'].tag_name =    'Obs_atom_isotope_number'
+        self['S2Val'].tag_name =                'S2_val'
+        self['S2ValErr'].tag_name =             'S2_val_err'   
+        self['S2fVal'].tag_name =               'S2f_val'      
+        self['S2fValErr'].tag_name =            'S2f_val_err'  
+        self['S2sVal'].tag_name =               'S2s_val'      
+        self['S2sValErr'].tag_name =            'S2s_val_err'  
+        self['TauEVal'].tag_name =              'Tau_e_val'
+        self['TauEValErr'].tag_name =           'Tau_e_val_err'
+        self['TauFVal'].tag_name =              'Tau_f_val'
+        self['TauFValErr'].tag_name =           'Tau_f_val_err'
+        self['TauSVal'].tag_name =              'Tau_s_val'
+        self['TauSValErr'].tag_name =           'Tau_s_val_err'
+        self['RexVal'].tag_name =               'Rex_val'
+        self['RexValErr'].tag_name =            'Rex_val_err'
+        self['ChiSquaredVal'].tag_name =        'Chi_squared_val'    
+        
+        # Set up the local_tm structures.
+        self['LocalTauCVal'].tag_name =         'Local_tau_c_val'
+        self['LocalTauCVal'].var_name =         'local_tc'
+        self['LocalTauCValErr'].tag_name =      'Local_tau_c_val_err'
+        self['LocalTauCValErr'].var_name =      'local_tc_err'
