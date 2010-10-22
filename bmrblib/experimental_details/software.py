@@ -25,6 +25,9 @@
 For example, see http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFramePage.html#software
 """
 
+# Python module imports.
+from string import lower
+
 # relax module imports.
 from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 
@@ -44,6 +47,15 @@ class SoftwareSaveframe(BaseSaveframe):
         self.tag_categories.append(Task(self))
         self.tag_categories.append(Vendor(self))
 
+
+    def create_title(self):
+        """Create a special software saveframe title.
+
+        @return:    The title.
+        @rtype:     str
+        """
+
+        return lower(self.name) + '_' + self.sf_label + '_' + self.count_str
 
 
 class Software(TagCategoryFree):
