@@ -57,6 +57,9 @@ class BaseSaveframe:
         """Add data to the saveframe.
 
         If the keywords are within the tag dictionary structure as the variable name, then the data will be checked, translated and stored in that variable.  If not, then a warning will be given.
+
+        @return:    The saveframe count.
+        @rtype:     int
         """
 
         # Reset all data structures.
@@ -132,6 +135,9 @@ class BaseSaveframe:
 
         # Add the saveframe to the data nodes.
         self.datanodes.append(self.frame)
+
+        # Return the saveframe count.
+        return self.count
 
 
     def create_title(self):
