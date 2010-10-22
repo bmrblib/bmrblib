@@ -443,6 +443,10 @@ class TagCategory(TagTranslationTable):
         tag_names = []
         tag_values = []
 
+        # Empty tag category.
+        if self.is_empty():
+            return
+
         # Loop over the keys of the class dictionary.
         for key in self._key_list:
             # The tag names and values (skipping entries with no corresponding variable).
@@ -533,6 +537,17 @@ class TagCategory(TagTranslationTable):
 
         # The data ID values.
         return range(1, N+1)
+
+
+    def is_empty(self):
+        """Dummy method for check if the tag category is empty.
+
+        @return:    The state of emptiness (False).
+        @rtype:     bool
+        """
+
+        # Not empty.
+        return False
 
 
     def tag_setup(self, tag_category_label=None, sep=None):
