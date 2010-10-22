@@ -27,9 +27,6 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#
 
 # relax module imports.
 from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
-from bmrblib.misc import translate
-from bmrblib.pystarlib.SaveFrame import SaveFrame
-from bmrblib.pystarlib.TagTable import TagTable
 
 
 class CitationsSaveframe(BaseSaveframe):

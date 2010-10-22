@@ -30,9 +30,6 @@ from numpy import array
 
 # relax module imports.
 from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
-from bmrblib.misc import no_missing, translate
-from bmrblib.pystarlib.SaveFrame import SaveFrame
-from bmrblib.pystarlib.TagTable import TagTable
 
 
 class TensorSaveframe(BaseSaveframe):
