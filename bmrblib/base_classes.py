@@ -62,6 +62,17 @@ class BaseSaveframe:
         # Reset all data structures.
         self.reset()
 
+        # First set default values.
+        for cat in self.tag_categories:
+            # Loop over the keys.
+            for key in cat._key_list:
+                # No variable or no default value.
+                if not cat[key].var_name or not cat[key].default:
+                    continue
+
+                # Set the default.
+                setattr(self, cat[key].var_name, translate(cat[key].default))
+
         # Loop over the keywords.
         for name, val in keywords.items():
             # Get the tag object.
@@ -262,7 +273,7 @@ class TagTranslationTable(dict):
         self._key_list = []
 
 
-    def add(self, key, var_name=None, tag_name=None, allowed=None, missing=True):
+    def add(self, key, var_name=None, tag_name=None, allowed=None, default=None, missing=True):
         """Add an entry to the translation table.
 
         @keyword key:       The dictionary key.  This is also the BMRB NMR-STAR database table name.
@@ -273,6 +284,8 @@ class TagTranslationTable(dict):
         @type tag_name:     None or str
         @keyword allowed:   A list of allowable values for the data.
         @type allowed:      None or list
+        @keyword default:   The default value.
+        @type default:      anything
         @keyword missing:   A flag which if True will allow the data to be set to None.
         @type missing:      bool
         """
@@ -283,11 +296,12 @@ class TagTranslationTable(dict):
             self[key].missing = missing
             self[key].tag_name = tag_name
             self[key].var_name = var_name
+            self[key].default = default
 
         # Otherwise add a new object.
         else:
             # Add the tag object.
-            self[key] = TagObject(self, var_name=var_name, tag_name=tag_name, allowed=allowed, missing=missing)
+            self[key] = TagObject(self, var_name=var_name, tag_name=tag_name, allowed=allowed, default=default, missing=missing)
 
             # Add the key to the ordered list.
             self._key_list.append(key)
@@ -297,10 +311,23 @@ class TagTranslationTable(dict):
 class TagObject(object):
     """An object for filling the translation table."""
 
-    def __init__(self, category, var_name=None, tag_name=None, allowed=None, missing=True):
+    def __init__(self, category, var_name=None, tag_name=None, allowed=None, default=None, missing=True):
         """Setup the internal variables.
 
         This stores the variable name, BMRB NMR-STAR tag name, a list of allowable values, the missing flag, and any other tag specific information corresponding to the key.
+
+        @param category:    The parent tag category class object.
+        @type category:     TagTranslationTable instance
+        @keyword var_name:  The saveframe variable name corresponding to the key.
+        @type var_name:     None or str
+        @keyword tag_name:  The BMRB NMR-STAR tag name corresponding to the key.
+        @type tag_name:     None or str
+        @keyword allowed:   A list of allowable values for the data.
+        @type allowed:      None or list
+        @keyword default:   The default value.
+        @type default:      anything
+        @keyword missing:   A flag which if True will allow the data to be set to None.
+        @type missing:      bool
         """
 
         # Store the tag category object.
@@ -311,6 +338,7 @@ class TagObject(object):
         self.missing = missing
         self.tag_name = tag_name
         self.var_name = var_name
+        self.default = default
 
 
     def tag_name_full(self):
