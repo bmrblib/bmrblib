@@ -164,11 +164,11 @@ class BaseSaveframe:
 
 
     def extract_data(self, datanode):
-        """Read all the tensor tags from the datanodes.
+        """Read all the tags from the datanodes.
 
-        @keyword datanode:  The tensor datanode.
+        @keyword datanode:  The datanode.
         @type datanode:     Datanode instance
-        @return:            The tensor data.
+        @return:            The data.
         @rtype:             tuple
         """
 
@@ -443,7 +443,7 @@ class TagCategory(TagTranslationTable):
 
 
     def create(self):
-        """Create the TensorList tag category."""
+        """Create the tag category."""
 
         # Init.
         self.tag_setup()
@@ -504,7 +504,7 @@ class TagCategory(TagTranslationTable):
     def extract_tag_data(self, tagtable):
         """Extract all of the tag data from the tagtable, placing it into the designated variable names.
 
-        @param tagtable:    The Tensor tagtable.
+        @param tagtable:    The tagtable.
         @type tagtable:     Tagtable instance
         """
 
