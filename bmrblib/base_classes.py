@@ -77,8 +77,13 @@ class BaseSaveframe:
         for name, val in keywords.items():
             # Get the tag object.
             info = self.tag_categories.get_tag(name)
+
+            # No corresponding tag, so set as a class instance variable and move to the next keyword.
             if not info:
+                setattr(self, name, val)
                 continue
+
+            # Unpack.
             cat_index, key, obj = info
 
             # Check that a value has been supplied.
@@ -258,9 +263,6 @@ class CategoryList(list):
             for key, obj in self[i].items():
                 if var_name == obj.var_name:
                     return i, key, obj
-
-        # Warning.
-        warn(Warning("The tag object possessing the variable name '%s' could not be found." % var_name))
 
 
 
