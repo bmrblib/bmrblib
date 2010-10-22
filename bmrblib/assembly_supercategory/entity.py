@@ -59,7 +59,7 @@ class Entity(TagCategoryFree):
         super(Entity, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='EntityID',                tag_name='ID',                          var_name='count_str')
+        self.add(key='EntityID',                tag_name='ID',                          var_name='count_str',       format='int')
         self.add(key='Name',                    tag_name='Name',                        var_name='mol_name')
         self.add(key='Type',                    tag_name='Type',                        var_name='mol_type')
         self.add(key='PolymerType',             tag_name='Polymer_type',                var_name='polymer_type',    allowed=['DNA/RNA hybrid', 'polydeoxyribonucleotide', 'polypeptide(D)', 'polypeptide(L)', 'polyribonucleotide', 'polysaccharide(D)', 'polysaccharide(L)'])
@@ -82,6 +82,6 @@ class EntityCompIndex(TagCategory):
         super(EntityCompIndex, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='EntityCompIndexID',   tag_name='ID',          var_name='res_nums')
+        self.add(key='EntityCompIndexID',   tag_name='ID',          var_name='res_nums',    format='int')
         self.add(key='CompID',              tag_name='Comp_ID',     var_name='res_names')
-        self.add(key='EntityID',            tag_name='Entity_ID',   var_name='count_str')
+        self.add(key='EntityID',            tag_name='Entity_ID',   var_name='count_str',   format='int')

@@ -60,10 +60,10 @@ class ChemShiftAnisotropy(TagCategoryFree):
         super(ChemShiftAnisotropy, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='ChemShiftAnisotropyID',       tag_name='ID',                         var_name='count_str')
-        self.add(key='DataFileName',                tag_name='Data_file_name',             var_name='file_name')
-        self.add(key='SampleConditionListLabel',    tag_name='Sample_conditions_label',    var_name='sample_cond_list_label',  default='$conditions_1')
-        self.add(key='ValUnits',                    tag_name='Val_units',                  var_name='units',                   default='ppm')
+        self.add(key='ChemShiftAnisotropyID',       tag_name='ID',                      var_name='count_str',               format='int')
+        self.add(key='DataFileName',                tag_name='Data_file_name',          var_name='file_name')
+        self.add(key='SampleConditionListLabel',    tag_name='Sample_conditions_label', var_name='sample_cond_list_label',  default='$conditions_1')
+        self.add(key='ValUnits',                    tag_name='Val_units',               var_name='units',                   default='ppm')
 
 
 
@@ -104,16 +104,16 @@ class CSAnisotropy(TagCategory):
         super(CSAnisotropy, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='CSAnisotropyID',          tag_name='ID',                          var_name='data_ids')
+        self.add(key='CSAnisotropyID',          tag_name='ID',                          var_name='data_ids',            format='int')
         self.add(key='AssemblyAtomID',          tag_name='Assembly_atom_ID',            var_name='assembly_atom_ids')
         self.add(key='EntityAssemblyID',        tag_name='Entity_assembly_ID',          var_name='entity_assembly_ids')
-        self.add(key='EntityID',                tag_name='Entity_ID',                   var_name='entity_ids')
-        self.add(key='CompIndexID',             tag_name='Residue_seq_code',            var_name='res_nums')
+        self.add(key='EntityID',                tag_name='Entity_ID',                   var_name='entity_ids',          format='int')
+        self.add(key='CompIndexID',             tag_name='Residue_seq_code',            var_name='res_nums',            format='int')
         self.add(key='SeqID',                   tag_name='Seq_ID',                      var_name='seq_id')
         self.add(key='CompID',                  tag_name='Residue_label',               var_name='res_names')
         self.add(key='AtomID',                  tag_name='Atom_name',                   var_name='atom_names')
         self.add(key='AtomType',                tag_name='Atom_type',                   var_name='atom_types')
-        self.add(key='AtomIsotopeNumber',       tag_name='Atom_isotope_number',         var_name='isotope')
-        self.add(key='Val',                     tag_name='value',                       var_name='csa')
-        self.add(key='ValErr',                  tag_name='value_error',                 var_name='csa_error')
+        self.add(key='AtomIsotopeNumber',       tag_name='Atom_isotope_number',         var_name='isotope',             format='int')
+        self.add(key='Val',                     tag_name='value',                       var_name='csa',                 format='float')
+        self.add(key='ValErr',                  tag_name='value_error',                 var_name='csa_error',           format='float')
         self.add(key='ChemShiftAnisotropyID',   tag_name='Chem_shift_anisotropy_ID',    var_name='count_str')
