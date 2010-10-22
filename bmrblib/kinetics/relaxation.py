@@ -115,7 +115,7 @@ class Relaxation:
             self.heteronucl_NOEs.add(**keywords)
 
 
-    def _loop(self):
+    def loop(self):
         """Generator method for looping over and returning all relaxation data."""
 
         # The NOE data.
