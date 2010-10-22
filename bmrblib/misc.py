@@ -27,28 +27,6 @@ from numpy import ndarray
 from warnings import warn
 
 
-class MissingSaveframe:
-    """Special class for when BMRB saveframes are non-existent in certain NMR-STAR versions."""
-
-    def __init__(self, name):
-        """Initialise the special class.
-
-        @param name:    The name of the missing Saveframe.
-        @type name:     str
-        """
-
-        # Store the arg.
-        self.name = name
-
-
-    def add(self, *args, **keywords):
-        """Special function for giving a warning."""
-
-        # The warning.
-        warn(Warning("The %s saveframe does not exist in this NMR-STAR version." % self.name))
-
-
-
 def no_missing(data, name):
     """Check that there are no None values in the data.
 

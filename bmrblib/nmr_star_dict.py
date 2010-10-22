@@ -28,11 +28,11 @@ http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
 
 # relax module imports.
 from bmrblib.assembly_supercategory.entity import EntitySaveframe
+from bmrblib.base_classes import MissingSaveframe
 from bmrblib.citations.citations import CitationsSaveframe
 from bmrblib.experimental_details.method import MethodSaveframe
 from bmrblib.experimental_details.software import SoftwareSaveframe
 from bmrblib.kinetics.relaxation import Relaxation
-from bmrblib.misc import MissingSaveframe
 from bmrblib.NMR_parameters.chem_shift_anisotropy import ChemShiftAnisotropySaveframe
 from bmrblib.thermodynamics.model_free import ModelFreeSaveframe
 from bmrblib.pystarlib.File import File
