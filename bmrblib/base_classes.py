@@ -304,11 +304,16 @@ class TagTranslationTable(dict):
 
         # The key already exists.
         if key in self._key_list:
+            # Overwrite the variables.
             self[key].allowed = allowed
             self[key].missing = missing
             self[key].tag_name = tag_name
             self[key].var_name = var_name
             self[key].default = default
+
+            # Change the key ordering.
+            self._key_list.remove(key)
+            self._key_list.append(key)
 
         # Otherwise add a new object.
         else:
