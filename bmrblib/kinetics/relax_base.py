@@ -50,7 +50,7 @@ class Rx(TagCategory):
         super(Rx, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='RxID',                tag_name='ID',                                  var_name='data_ids')
+        self.add(key='RxID',                tag_name='id',                                  var_name='data_ids')
         self.add(key='AssemblyAtomID',      tag_name='Assembly_atom_ID',                    var_name='assembly_atom_ids')
         self.add(key='EntityAssemblyID',    tag_name='Entity_assembly_ID',                  var_name='entity_assembly_ids')
         self.add(key='EntityID',            tag_name='Entity_ID',                           var_name='entity_ids')

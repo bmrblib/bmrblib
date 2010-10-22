@@ -36,18 +36,15 @@ class HeteronuclT2Saveframe_v3_1(HeteronuclT2Saveframe):
         """Create the v3.1 tag categories."""
 
         # The tag category objects.
-        self.heteronuclRxlist = HeteronuclT2List_v3_1(self)
-        self.heteronuclRxexperiment = HeteronuclT2Experiment_v3_1(self)
-        self.heteronuclRxsoftware = HeteronuclT2Software_v3_1(self)
-        self.Rx = T2_v3_1(self)
+        self.tag_categories.append(HeteronuclT2List_v3_1(self))
+        self.tag_categories.append(HeteronuclT2Experiment_v3_1(self))
+        self.tag_categories.append(HeteronuclT2Software_v3_1(self))
+        self.tag_categories.append(T2_v3_1(self))
 
 
 
 class HeteronuclT2List_v3_1(HeteronuclT2List):
     """v3.1 HeteronuclT2List tag category."""
-
-    # The category name.
-    tag_category_label = 'Heteronucl_T2_list'
 
     def __init__(self, sf):
         """Setup the HeteronuclT2List_v3_1 tag category.
@@ -59,34 +56,53 @@ class HeteronuclT2List_v3_1(HeteronuclT2List):
         # Initialise the baseclass.
         super(HeteronuclT2List_v3_1, self).__init__(sf)
 
-        # Database table name to tag name.
-        self.data_to_tag_name['SfCategory'] =               'Sf_category'
-        self.data_to_tag_name['HeteronuclT2ListID'] =       'ID'
-        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_condition_list_label'
+        # The category name.
+        self.tag_category_label = 'Heteronucl_T2_list'
+
+        # Change tag names.
+        self['HeteronuclT2ListID'].tag_name =       'ID'
+        self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
 
 
 
 class HeteronuclT2Experiment_v3_1(HeteronuclT2Experiment):
     """v3.1 HeteronuclT2Experiment tag category."""
 
-    # The category name.
-    tag_category_label = 'Heteronucl_T2_experiment'
+    def __init__(self, sf):
+        """Setup the HeteronuclT2Experiment_v3_1 tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(HeteronuclT2Experiment_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Heteronucl_T2_experiment'
 
 
 
 class HeteronuclT2Software_v3_1(HeteronuclT2Software):
     """v3.1 HeteronuclT2Software tag category."""
 
-    # The category name.
-    tag_category_label = 'Heteronucl_T2_software'
+    def __init__(self, sf):
+        """Setup the HeteronuclT2Software_v3_1 tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(HeteronuclT2Software_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Heteronucl_T2_software'
 
 
 
 class T2_v3_1(T2):
     """v3.1 T2 tag category."""
-
-    # The category name.
-    tag_category_label = 'T2'
 
     def __init__(self, sf):
         """Setup the T2_v3_1 tag category.
@@ -98,10 +114,13 @@ class T2_v3_1(T2):
         # Initialise the baseclass.
         super(T2_v3_1, self).__init__(sf)
 
-        # Database table names to class instance variables.
-        self.data_to_tag_name['RxID'] =         'ID'
-        self.data_to_tag_name['CompIndexID'] =  'Comp_index_ID'
-        self.data_to_tag_name['CompID'] =       'Comp_ID'
-        self.data_to_tag_name['AtomID'] =       'Atom_ID'
-        self.data_to_tag_name['Val'] =          'Val'
-        self.data_to_tag_name['ValErr'] =       'Val_err'
+        # The category name.
+        self.tag_category_label = 'T2'
+
+        # Change tag names.
+        self['RxID'] =         'ID'
+        self['CompIndexID'] =  'Comp_index_ID'
+        self['CompID'] =       'Comp_ID'
+        self['AtomID'] =       'Atom_ID'
+        self['Val'] =          'Val'
+        self['ValErr'] =       'Val_err'
