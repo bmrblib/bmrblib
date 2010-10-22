@@ -392,14 +392,6 @@ class TagCategory(TagTranslationTable):
         # Place the saveframe and tag info into the namespace.
         self.sf = sf
 
-        # The translation tables.
-        self.data_to_var_name = []
-        self.data_to_tag_name = {}
-        self.data_to_tag_name_full = {}
-
-        # The specific variables dictionary.
-        self.variables = {}
-
         # The tag category name.
         self.tag_category_label = None
 
@@ -593,6 +585,3 @@ class TagCategoryFree(TagCategory):
         # Add some generic saveframe category tag.
         self.add(key='SfCategory',  var_name='sf_label',        tag_name='Sf_category')
         self.add(key='SfFramecode', var_name='sf_framecode',    tag_name='Sf_framecode')
-
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['SfCategory',         'sf_label'])
