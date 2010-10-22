@@ -23,7 +23,7 @@
 """The TagCategory base class."""
 
 # Python module imports.
-from numpy import ndarray
+from numpy import float64, ndarray, zeros
 from warnings import warn
 
 # relax module imports.
@@ -172,10 +172,57 @@ class BaseSaveframe:
         @rtype:             tuple
         """
 
-        # Loop over the tag categories.
-        for i in range(len(self.tag_categories)):
+        # Find the mapping between the tag categories of the NMR-STAR file and the bmrblib class.
+        mapping = self.find_mapping(datanode)
+
+        # Loop over the mapping.
+        for i in range(len(mapping)):
+            # The tag category is not present in the file.
+            if mapping[i] == None:
+                continue
+
             # Extract the data.
-            self.tag_categories[i].extract_tag_data(datanode.tagtables[i])
+            self.tag_categories[i].extract_tag_data(datanode.tagtables[mapping[i]])
+
+
+    def find_mapping(self, datanode):
+        """Determine the mapping between the tag categories of the NMR-STAR file and the bmrblib class.
+
+        @keyword datanode:  The datanode.
+        @type datanode:     Datanode instance
+        @return:            The mapping structure.
+        @rtype:             list
+        """
+
+        # Init.
+        N = len(self.tag_categories)
+        M = len(datanode.tagtables)
+        counts = zeros((N, M), float64)
+        mapping = []
+
+        # Count the tag name matches.
+        for i in range(N):
+            for j in range(M):
+                # Alias.
+                cat = self.tag_categories[i]
+                table = datanode.tagtables[j]
+
+                # Loop over the tags.
+                for key in cat.keys():
+                    for name in table.tagnames:
+                        # Check for a match.
+                        if name == cat[key].tag_name_full():
+                            counts[i, j] += 1
+
+            # The index of the maximum count.
+            if not counts[i].sum():
+                index = None
+            else:
+                index = counts[i].tolist().index(counts[i].max())
+            mapping.append(index)
+
+        # Return the mapping.
+        return mapping
 
 
     def loop(self):
