@@ -86,14 +86,6 @@ def translate(data, format='str', reverse=False):
     @type format:       str
     """
 
-    # Conversion function.
-    if format == 'str':
-        convert = str
-    elif format == 'int':
-        convert = int
-    elif format == 'float':
-        convert = float
-
     # From Python to NMR-STAR.
     if not reverse:
         # List data (including numpy arrays).
@@ -104,7 +96,7 @@ def translate(data, format='str', reverse=False):
                 if data[i] == None or data[i] == 'None':
                     new_data.append('?')
                 else:
-                    new_data.append(convert(data[i]))
+                    new_data.append(str(data[i]))
 
         # None.
         elif data == None:
@@ -112,10 +104,18 @@ def translate(data, format='str', reverse=False):
 
         # Otherwise normal conversion.
         else:
-            new_data = convert(data)
+            new_data = str(data)
 
     # From NMR-STAR to Python.
     else:
+        # Conversion function.
+        if format == 'str':
+            convert = str
+        elif format == 'int':
+            convert = int
+        elif format == 'float':
+            convert = float
+
         # List data.
         if isinstance(data, list):
             # Loop over the data.
