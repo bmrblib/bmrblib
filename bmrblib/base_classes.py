@@ -142,7 +142,10 @@ class BaseSaveframe:
         """
 
         # Build and return the title.
-        return self.sf_label + '_' + self.count_str
+        if hasattr(self, 'label'):
+            return self.label + '_' + self.count_str
+        else:
+            return self.sf_label + '_' + self.count_str
 
 
     def extract_data(self, datanode):

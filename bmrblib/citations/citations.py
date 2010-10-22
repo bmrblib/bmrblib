@@ -47,17 +47,6 @@ class CitationsSaveframe(BaseSaveframe):
         self.tag_categories.append(CitationsAuthor(self))
 
 
-    def create_title(self):
-        """Create the saveframe title.
-
-        @return:    The title.
-        @rtype:     str
-        """
-
-        # Build and return the title.
-        return self.label + '_' + self.count_str
-
-
 
 class Citations(TagCategoryFree):
     """Base class for the Citations tag category."""
