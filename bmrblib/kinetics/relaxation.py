@@ -49,8 +49,8 @@ class Relaxation:
         self.heteronucl_T2_relaxation = HeteronuclT2Saveframe(datanodes)
 
 
-    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, peak_intensity_type=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None):
-        """Add relaxation data to the data nodes.
+    def add(self, **keywords):
+        """Distribute the relaxation data to the appropriate saveframes.
 
         @keyword data_type:                 The relaxation data type (one of 'NOE', 'R1', or 'R2').
         @type data_type:                    str
@@ -107,65 +107,28 @@ class Relaxation:
         """
 
         # Pack specific the data.
-        if data_type == 'R1':
-            self.heteronucl_T1_relaxation.add(frq=frq,
-                                              entity_ids=entity_ids,
-                                              res_nums=res_nums,
-                                              res_names=res_names,
-                                              atom_names=atom_names,
-                                              isotope=isotope,
-                                              data=data,
-                                              errors=errors)
-        elif data_type == 'R2':
-            self.heteronucl_T2_relaxation.add(frq=frq,
-                                              entity_ids=entity_ids,
-                                              res_nums=res_nums,
-                                              res_names=res_names,
-                                              atom_names=atom_names,
-                                              isotope=isotope,
-                                              data=data,
-                                              errors=errors)
-        elif data_type == 'NOE':
-            self.heteronucl_NOEs.add(sample_cond_list_id=sample_cond_list_id,
-                                     sample_cond_list_label=sample_cond_list_label,
-                                     frq=frq,
-                                     details=details,
-                                     assembly_atom_ids=assembly_atom_ids,
-                                     entity_assembly_ids=entity_assembly_ids,
-                                     entity_ids=entity_ids,
-                                     res_nums=res_nums,
-                                     seq_id=seq_id,
-                                     res_names=res_names,
-                                     atom_names=atom_names,
-                                     atom_types=atom_types,
-                                     isotope=isotope,
-                                     assembly_atom_ids_2=assembly_atom_ids_2,
-                                     entity_assembly_ids_2=entity_assembly_ids_2,
-                                     entity_ids_2=entity_ids_2,
-                                     res_nums_2=res_nums_2,
-                                     seq_id_2=res_nums_2,
-                                     res_names_2=res_names_2,
-                                     atom_names_2=atom_names_2,
-                                     atom_types_2=atom_types_2,
-                                     isotope_2=isotope_2,
-                                     data=data,
-                                     errors=errors)
+        if keywords['data_type'] == 'R1':
+            self.heteronucl_T1_relaxation.add(**keywords)
+        elif keywords['data_type'] == 'R2':
+            self.heteronucl_T2_relaxation.add(**keywords)
+        elif keywords['data_type'] == 'NOE':
+            self.heteronucl_NOEs.add(**keywords)
 
 
-    def loop(self):
+    def _loop(self):
         """Generator method for looping over and returning all relaxation data."""
 
         # The NOE data.
-        for frq, entity_ids, res_nums, res_names, spin_names, val, err in self.heteronucl_NOEs.loop():
-            yield "NOE", frq, entity_ids, res_nums, res_names, spin_names, val, err
+        for data in self.heteronucl_NOEs.loop():
+            yield data
 
         # The R1 data.
-        for frq, entity_ids, res_nums, res_names, spin_names, val, err in self.heteronucl_T1_relaxation.loop():
-            yield "R1", frq, entity_ids, res_nums, res_names, spin_names, val, err
+        for data in self.heteronucl_T1_relaxation.loop():
+            yield data
 
         # The R2 data.
-        for frq, entity_ids, res_nums, res_names, spin_names, val, err in self.heteronucl_T2_relaxation.loop():
-            yield "R2", frq, entity_ids, res_nums, res_names, spin_names, val, err
+        for data in self.heteronucl_T2_relaxation.loop():
+            yield data
 
 
 
@@ -202,7 +165,7 @@ class Relaxation_v3_1(Relaxation_v3_0):
         self.auto_relaxation = AutoRelaxationSaveframe(datanodes)
 
 
-    def add(self, data_type=None, sample_cond_list_id=None, sample_cond_list_label='$conditions_1', temp_calibration=None, temp_control=None, peak_intensity_type=None, frq=None, details=None, assembly_atom_ids=None, entity_assembly_ids=None, entity_ids=None, res_nums=None, seq_id=None, res_names=None, atom_names=None, atom_types=None, isotope=None, assembly_atom_ids_2=None, entity_assembly_ids_2=None, entity_ids_2=None, res_nums_2=None, seq_id_2=None, res_names_2=None, atom_names_2=None, atom_types_2=None, isotope_2=None, data=None, errors=None):
+    def add(self, **keywords):
         """Add relaxation data to the data nodes.
 
         @keyword data_type:                 The relaxation data type (one of 'NOE', 'R1', or 'R2').
@@ -260,62 +223,18 @@ class Relaxation_v3_1(Relaxation_v3_0):
         """
 
         # Pack specific the data.
-        if data_type in ['R1', 'R2']:
-            self.auto_relaxation.add(data_type=data_type,
-                                     sample_cond_list_id=sample_cond_list_id,
-                                     sample_cond_list_label=sample_cond_list_label,
-                                     temp_calibration=temp_calibration,
-                                     temp_control=temp_control,
-                                     peak_intensity_type=peak_intensity_type,
-                                     frq=frq,
-                                     details=details,
-                                     assembly_atom_ids=assembly_atom_ids,
-                                     entity_assembly_ids=entity_assembly_ids,
-                                     entity_ids=entity_ids,
-                                     res_nums=res_nums,
-                                     seq_id=seq_id,
-                                     res_names=res_names,
-                                     atom_names=atom_names,
-                                     atom_types=atom_types,
-                                     isotope=isotope,
-                                     data=data,
-                                     errors=errors)
-        elif data_type == 'NOE':
-            self.heteronucl_NOEs.add(sample_cond_list_id=sample_cond_list_id,
-                                     sample_cond_list_label=sample_cond_list_label,
-                                     temp_calibration=temp_calibration,
-                                     temp_control=temp_control,
-                                     peak_intensity_type=peak_intensity_type,
-                                     frq=frq,
-                                     details=details,
-                                     assembly_atom_ids=assembly_atom_ids,
-                                     entity_assembly_ids=entity_assembly_ids,
-                                     entity_ids=entity_ids,
-                                     res_nums=res_nums,
-                                     seq_id=seq_id,
-                                     res_names=res_names,
-                                     atom_names=atom_names,
-                                     atom_types=atom_types,
-                                     isotope=isotope,
-                                     assembly_atom_ids_2=assembly_atom_ids_2,
-                                     entity_assembly_ids_2=entity_assembly_ids_2,
-                                     entity_ids_2=entity_ids_2,
-                                     res_nums_2=res_nums_2,
-                                     seq_id_2=seq_id_2,
-                                     res_names_2=res_names_2,
-                                     atom_names_2=atom_names_2,
-                                     atom_types_2=atom_types_2,
-                                     isotope_2=isotope_2,
-                                     data=data,
-                                     errors=errors)
+        if keywords['data_type'] in ['R1', 'R2']:
+            self.auto_relaxation.add(**keywords)
+        elif keywords['data_type'] == 'NOE':
+            self.heteronucl_NOEs.add(**keywords)
 
 
     def loop(self):
         """Generator method for looping over and returning all relaxation data."""
 
         # The NOE data.
-        for frq, entity_ids, res_nums, res_names, spin_names, val, err in self.heteronucl_NOEs.loop():
-            yield "NOE", frq, entity_ids, res_nums, res_names, spin_names, val, err
+        for data in self.heteronucl_NOEs.loop():
+            yield data
 
         # The R1 and R2 data.
         for data in self.auto_relaxation.loop():

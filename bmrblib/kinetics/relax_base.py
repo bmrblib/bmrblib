@@ -29,66 +29,10 @@ from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 class RelaxSaveframe(BaseSaveframe):
     """The heteronuclear Rx data saveframe baseclass."""
 
-    def loop(self):
-        """Loop over the Rx saveframes, yielding the relaxation data.
-
-        @return:    The relaxation data consisting of the proton frequency, residue numbers, residue
-                    names, atom names, values, and errors.
-        @rtype:     tuple of float, list of int, list of str, list of str, list of float, list of
-                    float
-        """
-
-        # Set up the tag information.
-        self.heteronuclRxlist.tag_setup()
-        self.Rx.tag_setup()
-
-        # Get the saveframe name.
-        sf_name = getattr(self, 'sf_label')
-
-        # Loop over all datanodes.
-        for datanode in self.datanodes:
-            # Find the Heteronuclear Rx saveframes via the SfCategory tag index.
-            found = False
-            for index in range(len(datanode.tagtables[0].tagnames)):
-                # First match the tag names.
-                if datanode.tagtables[0].tagnames[index] == self.heteronuclRxlist.data_to_tag_name_full['SfCategory']:
-                    # Then the tag value.
-                    if datanode.tagtables[0].tagvalues[index][0] == sf_name:
-                        found = True
-                        break
-
-            # Skip the datanode.
-            if not found:
-                continue
-
-            # Get general info.
-            frq = self.heteronuclRxlist.read(datanode.tagtables[0])
-
-            # Get the Rx info.
-            entity_ids, res_nums, res_names, atom_names, values, errors = self.Rx.read(datanode.tagtables[2])
-
-            # Yield the data.
-            yield frq, entity_ids, res_nums, res_names, atom_names, values, errors
-
 
 
 class HeteronuclRxList(TagCategoryFree):
     """Base class for the HeteronuclRxList tag categories."""
-
-    def read(self, tagtable):
-        """Extract the HeteronuclRxList tag category info.
-
-        @param tagtable:    The HeteronuclRxList tagtable.
-        @type tagtable:     Tagtable instance
-        @return:            The proton frequency in Hz.
-        @rtype:             float
-        """
-
-        # The general info.
-        frq = float(tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['SpectrometerFrequency1H'])][0]) * 1e6
-
-        # Return the data.
-        return frq
 
 
 
@@ -105,66 +49,16 @@ class Rx(TagCategory):
         # Initialise the baseclass.
         super(Rx, self).__init__(sf)
 
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['RxID',                'data_ids'])
-        self.data_to_var_name.append(['AssemblyAtomID',      'assembly_atom_ids'])
-        self.data_to_var_name.append(['EntityAssemblyID',    'entity_assembly_ids'])
-        self.data_to_var_name.append(['EntityID',            'entity_ids'])
-        self.data_to_var_name.append(['CompIndexID',         'res_nums'])
-        self.data_to_var_name.append(['SeqID',               'seq_id'])
-        self.data_to_var_name.append(['CompID',              'res_names'])
-        self.data_to_var_name.append(['AtomID',              'atom_names'])
-        self.data_to_var_name.append(['AtomType',            'atom_types'])
-        self.data_to_var_name.append(['AtomIsotopeNumber',   'isotope'])
-        self.data_to_var_name.append(['Val',                 'data'])
-        self.data_to_var_name.append(['ValErr',              'errors'])
-        self.data_to_var_name.append(['HeteronuclRxListID',  'rx_inc_list'])
-
-        # Database table name to tag name.
-        self.data_to_tag_name['RxID'] = None
-        self.data_to_tag_name['AssemblyAtomID'] = 'Assembly_atom_ID'
-        self.data_to_tag_name['EntityAssemblyID'] = 'Entity_assembly_ID'
-        self.data_to_tag_name['EntityID'] = 'Entity_ID'
-        self.data_to_tag_name['CompIndexID'] = 'Residue_seq_code'
-        self.data_to_tag_name['SeqID'] = 'Seq_ID'
-        self.data_to_tag_name['CompID'] = 'Residue_label'
-        self.data_to_tag_name['AtomID'] = 'Atom_name'
-        self.data_to_tag_name['AtomType'] = 'Atom_type'
-        self.data_to_tag_name['AtomIsotopeNumber'] = 'Atom_isotope_number'
-        self.data_to_tag_name['Val'] = self.sf.name+'_value'
-        self.data_to_tag_name['ValErr'] = self.sf.name+'_value_error'
-        self.data_to_tag_name['HeteronuclRxListID'] = 'Heteronucl_'+self.sf.name+'_list_ID'
-
-
-    def read(self, tagtable):
-        """Extract the Rx tag category info.
-
-        @param tagtable:    The Rx tagtable.
-        @type tagtable:     Tagtable instance
-        @return:            The residue numbers, residue names, atom names, values, and errors.
-        @rtype:             tuple of list of int, list of str, list of str, list of float, list of
-                            float
-        """
-
-        # The entity info.
-        entity_ids = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['EntityID'])]
-        res_nums = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompIndexID'])]
-        res_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['CompID'])]
-        atom_names = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['AtomID'])]
-        values = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['Val'])]
-        errors = tagtable.tagvalues[tagtable.tagnames.index(self.data_to_tag_name_full['ValErr'])]
-
-        # Convert the residue numbers to ints and the values and errors to floats.
-        for i in range(len(res_nums)):
-            res_nums[i] = int(res_nums[i])
-            if values[i] == '?':
-                values[i] = None
-            else:
-                values[i] = float(values[i])
-            if errors[i] == '?':
-                errors[i] = None
-            else:
-                errors[i] = float(errors[i])
-
-        # Return the data.
-        return entity_ids, res_nums, res_names, atom_names, values, errors
+        # Add the tag info.
+        self.add(key='RxID',                tag_name='ID',                                  var_name='data_ids')
+        self.add(key='AssemblyAtomID',      tag_name='Assembly_atom_ID',                    var_name='assembly_atom_ids')
+        self.add(key='EntityAssemblyID',    tag_name='Entity_assembly_ID',                  var_name='entity_assembly_ids')
+        self.add(key='EntityID',            tag_name='Entity_ID',                           var_name='entity_ids')
+        self.add(key='CompIndexID',         tag_name='Residue_seq_code',                    var_name='res_nums')
+        self.add(key='SeqID',               tag_name='Seq_ID',                              var_name='seq_id')
+        self.add(key='CompID',              tag_name='Residue_label',                       var_name='res_names')
+        self.add(key='AtomID',              tag_name='Atom_name',                           var_name='atom_names')
+        self.add(key='AtomType',            tag_name='Atom_type',                           var_name='atom_types')
+        self.add(key='AtomIsotopeNumber',   tag_name='Atom_isotope_number',                 var_name='isotope')
+        self.add(key='Val',                 tag_name=self.sf.name+'_value',                 var_name='data')
+        self.add(key='ValErr',              tag_name=self.sf.name+'_value_error',           var_name='errors')
