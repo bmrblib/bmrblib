@@ -347,7 +347,7 @@ class TagTranslationTable(dict):
         self._key_list = []
 
 
-    def add(self, key, var_name=None, tag_name=None, allowed=None, default=None, missing=True):
+    def add(self, key, var_name=None, tag_name=None, allowed=None, default=None, format='str', missing=True):
         """Add an entry to the translation table.
 
         @keyword key:       The dictionary key.  This is also the BMRB NMR-STAR database table name.
@@ -360,6 +360,8 @@ class TagTranslationTable(dict):
         @type allowed:      None or list
         @keyword default:   The default value.
         @type default:      anything
+        @keyword format:    The original python format of the data.
+        @type format:       str
         @keyword missing:   A flag which if True will allow the data to be set to None.
         @type missing:      bool
         """
@@ -372,6 +374,7 @@ class TagTranslationTable(dict):
             self[key].tag_name = tag_name
             self[key].var_name = var_name
             self[key].default = default
+            self[key].format = format
 
             # Change the key ordering.
             self._key_list.remove(key)
@@ -380,7 +383,7 @@ class TagTranslationTable(dict):
         # Otherwise add a new object.
         else:
             # Add the tag object.
-            self[key] = TagObject(self, var_name=var_name, tag_name=tag_name, allowed=allowed, default=default, missing=missing)
+            self[key] = TagObject(self, var_name=var_name, tag_name=tag_name, allowed=allowed, default=default, format=format, missing=missing)
 
             # Add the key to the ordered list.
             self._key_list.append(key)
@@ -390,7 +393,7 @@ class TagTranslationTable(dict):
 class TagObject(object):
     """An object for filling the translation table."""
 
-    def __init__(self, category, var_name=None, tag_name=None, allowed=None, default=None, missing=True):
+    def __init__(self, category, var_name=None, tag_name=None, allowed=None, default=None, format='str', missing=True):
         """Setup the internal variables.
 
         This stores the variable name, BMRB NMR-STAR tag name, a list of allowable values, the missing flag, and any other tag specific information corresponding to the key.
@@ -405,6 +408,8 @@ class TagObject(object):
         @type allowed:      None or list
         @keyword default:   The default value.
         @type default:      anything
+        @keyword format:    The original python format of the data.
+        @type format:       str
         @keyword missing:   A flag which if True will allow the data to be set to None.
         @type missing:      bool
         """
@@ -418,6 +423,7 @@ class TagObject(object):
         self.tag_name = tag_name
         self.var_name = var_name
         self.default = default
+        self.format = format
 
 
     def tag_name_full(self):
