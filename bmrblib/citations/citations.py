@@ -36,8 +36,8 @@ class CitationsSaveframe(BaseSaveframe):
     """The citations saveframe class."""
 
     # Class variables.
-    label = 'citations'
-    sf_label = 'citation'
+    label = 'citation'
+    sf_label = 'citations'
 
     def add_tag_categories(self):
         """Create the tag categories."""
@@ -45,6 +45,17 @@ class CitationsSaveframe(BaseSaveframe):
         # The tag category objects.
         self.tag_categories.append(Citations(self))
         self.tag_categories.append(CitationsAuthor(self))
+
+
+    def create_title(self):
+        """Create the saveframe title.
+
+        @return:    The title.
+        @rtype:     str
+        """
+
+        # Build and return the title.
+        return self.label + '_' + self.count_str
 
 
 
