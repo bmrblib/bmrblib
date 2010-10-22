@@ -107,7 +107,7 @@ class ModelFreeSoftware(TagCategory):
         # Add the tag info.
         self.add(key='SoftwareID',      tag_name='Software_ID',         var_name='software_ids')
         self.add(key='SoftwareLabel',   tag_name='Software_label',      var_name='software_labels')
-        self.add(key='ModelFreeListID', tag_name='Model_free_list_ID',  var_name='model_free_id')
+        self.add(key='ModelFreeListID', tag_name='Model_free_list_ID',  var_name='count_str')
 
 
 
