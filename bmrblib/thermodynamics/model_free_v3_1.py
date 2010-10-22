@@ -36,10 +36,10 @@ class ModelFreeSaveframe_v3_1(ModelFreeSaveframe):
         """Create the v3.1 tag categories."""
 
         # The tag category objects.
-        self.model_free_list = ModelFreeList_v3_1(self)
-        self.model_free_experiment = ModelFreeExperiment_v3_1(self)
-        self.model_free_software = ModelFreeSoftware_v3_1(self)
-        self.model_free = ModelFree_v3_1(self)
+        self.tag_categories.append(ModelFreeList_v3_1(self))
+        self.tag_categories.append(ModelFreeExperiment_v3_1(self))
+        self.tag_categories.append(ModelFreeSoftware_v3_1(self))
+        self.tag_categories.append(ModelFree_v3_1(self))
 
 
 
@@ -59,10 +59,9 @@ class ModelFreeList_v3_1(ModelFreeList):
         # The category name.
         self.tag_category_label = 'Model_free_list'
 
-        # Database table name to tag name.
-        self.data_to_tag_name['SfCategory'] =               'Sf_category'
-        self.data_to_tag_name['ModelFreeListID'] =          'ID'
-        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_condition_list_label'
+        # Change tag names.
+        self['ModelFreeListID'].tag_name =          'ID'
+        self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
 
 
 
@@ -118,60 +117,31 @@ class ModelFree_v3_1(ModelFree):
         # The category name.
         self.tag_category_label = 'Model_free'
 
-        # Database table names to class instance variables.
-        self.data_to_var_name = []
-        self.data_to_var_name.append(['ModelFreeID',         'data_ids'])
-        self.data_to_var_name.append(['AssemblyAtomID',      'assembly_atom_ids'])
-        self.data_to_var_name.append(['EntityAssemblyID',    'entity_assembly_ids'])
-        self.data_to_var_name.append(['EntityID',            'entity_ids'])
-        self.data_to_var_name.append(['CompIndexID',         'res_nums'])
-        self.data_to_var_name.append(['CompID',              'res_names'])
-        self.data_to_var_name.append(['AtomID',              'atom_names'])
-        self.data_to_var_name.append(['AtomType',            'atom_types'])
-        self.data_to_var_name.append(['AtomIsotopeNumber',   'isotope'])
-        self.data_to_var_name.append(['S2Val',               's2'])
-        self.data_to_var_name.append(['S2ValErr',            's2_err'])
-        self.data_to_var_name.append(['S2fVal',              's2f'])
-        self.data_to_var_name.append(['S2fValErr',           's2f_err'])
-        self.data_to_var_name.append(['S2sVal',              's2s'])
-        self.data_to_var_name.append(['S2sValErr',           's2s_err'])
-        self.data_to_var_name.append(['LocalTauCVal',        'local_tc'])
-        self.data_to_var_name.append(['LocalTauCValErr',     'local_tc_err'])
-        self.data_to_var_name.append(['TauEVal',             'te'])
-        self.data_to_var_name.append(['TauEValErr',          'te_err'])
-        self.data_to_var_name.append(['TauFVal',             'tf'])
-        self.data_to_var_name.append(['TauFValErr',          'tf_err'])
-        self.data_to_var_name.append(['TauSVal',             'ts'])
-        self.data_to_var_name.append(['TauSValErr',          'ts_err'])
-        self.data_to_var_name.append(['RexVal',              'rex'])
-        self.data_to_var_name.append(['RexValErr',           'rex_err'])
-        self.data_to_var_name.append(['ChiSquaredVal',       'chi2'])
-        self.data_to_var_name.append(['ModelFit',            'model_fit'])
-
-        # Database table name to tag name.
-        self.data_to_tag_name['ModelFreeID'] =       'ID'
-        self.data_to_tag_name['AssemblyAtomID'] =    'Assembly_atom_ID'
-        self.data_to_tag_name['EntityAssemblyID'] =  'Entity_assembly_ID'
-        self.data_to_tag_name['EntityID'] =          'Entity_ID'
-        self.data_to_tag_name['CompIndexID'] =       'Comp_index_ID'
-        self.data_to_tag_name['CompID'] =            'Comp_ID'
-        self.data_to_tag_name['AtomID'] =            'Obs_atom_ID'
-        self.data_to_tag_name['AtomType'] =          'Obs_atom_type'
-        self.data_to_tag_name['AtomIsotopeNumber'] = 'Obs_atom_isotope_number'
-        self.data_to_tag_name['S2Val'] =             'S2_val'
-        self.data_to_tag_name['S2ValErr'] =          'S2_val_err'
-        self.data_to_tag_name['S2fVal'] =            'S2f_val'
-        self.data_to_tag_name['S2fValErr'] =         'S2f_val_err'
-        self.data_to_tag_name['S2sVal'] =            'S2s_val'
-        self.data_to_tag_name['S2sValErr'] =         'S2s_val_err'
-        self.data_to_tag_name['LocalTauCVal'] =      'Local_tau_c_val'
-        self.data_to_tag_name['LocalTauCValErr'] =   'Local_tau_c_val_err'
-        self.data_to_tag_name['TauEVal'] =           'Tau_e_val'
-        self.data_to_tag_name['TauEValErr'] =        'Tau_e_val_err'
-        self.data_to_tag_name['TauFVal'] =           'Tau_f_val'
-        self.data_to_tag_name['TauFValErr'] =        'Tau_f_val_err'
-        self.data_to_tag_name['TauSVal'] =           'Tau_s_val'
-        self.data_to_tag_name['TauSValErr'] =        'Tau_s_val_err'
-        self.data_to_tag_name['RexVal'] =            'Rex_val'
-        self.data_to_tag_name['RexValErr'] =         'Rex_val_err'
-        self.data_to_tag_name['ChiSquaredVal'] =     'Chi_squared_val'
+        # Add the tag info.
+        self.add(key='ModelFreeID',         tag_name='ID',                      var_name='data_ids')
+        self.add(key='AssemblyAtomID',      tag_name='Assembly_atom_ID',        var_name='assembly_atom_ids')
+        self.add(key='EntityAssemblyID',    tag_name='Entity_assembly_ID',      var_name='entity_assembly_ids')
+        self.add(key='EntityID',            tag_name='Entity_ID',               var_name='entity_ids')
+        self.add(key='CompIndexID',         tag_name='Comp_index_ID',           var_name='res_nums')
+        self.add(key='CompID',              tag_name='Comp_ID',                 var_name='res_names')
+        self.add(key='AtomID',              tag_name='Obs_atom_ID',             var_name='atom_names')
+        self.add(key='AtomType',            tag_name='Obs_atom_type',           var_name='atom_types')
+        self.add(key='AtomIsotopeNumber',   tag_name='Obs_atom_isotope_number', var_name='isotope')
+        self.add(key='S2Val',               tag_name='S2_val',                  var_name='s2')
+        self.add(key='S2ValErr',            tag_name='S2_val_err',              var_name='s2_err')
+        self.add(key='S2fVal',              tag_name='S2f_val',                 var_name='s2f')
+        self.add(key='S2fValErr',           tag_name='S2f_val_err',             var_name='s2f_err')
+        self.add(key='S2sVal',              tag_name='S2s_val',                 var_name='s2s')
+        self.add(key='S2sValErr',           tag_name='S2s_val_err',             var_name='s2s_err')
+        self.add(key='LocalTauCVal',        tag_name='Local_tau_c_val',         var_name='local_tc')
+        self.add(key='LocalTauCValErr',     tag_name='Local_tau_c_val_err',     var_name='local_tc_err')
+        self.add(key='TauEVal',             tag_name='Tau_e_val',               var_name='te')
+        self.add(key='TauEValErr',          tag_name='Tau_e_val_err',           var_name='te_err')
+        self.add(key='TauFVal',             tag_name='Tau_f_val',               var_name='tf')
+        self.add(key='TauFValErr',          tag_name='Tau_f_val_err',           var_name='tf_err')
+        self.add(key='TauSVal',             tag_name='Tau_s_val',               var_name='ts')
+        self.add(key='TauSValErr',          tag_name='Tau_s_val_err',           var_name='ts_err')
+        self.add(key='RexVal',              tag_name='Rex_val',                 var_name='rex')
+        self.add(key='RexValErr',           tag_name='Rex_val_err',             var_name='rex_err')
+        self.add(key='ChiSquaredVal',       tag_name='Chi_squared_val',         var_name='chi2')
+        self.add(key='ModelFit',            tag_name='Model_fit',               var_name='model_fit')
