@@ -120,14 +120,17 @@ class Relaxation:
 
         # The NOE data.
         for data in self.heteronucl_NOEs.loop():
+            data['data_type'] = 'NOE'
             yield data
 
         # The R1 data.
         for data in self.heteronucl_T1_relaxation.loop():
+            data['data_type'] = 'R1'
             yield data
 
         # The R2 data.
         for data in self.heteronucl_T2_relaxation.loop():
+            data['data_type'] = 'R2'
             yield data
 
 
@@ -234,8 +237,10 @@ class Relaxation_v3_1(Relaxation_v3_0):
 
         # The NOE data.
         for data in self.heteronucl_NOEs.loop():
+            data['data_type'] = 'NOE'
             yield data
 
         # The R1 and R2 data.
         for data in self.auto_relaxation.loop():
+            data['data_type'] = data['coherence_common_name']
             yield data
