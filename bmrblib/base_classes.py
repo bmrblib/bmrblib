@@ -115,6 +115,9 @@ class BaseSaveframe:
             if ids:
                 self.data_ids = translate(ids)
 
+        # If needed, perform some saveframe specific operations.
+        self.pre_ops()
+
         # Initialise the save frame.
         self.frame = SaveFrame(title=self.create_title())
 
@@ -187,6 +190,10 @@ class BaseSaveframe:
 
             # Return the saveframe info.
             yield self.read()
+
+
+    def pre_ops(self):
+        """A dummy method for performing no saveframe specific operations prior to XML creation."""
 
 
     def read(self):
