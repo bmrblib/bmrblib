@@ -26,7 +26,6 @@ See http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFramePage.html#c
 """
 
 # relax module imports.
-from bmrblib.misc import translate
 from bmrblib.NMR_parameters.chem_shift_anisotropy import ChemShiftAnisotropySaveframe, ChemShiftAnisotropy, CSAnisotropyExperiment, CSAnisotropySoftware, CSAnisotropy
 
 
@@ -37,10 +36,10 @@ class ChemShiftAnisotropySaveframe_v3_1(ChemShiftAnisotropySaveframe):
         """Create the v3.1 tag categories."""
 
         # The tag category objects.
-        self.Chem_shift_anisotropy = ChemShiftAnisotropy_v3_1(self)
-        self.CS_anisotropy_experiment = CSAnisotropyExperiment_v3_1(self)
-        self.CS_anisotropy_software = CSAnisotropySoftware_v3_1(self)
-        self.CS_anisotropy = CSAnisotropy_v3_1(self)
+        self.tag_categories.append(ChemShiftAnisotropy_v3_1(self))
+        self.tag_categories.append(CSAnisotropyExperiment_v3_1(self))
+        self.tag_categories.append(CSAnisotropySoftware_v3_1(self))
+        self.tag_categories.append(CSAnisotropy_v3_1(self))
 
 
 
@@ -60,10 +59,9 @@ class ChemShiftAnisotropy_v3_1(ChemShiftAnisotropy):
         # The category name.
         self.tag_category_label = 'Chem_shift_anisotropy'
 
-        # Database table name to tag name.
-        self.data_to_tag_name['SfCategory'] =               'Sf_category'
-        self.data_to_tag_name['ChemShiftAnisotropyID'] =    'ID'
-        self.data_to_tag_name['SampleConditionListLabel'] = 'Sample_condition_list_label'
+        # Change tag names.
+        self['ChemShiftAnisotropyID'].tag_name =    'ID'
+        self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
 
 
 
@@ -119,10 +117,10 @@ class CSAnisotropy_v3_1(CSAnisotropy):
         # The category name.
         self.tag_category_label = 'CS_anisotropy'
 
-        # Database table name to tag name.
-        self.data_to_tag_name['CSAnisotropyID'] = 'ID'
-        self.data_to_tag_name['CompIndexID'] = 'Comp_index_ID'
-        self.data_to_tag_name['CompID'] = 'Comp_ID'
-        self.data_to_tag_name['AtomID'] = 'Atom_ID'
-        self.data_to_tag_name['Val'] = 'Val'
-        self.data_to_tag_name['ValErr'] = 'Val_err'
+        # Change tag names.
+        self['CSAnisotropyID'].tag_name =   'ID'
+        self['CompIndexID'].tag_name =      'Comp_index_ID'
+        self['CompID'].tag_name =           'Comp_ID'
+        self['AtomID'].tag_name =           'Atom_ID'
+        self['Val'].tag_name =              'Val'
+        self['ValErr'].tag_name =           'Val_err'
