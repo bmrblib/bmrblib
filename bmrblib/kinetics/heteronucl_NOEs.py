@@ -73,7 +73,7 @@ class HeteronuclNOEList(HeteronuclRxList):
         self.add(key='HeteronuclNOEListID',         tag_name='ID',                          var_name='count_str')
         self.add(key='SampleConditionListID',       tag_name='Sample_condition_list_ID',    var_name='sample_cond_list_id')
         self.add(key='SampleConditionListLabel',    tag_name='Sample_conditions_label',     var_name='sample_cond_list_label',  default='$conditions_1')
-        self.add(key='SpectrometerFrequency1H',     tag_name='Spectrometer_frequency_1H',   var_name='frq')
+        self.add(key='SpectrometerFrequency1H',     tag_name='Spectrometer_frequency_1H',   var_name='frq',                     format='float')
         self.add(key='Details',                     tag_name='Details',                     var_name='details')
 
 

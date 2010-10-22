@@ -70,12 +70,12 @@ class HeteronuclT1List(HeteronuclRxList):
         super(HeteronuclT1List, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='HeteronuclT1ListID',          tag_name='id',                          var_name='count_str')
+        self.add(key='HeteronuclT1ListID',          tag_name='id',                          var_name='count_str',               format='int')
         self.add(key='SampleConditionListID',       tag_name='Sample_condition_list_ID',    var_name='sample_cond_list_id')
-        self.add(key='SampleConditionListLabel',    tag_name='Sample_conditions_label',     var_name='sample_cond_list_label',          default='$conditions_1')
-        self.add(key='SpectrometerFrequency1H',     tag_name='Spectrometer_frequency_1H',   var_name='frq')
-        self.add(key='T1CoherenceType',             tag_name='T1_coherence_type',           var_name='coherence',           default='Nz')
-        self.add(key='T1ValUnits',                  tag_name='T1_value_units',              var_name='units',               default='1/s')
+        self.add(key='SampleConditionListLabel',    tag_name='Sample_conditions_label',     var_name='sample_cond_list_label',  default='$conditions_1')
+        self.add(key='SpectrometerFrequency1H',     tag_name='Spectrometer_frequency_1H',   var_name='frq',                     format='float')
+        self.add(key='T1CoherenceType',             tag_name='T1_coherence_type',           var_name='coherence',               default='Nz')
+        self.add(key='T1ValUnits',                  tag_name='T1_value_units',              var_name='units',                   default='1/s')
         self.add(key='Details',                     tag_name='Details',                     var_name='details')
 
 
