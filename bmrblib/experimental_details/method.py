@@ -27,9 +27,6 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFra
 
 # relax module imports.
 from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
-from bmrblib.pystarlib.SaveFrame import SaveFrame
-from bmrblib.pystarlib.TagTable import TagTable
-from bmrblib.misc import no_missing, translate
 
 
 class MethodSaveframe(BaseSaveframe):
@@ -38,90 +35,14 @@ class MethodSaveframe(BaseSaveframe):
     # Class variables.
     sf_label = 'method'
 
-    def __init__(self, datanodes):
-        """Initialise the class, placing the pystarlib data nodes into the namespace.
-
-        @param datanodes:   The pystarlib data nodes object.
-        @type datanodes:    list
-        """
-
-        # Place the data nodes into the namespace.
-        self.datanodes = datanodes
-
-        # The number of methods used.
-        self.method_num = 0
-
-        # Add the specific tag category objects.
-        self.add_tag_categories()
-
-
-    def add(self, name=None, details=None, cite_ids=None, file_name=None, file_text=None, param_file_name=None, param_file_text=None):
-        """Add the method info to the data nodes.
-
-        @keyword name:              The unique name describing this method.
-        @type name:                 str
-        @keyword details:           Text description providing additional information about the reported method.
-        @type details:              None or str
-        @keyword cite_ids:          The citation ID numbers.
-        @type cite_ids:             None or list of int
-        @keyword file_name:         The name of the file containing the source code or protocol for the reported method.
-        @type file_name:            str
-        @keyword file_text:         The method provided as an ASCII text document that is included in the NMR-STAR file.
-        @type file_text:            str
-        @keyword param_file_name:   The name of the file that contains parameters required to execute the method.
-        @type param_file_name:      None or str
-        @keyword param_file_text:   The text of the parameter file.
-        @type param_file_text:      None or str
-        """
-
-        # Check that nothing is missing.
-        no_missing(name, 'method name')
-        no_missing(file_name, 'file name')
-        no_missing(file_text, 'file text')
-
-        # Check.
-        if not isinstance(cite_ids, list):
-            raise NameError, "The cite_ids argument '%s' should be a list." % cite_ids
-
-        # Place the args into the namespace.
-        self.method_name = name
-        self.details = translate(details)
-        self.cite_ids = translate(cite_ids)
-        self.file_name = translate(file_name)
-        self.file_text = translate(file_text)
-        self.param_file_name = translate(param_file_name)
-        self.param_file_text = translate(param_file_text)
-
-        # The text format.
-        self.text_format = '?'
-
-        # Increment the ID number.
-        self.method_num = self.method_num + 1
-        self.method_num_str = str(self.method_num)
-        self.method_id_num = [str(translate(self.method_num))]
-
-        # Initialise the save frame.
-        self.frame = SaveFrame(title='method')
-
-        # Create the tag categories.
-        self.Method.create()
-        if len(self.cite_ids):
-            self.Method_citation.create()
-        self.Method_file.create()
-        self.Method_parameter_file.create()
-
-        # Add the saveframe to the data nodes.
-        self.datanodes.append(self.frame)
-
-
     def add_tag_categories(self):
         """Create the tag categories."""
 
         # The tag category objects.
-        self.Method = Method(self)
-        self.Method_citation = MethodCitation(self)
-        self.Method_file = MethodFile(self)
-        self.Method_parameter_file = MethodParam(self)
+        self.tag_categories.append(Method(self))
+        self.tag_categories.append(MethodCitation(self))
+        self.tag_categories.append(MethodFile(self))
+        self.tag_categories.append(MethodParam(self))
 
 
 
@@ -141,16 +62,10 @@ class Method(TagCategoryFree):
         # The category name.
         self.tag_category_label = 'Method'
 
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['SfFramecode',    'method_name'])
-        self.data_to_var_name.append(['MethodID',       'method_num_str'])
-        self.data_to_var_name.append(['Details',        'details'])
-
-        # Database table name to tag name.
-        self.data_to_tag_name['SfCategory'] =   'Sf_category'
-        self.data_to_tag_name['SfFramecode'] =  'Sf_framecode'
-        self.data_to_tag_name['MethodID'] =     'ID'
-        self.data_to_tag_name['Details'] =      'Details'
+        # Add the tag info.
+        self.add(key='SfFramecode', tag_name='Sf_framecode',    var_name='name',            missing=False)
+        self.add(key='MethodID',    tag_name='ID',              var_name='count_str')
+        self.add(key='Details',     tag_name='Details',         var_name='details')
 
 
 
@@ -170,14 +85,24 @@ class MethodCitation(TagCategory):
         # The category name.
         self.tag_category_label = 'Method_citation'
 
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['CitationID',      'cite_ids'])
-        self.data_to_var_name.append(['MethodID',        'method_id_num'])
+        # Add the tag info.
+        self.add(key='CitationID',  tag_name='Citation_ID', var_name='cite_ids')
+        self.add(key='MethodID',    tag_name='Method_ID',   var_name='count_str')
 
-        # Database table name to tag name.
-        self.data_to_tag_name['CitationID'] =   'Citation_ID'
-        self.data_to_tag_name['MethodID'] =     'Method_ID'
 
+    def is_empty(self):
+        """Check if the citation tag category is empty.
+
+        @return:    The state of emptiness.
+        @rtype:     bool
+        """
+
+        # No citation IDs.
+        if not hasattr(self.sf, 'cite_ids') or not len(self.sf.cite_ids):
+            return True
+
+        # Not empty.
+        return False
 
 
 class MethodFile(TagCategory):
@@ -196,17 +121,11 @@ class MethodFile(TagCategory):
         # The category name.
         self.tag_category_label = 'Method_file'
 
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['Name',                'file_name'])
-        self.data_to_var_name.append(['TextFormat',          'text_format'])
-        self.data_to_var_name.append(['Text',                'file_text'])
-        self.data_to_var_name.append(['MethodID',            'method_id_num'])
-
-        # Database table name to tag name.
-        self.data_to_tag_name['Name'] =        'Name'
-        self.data_to_tag_name['TextFormat'] =  'Text_format'
-        self.data_to_tag_name['Text'] =        'Text'
-        self.data_to_tag_name['MethodID'] =    'Method_ID'
+        # Add the tag info.
+        self.add(key='Name',        tag_name='Name',        var_name='file_name',       missing=False)
+        self.add(key='TextFormat',  tag_name='Text_format', var_name='text_format')
+        self.add(key='Text',        tag_name='Text',        var_name='file_text',       missing=False)
+        self.add(key='MethodID',    tag_name='Method_ID',   var_name='count_str')
 
 
 
@@ -226,14 +145,8 @@ class MethodParam(TagCategory):
         # The category name.
         self.tag_category_label = 'Method_param'
 
-        # Database table names to class instance variables.
-        self.data_to_var_name.append(['FileName',            'param_file_name'])
-        self.data_to_var_name.append(['TextFormat',          'text_format'])
-        self.data_to_var_name.append(['Text',                'param_file_text'])
-        self.data_to_var_name.append(['MethodID',            'method_id_num'])
-
-        # Database table name to tag name.
-        self.data_to_tag_name['FileName'] =    'File_name'
-        self.data_to_tag_name['TextFormat'] =  'Text_format'
-        self.data_to_tag_name['Text'] =        'Text'
-        self.data_to_tag_name['MethodID'] =    'Method_ID'
+        # Add the tag info.
+        self.add(key='FileName',    tag_name='File_name',   var_name='param_file_name')
+        self.add(key='TextFormat',  tag_name='Text_format', var_name='text_format')
+        self.add(key='Text',        tag_name='Text',        var_name='param_file_text')
+        self.add(key='MethodID',    tag_name='Method_ID',   var_name='count_str')
