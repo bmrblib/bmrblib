@@ -78,7 +78,7 @@ class BaseSaveframe:
             # Get the tag object.
             info = self.tag_categories.get_tag(name)
             if not info:
-                return
+                continue
             cat_index, key, obj = info
 
             # Check that a value has been supplied.
