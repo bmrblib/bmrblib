@@ -94,8 +94,17 @@ class BaseSaveframe:
                 no_missing(val, name)
 
             # Check that the value is allowed.
-            if obj.allowed != None and val not in obj.allowed:
-                raise NameError("The %s keyword argument of '%s' must be one of %s." % (name, val, obj.allowed))
+            if obj.allowed != None:
+                # List argument.
+                if not (isinstance(val, list) and not isinstance(val, ndarray)):
+                    val_list = [val]
+                else:
+                    val_list = val
+
+                # Loop over the list.
+                for i in range(len(val_list)):
+                    if val_list[i] not in obj.allowed:
+                        raise NameError("The %s keyword argument of '%s' must be one of %s." % (name, val_list[i], obj.allowed))
 
             # Length check of the non-free tag category elements (must be the same).
             if (isinstance(val, list) or isinstance(val, ndarray)):
