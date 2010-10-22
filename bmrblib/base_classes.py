@@ -334,6 +334,17 @@ class MissingSaveframe:
         warn(Warning("The %s saveframe does not exist in this NMR-STAR version." % self.name))
 
 
+    def loop(self):
+        """Special function for giving a warning."""
+
+        # The warning.
+        warn(Warning("The %s saveframe does not exist in this NMR-STAR version." % self.name))
+
+        # Yield nothing.
+        yield None
+
+
+
 
 class CategoryList(list):
     """A special lits object for holding the different saveframe tag categories."""
