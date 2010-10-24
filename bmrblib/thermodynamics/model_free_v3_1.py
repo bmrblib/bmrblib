@@ -142,6 +142,6 @@ class ModelFree_v3_1(ModelFree):
         
         # Set up the local_tm structures.
         self['LocalTauCVal'].tag_name =         'Local_tau_c_val'
-        self['LocalTauCVal'].var_name =         'local_tc'
+        self['LocalTauCVal'].var_name =         'local_tm'
         self['LocalTauCValErr'].tag_name =      'Local_tau_c_val_err'
-        self['LocalTauCValErr'].var_name =      'local_tc_err'
+        self['LocalTauCValErr'].var_name =      'local_tm_err'
