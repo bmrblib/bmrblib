@@ -470,7 +470,10 @@ class TagObject(object):
         """
 
         # Return the name.
-        return self.category.tag_prefix + self.tag_name
+        if not self.tag_name:
+            return None
+        else:
+            return self.category.tag_prefix + self.tag_name
 
 
 
