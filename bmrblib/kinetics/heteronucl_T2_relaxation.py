@@ -77,9 +77,6 @@ class HeteronuclT2List(HeteronuclRxList):
 class HeteronuclT2Experiment(TagCategory):
     """Base class for the HeteronuclT2Experiment tag category."""
 
-    def create(self, frame=None):
-        """Create the HeteronuclT2Experiment tag category."""
-
     def __init__(self, sf):
         """Setup the HeteronuclT2Experiment tag category.
 
