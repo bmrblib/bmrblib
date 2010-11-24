@@ -284,8 +284,13 @@ class BaseSaveframe:
                 if not cat[key].var_name:
                     continue
 
+                # No object.
+                if not hasattr(self, cat[key].var_name):
+                    obj = None
+
                 # Get the object.
-                obj = getattr(self, cat[key].var_name)
+                else:
+                    obj = getattr(self, cat[key].var_name)
 
                 # Package the translated data.
                 data[cat[key].var_name] = translate(obj, format=cat[key].format, reverse=True)
