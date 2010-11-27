@@ -30,7 +30,9 @@ http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
 from bmrblib.assembly_supercategory.entity import EntitySaveframe
 from bmrblib.base_classes import MissingSaveframe
 from bmrblib.citations.citations import CitationsSaveframe
+from bmrblib.experimental_details.experiment import ExperimentSaveframe
 from bmrblib.experimental_details.method import MethodSaveframe
+from bmrblib.experimental_details.nmr_spectrometer import NMRSpectrometerSaveframe
 from bmrblib.experimental_details.software import SoftwareSaveframe
 from bmrblib.kinetics.relaxation import Relaxation
 from bmrblib.NMR_parameters.chem_shift_anisotropy import ChemShiftAnisotropySaveframe
@@ -71,7 +73,9 @@ class NMR_STAR:
         self.entity = EntitySaveframe(self.data.datanodes)
 
         # Initialise Supergroup 4:  The experimental descriptions saveframe API.
+        self.experiment = ExperimentSaveframe(self.data.datanodes)
         self.method = MethodSaveframe(self.data.datanodes)
+        self.nmr_spectrometer = NMRSpectrometerSaveframe(self.data.datanodes)
         self.software = SoftwareSaveframe(self.data.datanodes)
 
         # Initialise Supergroup 5:  The NMR parameters saveframe API.
