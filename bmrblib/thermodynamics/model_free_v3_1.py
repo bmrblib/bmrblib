@@ -124,6 +124,7 @@ class ModelFree_v3_1(ModelFree):
         self['AtomID'].tag_name =               'Obs_atom_ID'
         self['AtomType'].tag_name =             'Obs_atom_type'
         self['AtomIsotopeNumber'].tag_name =    'Obs_atom_isotope_number'
+        self['ValBondLength'].tag_name =        'Val_bond_length'
         self['S2Val'].tag_name =                'S2_val'
         self['S2ValErr'].tag_name =             'S2_val_err'   
         self['S2fVal'].tag_name =               'S2f_val'      

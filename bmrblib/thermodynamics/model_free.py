@@ -165,6 +165,7 @@ class ModelFree(TagCategory):
         self.add(key='AtomID',              tag_name='Atom_name',                   var_name='atom_names',          missing=False)
         self.add(key='AtomType',            tag_name='Atom_type',                   var_name='atom_types')
         self.add(key='AtomIsotopeNumber',   tag_name='Atom_isotope_number',         var_name='isotope',             format='int')
+        self.add(key='ValBondLength',       tag_name=None,                          var_name='bond_length',         format='float')
         self.add(key='S2Val',               tag_name='S2_value',                    var_name='s2',                  format='float')
         self.add(key='S2ValErr',            tag_name='S2_value_fit_error',          var_name='s2_err',              format='float')
         self.add(key='S2fVal',              tag_name='S2f_value',                   var_name='s2f',                 format='float')
