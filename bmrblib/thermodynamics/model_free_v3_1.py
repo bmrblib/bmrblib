@@ -124,7 +124,6 @@ class ModelFree_v3_1(ModelFree):
         self['AtomID'].tag_name =               'Obs_atom_ID'
         self['AtomType'].tag_name =             'Obs_atom_type'
         self['AtomIsotopeNumber'].tag_name =    'Obs_atom_isotope_number'
-        self['BondLengthVal'].tag_name =        'Bond_length_val'
         self['S2Val'].tag_name =                'S2_val'
         self['S2ValErr'].tag_name =             'S2_val_err'   
         self['S2fVal'].tag_name =               'S2f_val'      
@@ -141,8 +140,10 @@ class ModelFree_v3_1(ModelFree):
         self['RexValErr'].tag_name =            'Rex_val_err'
         self['ChiSquaredVal'].tag_name =        'Chi_squared_val'    
         
-        # Set up the local_tm structures.
+        # Set up the local_tm and bond length structures.
         self['LocalTauCVal'].tag_name =         'Local_tau_c_val'
         self['LocalTauCVal'].var_name =         'local_tm'
         self['LocalTauCValErr'].tag_name =      'Local_tau_c_val_err'
         self['LocalTauCValErr'].var_name =      'local_tm_err'
+        self['BondLengthVal'].tag_name =        'Bond_length_val'
+        self['BondLengthVal'].var_name =        'bond_length'
