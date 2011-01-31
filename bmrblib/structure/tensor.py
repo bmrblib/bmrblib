@@ -79,6 +79,10 @@ class TensorList(TagCategoryFree):
         self.add(key='DataFileName',            tag_name='Data_file_name',          var_name='file_name')
         self.add(key='Details',                 tag_name='Details',                 var_name='details')
 
+        # Change tag names.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
+
 
 
 class Tensor(TagCategory):
