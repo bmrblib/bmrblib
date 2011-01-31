@@ -103,13 +103,13 @@ def translate(data, format='str', reverse=False):
             # Loop over the data.
             new_data = []
             for i in range(len(data)):
-                if data[i] == '?':
+                if data[i] in ['?', '.']:
                     new_data.append(None)
                 else:
                     new_data.append(convert(data[i]))
 
         # None.
-        elif data == '?':
+        elif data in ['?', '.']:
             new_data = None
 
         # Otherwise normal conversion.
