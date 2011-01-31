@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -28,7 +28,7 @@ http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
 
 # relax module imports.
 from bmrblib.assembly_supercategory.entity_v3_1 import EntitySaveframe_v3_1
-from bmrblib.citations.citations import CitationsSaveframe
+from bmrblib.citations.citations_v3_1 import CitationsSaveframe_v3_1
 from bmrblib.experimental_details.experiment import ExperimentSaveframe
 from bmrblib.experimental_details.method import MethodSaveframe
 from bmrblib.experimental_details.nmr_spectrometer import NMRSpectrometerSaveframe
@@ -51,7 +51,7 @@ class NMR_STAR_v3_1(NMR_STAR):
         """Create all the saveframe objects."""
 
         # Initialise Supergroup 2:  The citations.
-        self.citations = CitationsSaveframe(self.data.datanodes)
+        self.citations = CitationsSaveframe_v3_1(self.data.datanodes)
 
         # Initialise Supergroup 3:  The molecular assembly saveframe API.
         self.entity = EntitySaveframe_v3_1(self.data.datanodes)
