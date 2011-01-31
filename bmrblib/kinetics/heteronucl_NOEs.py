@@ -34,7 +34,7 @@ class HeteronuclNOESaveframe(RelaxSaveframe):
     """The Heteronuclear NOE data saveframe class."""
 
     # Class variables.
-    name = 'NOE'
+    name = 'Heteronuclear_NOE'
     label = 'heteronucl_NOE'
     sf_label = 'heteronuclear_NOE'
 
