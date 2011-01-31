@@ -60,6 +60,8 @@ class ChemShiftAnisotropy_v3_1(ChemShiftAnisotropy):
         self.tag_category_label = 'Chem_shift_anisotropy'
 
         # Change tag names.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
         self['ChemShiftAnisotropyID'].tag_name =    'ID'
         self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
 

@@ -65,6 +65,8 @@ class HeteronuclNOEList_v3_1(HeteronuclNOEList):
         self.add(key='HeteronuclearNOEValType',     tag_name='Heteronuclear_NOE_val_type',  var_name='peak_intensity_type', missing=False)
 
         # Change tag names.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
         self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
 
 

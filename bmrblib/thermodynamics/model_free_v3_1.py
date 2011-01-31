@@ -63,6 +63,8 @@ class ModelFreeList_v3_1(ModelFreeList):
         self.tag_category_label = 'Model_free_list'
 
         # Change tag names.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
         self['ModelFreeListID'].tag_name =          'ID'
         self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
 

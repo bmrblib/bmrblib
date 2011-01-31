@@ -60,6 +60,8 @@ class HeteronuclT1List_v3_1(HeteronuclT1List):
         self.tag_category_label = 'Heteronucl_T1_list'
 
         # Change tag names.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
         self['HeteronuclT1ListID'].tag_name =       'ID'
         self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
 

@@ -93,6 +93,9 @@ class AutoRelaxationList(HeteronuclRxList):
         self.add(key='RelaxationValType',           tag_name='Relaxation_val_type',         var_name='peak_intensity_type',     missing=False)
         self.add(key='Details',                     tag_name='Details',                     var_name='details')
 
+        # Change tag names.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
 
 
 class AutoRelaxationExperiment(TagCategory):
