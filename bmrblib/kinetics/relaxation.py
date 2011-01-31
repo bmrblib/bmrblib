@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -165,6 +165,8 @@ class Relaxation_v3_1(Relaxation_v3_0):
 
         # Initialise the kinetic saveframe supergroups.
         self.heteronucl_NOEs = HeteronuclNOESaveframe_v3_1(datanodes)
+        self.heteronucl_T1_relaxation = HeteronuclT1Saveframe_v3_1(datanodes)
+        self.heteronucl_T2_relaxation = HeteronuclT2Saveframe_v3_1(datanodes)
         self.auto_relaxation = AutoRelaxationSaveframe(datanodes)
 
 
@@ -240,7 +242,18 @@ class Relaxation_v3_1(Relaxation_v3_0):
             data['data_type'] = 'NOE'
             yield data
 
-        # The R1 and R2 data.
+        # The R1 data.
+        for data in self.heteronucl_T1_relaxation.loop():
+            data['data_type'] = 'R1'
+            yield data
+
+        # The R2 data.
+        for data in self.heteronucl_T2_relaxation.loop():
+            data['data_type'] = 'R2'
+            yield data
+
+
+        # The auto-relaxation data.
         for data in self.auto_relaxation.loop():
             data['data_type'] = data['coherence_common_name']
             yield data
