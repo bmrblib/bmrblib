@@ -33,10 +33,10 @@ class ModelFreeSaveframe(BaseSaveframe):
     """The Order parameters saveframe class."""
 
     # Class variables.
-    sf_label = 'model_free'
+    sf_label = 'S2_parameters'
 
     def add_tag_categories(self):
-        """Create the v3.1 tag categories."""
+        """Create the tag categories."""
 
         # The tag category objects.
         self.tag_categories.append(ModelFreeList(self))
