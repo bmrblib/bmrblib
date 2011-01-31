@@ -695,5 +695,5 @@ class TagCategoryFree(TagCategory):
         super(TagCategoryFree, self).__init__(sf)
 
         # Add some generic saveframe category tag.
-        self.add(key='SfCategory',  var_name='sf_label',        tag_name='Sf_category')
-        self.add(key='SfFramecode', var_name='sf_framecode',    tag_name='Sf_framecode')
+        self.add(key='SfCategory',  var_name='sf_label',        tag_name='Saveframe_category')
+        self.add(key='SfFramecode', var_name='sf_framecode',    tag_name=None)
