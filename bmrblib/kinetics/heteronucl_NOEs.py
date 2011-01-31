@@ -36,7 +36,7 @@ class HeteronuclNOESaveframe(RelaxSaveframe):
     # Class variables.
     name = 'NOE'
     label = 'heteronucl_NOE'
-    sf_label = 'heteronucl_NOEs'
+    sf_label = 'heteronuclear_NOE'
 
     def add_tag_categories(self):
         """Create the tag categories."""
