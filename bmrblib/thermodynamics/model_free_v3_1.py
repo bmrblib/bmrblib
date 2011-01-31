@@ -33,7 +33,7 @@ class ModelFreeSaveframe_v3_1(ModelFreeSaveframe):
     """The v3.1 Model_free data saveframe class."""
 
     # Class variables.
-    sf_label = 'model_free'
+    sf_label = 'order_parameters'
 
     def add_tag_categories(self):
         """Create the v3.1 tag categories."""
@@ -60,7 +60,7 @@ class ModelFreeList_v3_1(ModelFreeList):
         super(ModelFreeList_v3_1, self).__init__(sf)
 
         # The category name.
-        self.tag_category_label = 'Model_free_list'
+        self.tag_category_label = 'Order_parameter_list'
 
         # Change tag names.
         self['SfCategory'].tag_name = 'Sf_category'
@@ -84,7 +84,7 @@ class ModelFreeExperiment_v3_1(ModelFreeExperiment):
         super(ModelFreeExperiment_v3_1, self).__init__(sf)
 
         # The category name.
-        self.tag_category_label = 'Model_free_list'
+        self.tag_category_label = 'Order_parameter_experiment'
 
 
 
@@ -102,7 +102,7 @@ class ModelFreeSoftware_v3_1(ModelFreeSoftware):
         super(ModelFreeSoftware_v3_1, self).__init__(sf)
 
         # The category name.
-        self.tag_category_label = 'Model_free_software'
+        self.tag_category_label = 'Order_parameter_software'
 
 
 
@@ -120,7 +120,7 @@ class ModelFree_v3_1(ModelFree):
         super(ModelFree_v3_1, self).__init__(sf)
 
         # The category name.
-        self.tag_category_label = 'Model_free'
+        self.tag_category_label = 'Order_param'
 
         # Change the tag names.
         self['ModelFreeID'].tag_name =          'ID'
@@ -130,11 +130,11 @@ class ModelFree_v3_1(ModelFree):
         self['AtomType'].tag_name =             'Obs_atom_type'
         self['AtomIsotopeNumber'].tag_name =    'Obs_atom_isotope_number'
         self['S2Val'].tag_name =                'S2_val'
-        self['S2ValErr'].tag_name =             'S2_val_err'   
-        self['S2fVal'].tag_name =               'S2f_val'      
-        self['S2fValErr'].tag_name =            'S2f_val_err'  
-        self['S2sVal'].tag_name =               'S2s_val'      
-        self['S2sValErr'].tag_name =            'S2s_val_err'  
+        self['S2ValErr'].tag_name =             'S2_val_err'
+        self['S2fVal'].tag_name =               'S2f_val'
+        self['S2fValErr'].tag_name =            'S2f_val_err'
+        self['S2sVal'].tag_name =               'S2s_val'
+        self['S2sValErr'].tag_name =            'S2s_val_err'
         self['TauEVal'].tag_name =              'Tau_e_val'
         self['TauEValErr'].tag_name =           'Tau_e_val_err'
         self['TauFVal'].tag_name =              'Tau_f_val'
@@ -143,8 +143,8 @@ class ModelFree_v3_1(ModelFree):
         self['TauSValErr'].tag_name =           'Tau_s_val_err'
         self['RexVal'].tag_name =               'Rex_val'
         self['RexValErr'].tag_name =            'Rex_val_err'
-        self['ChiSquaredVal'].tag_name =        'Chi_squared_val'    
-        
+        self['ChiSquaredVal'].tag_name =        'Chi_squared_val'
+
         # Set up the local_tm and bond length structures.
         self['LocalTauCVal'].tag_name =         'Local_tau_c_val'
         self['LocalTauCVal'].var_name =         'local_tm'
