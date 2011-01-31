@@ -697,3 +697,22 @@ class TagCategoryFree(TagCategory):
         # Add some generic saveframe category tag.
         self.add(key='SfCategory',  var_name='sf_label',        tag_name='Saveframe_category')
         self.add(key='SfFramecode', var_name='sf_framecode',    tag_name=None)
+
+
+
+class TagCategoryFree_v3_1(TagCategoryFree):
+    """The free version of the TagCategory class."""
+
+    def __init__(self, sf):
+        """Setup the TagCategoryFree tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(TagCategoryFree_v3_1, self).__init__(sf)
+
+        # Add some generic saveframe category tag.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
