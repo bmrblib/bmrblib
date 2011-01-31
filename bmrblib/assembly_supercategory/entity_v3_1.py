@@ -57,6 +57,10 @@ class Entity_v3_1(Entity):
         # The category name.
         self.tag_category_label = 'Entity'
 
+        # Change tag names.
+        self['SfCategory'].tag_name = 'Sf_category'
+        self['SfFramecode'].tag_name = 'Sf_framecode'
+
 
 
 class EntityCompIndex_v3_1(EntityCompIndex):
