@@ -181,6 +181,6 @@ class ModelFree(TagCategory):
         self.add(key='TauSVal',             tag_name='Tau_s_value',                 var_name='ts',                  format='float')
         self.add(key='TauSValErr',          tag_name='Tau_s_value_fit_error',       var_name='ts_err',              format='float')
         self.add(key='RexVal',              tag_name='Rex_value',                   var_name='rex',                 format='float')
-        self.add(key='RexValErr',           tag_name='Rex_value_fit_error',         var_name='rex_err',             format='float')
+        self.add(key='RexValErr',           tag_name='Rex_error',                   var_name='rex_err',             format='float')
         self.add(key='ChiSquaredVal',       tag_name='SSE_val',                     var_name='chi2',                format='float')
         self.add(key='ModelFit',            tag_name='Model_fit',                   var_name='model_fit',           allowed=allowed_models)
