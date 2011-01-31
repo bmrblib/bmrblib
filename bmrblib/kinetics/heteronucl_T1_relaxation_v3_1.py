@@ -32,6 +32,9 @@ from bmrblib.kinetics.heteronucl_T1_relaxation import HeteronuclT1Saveframe, Het
 class HeteronuclT1Saveframe_v3_1(HeteronuclT1Saveframe):
     """The v3.1 Heteronuclear T1 data saveframe class."""
 
+    # Class variables.
+    sf_label = 'heteronuc_T1_relaxation'
+
     def add_tag_categories(self):
         """Create the v3.1 tag categories."""
 

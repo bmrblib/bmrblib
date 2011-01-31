@@ -32,6 +32,9 @@ from bmrblib.kinetics.heteronucl_NOEs import HeteronuclNOESaveframe, HeteronuclN
 class HeteronuclNOESaveframe_v3_1(HeteronuclNOESaveframe):
     """The v3.1 Heteronuclear NOE data saveframe class."""
 
+    # Class variables.
+    sf_label = 'heteronucl_NOEs'
+
     def add_tag_categories(self):
         """Create the v3.1 tag categories."""
 
