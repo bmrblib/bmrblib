@@ -553,8 +553,8 @@ class TagCategory(TagTranslationTable):
 
         # Loop over the keys of the class dictionary.
         for key in self._key_list:
-            # The tag names and values (skipping entries with no corresponding variable).
-            if self[key].var_name != None:
+            # The tag names and values (skipping entries with no corresponding tag name or variable).
+            if self[key].tag_name != None and self[key].var_name != None:
                 # The name (adding the tag prefix).
                 tag_names.append(self[key].tag_name_full())
 
