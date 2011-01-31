@@ -36,7 +36,7 @@ class HeteronuclT1Saveframe(RelaxSaveframe):
     # Class variables.
     name = 'T1'
     label = 'heteronucl_T1'
-    sf_label = 'heteronucl_T1s'
+    sf_label = 'T1_relaxation'
 
     def add_tag_categories(self):
         """Create the tag categories."""
