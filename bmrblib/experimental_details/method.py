@@ -59,9 +59,6 @@ class Method(TagCategoryFree):
         # Initialise the baseclass.
         super(Method, self).__init__(sf)
 
-        # The category name.
-        self.tag_category_label = 'Method'
-
         # Add the tag info.
         self.add(key='SfFramecode', tag_name='Sf_framecode',    var_name='name',            missing=False)
         self.add(key='MethodID',    tag_name='ID',              var_name='count_str')
@@ -81,9 +78,6 @@ class MethodCitation(TagCategory):
 
         # Initialise the baseclass.
         super(MethodCitation, self).__init__(sf)
-
-        # The category name.
-        self.tag_category_label = 'Method_citation'
 
         # Add the tag info.
         self.add(key='CitationID',  tag_name='Citation_ID', var_name='cite_ids')
@@ -118,9 +112,6 @@ class MethodFile(TagCategory):
         # Initialise the baseclass.
         super(MethodFile, self).__init__(sf)
 
-        # The category name.
-        self.tag_category_label = 'Method_file'
-
         # Add the tag info.
         self.add(key='Name',        tag_name='Name',        var_name='file_name',       missing=False)
         self.add(key='TextFormat',  tag_name='Text_format', var_name='text_format')
@@ -141,9 +132,6 @@ class MethodParam(TagCategory):
 
         # Initialise the baseclass.
         super(MethodParam, self).__init__(sf)
-
-        # The category name.
-        self.tag_category_label = 'Method_param'
 
         # Add the tag info.
         self.add(key='FileName',    tag_name='File_name',   var_name='param_file_name')

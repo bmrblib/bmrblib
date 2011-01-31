@@ -71,9 +71,6 @@ class Software(TagCategoryFree):
         # Initialise the baseclass.
         super(Software, self).__init__(sf)
 
-        # The category name.
-        self.tag_category_label = 'Software'
-
         # Add the tag info.
         self.add(key='SoftwareID',  tag_name='ID',      var_name='count_str')
         self.add(key='Name',        tag_name='Name',    var_name='name')
@@ -95,9 +92,6 @@ class SoftwareCitation(TagCategory):
         # Initialise the baseclass.
         super(SoftwareCitation, self).__init__(sf)
 
-        # The category name.
-        self.tag_category_label = 'Software_citation'
-
         # Add the tag info.
         self.add(key='CitationID',  tag_name='Citation_ID', var_name='cite_ids')
         self.add(key='SoftwareID',  tag_name='Software_ID', var_name='count_str')
@@ -117,9 +111,6 @@ class Task(TagCategory):
         # Initialise the baseclass.
         super(Task, self).__init__(sf)
 
-        # The category name.
-        self.tag_category_label = 'Task'
-
         # Add the tag info.
         self.add(key='Task',        tag_name='Task',        var_name='task')
         self.add(key='SoftwareID',  tag_name='Software_ID', var_name='count_str')
@@ -138,9 +129,6 @@ class Vendor(TagCategory):
 
         # Initialise the baseclass.
         super(Vendor, self).__init__(sf)
-
-        # The category name.
-        self.tag_category_label = 'Vendor'
 
         # Add the tag info.
         self.add(key='Name',                tag_name='Name',                var_name='vendor_name')

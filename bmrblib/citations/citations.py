@@ -58,9 +58,6 @@ class Citations(TagCategoryFree):
         # Initialise the baseclass.
         super(Citations, self).__init__(sf)
 
-        # The tag category label.
-        self.tag_category_label = 'Citation'
-
         # Add the tag info.
         self.add(key='SfFramecode',                 tag_name='Sf_framecode',                var_name='citation_label')
         self.add(key='CitationID',                  tag_name='ID',                          var_name='count_str')
@@ -116,9 +113,6 @@ class CitationsAuthor(TagCategory):
 
         # Initialise the baseclass.
         super(CitationsAuthor, self).__init__(sf)
-
-        # The tag category label.
-        self.tag_category_label = 'Citation_author'
 
         # Add the tag info.
         self.add(key='Ordinal',         tag_name='Ordinal',         var_name='data_ids')

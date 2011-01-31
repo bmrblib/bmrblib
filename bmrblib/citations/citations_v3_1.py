@@ -55,6 +55,9 @@ class Citations_v3_1(Citations):
         # Initialise the baseclass.
         super(Citations_v3_1, self).__init__(sf)
 
+        # The tag category label.
+        self.tag_category_label = 'Citation'
+
         # Change tag names.
         self['SfCategory'].tag_name = 'Sf_category'
         self['SfFramecode'].tag_name = 'Sf_framecode'
@@ -73,3 +76,6 @@ class CitationsAuthor_v3_1(CitationsAuthor):
 
         # Initialise the baseclass.
         super(CitationsAuthor_v3_1, self).__init__(sf)
+
+        # The tag category label.
+        self.tag_category_label = 'Citation_author'

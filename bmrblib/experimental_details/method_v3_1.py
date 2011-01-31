@@ -81,6 +81,9 @@ class MethodCitation_v3_1(MethodCitation):
         # Initialise the baseclass.
         super(MethodCitation_v3_1, self).__init__(sf)
 
+        # The category name.
+        self.tag_category_label = 'Method_citation'
+
 
 
 class MethodFile_v3_1(MethodFile):
@@ -96,6 +99,9 @@ class MethodFile_v3_1(MethodFile):
         # Initialise the baseclass.
         super(MethodFile_v3_1, self).__init__(sf)
 
+        # The category name.
+        self.tag_category_label = 'Method_file'
+
 
 
 class MethodParam_v3_1(MethodParam):
@@ -110,3 +116,6 @@ class MethodParam_v3_1(MethodParam):
 
         # Initialise the baseclass.
         super(MethodParam_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Method_param'

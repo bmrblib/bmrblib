@@ -59,6 +59,9 @@ class Software_v3_1(Software):
         # Initialise the baseclass.
         super(Software_v3_1, self).__init__(sf)
 
+        # The category name.
+        self.tag_category_label = 'Software'
+
         # Change tag names.
         self['SfCategory'].tag_name = 'Sf_category'
         self['SfFramecode'].tag_name = 'Sf_framecode'
@@ -79,6 +82,9 @@ class SoftwareCitation_v3_1(SoftwareCitation):
         # Initialise the baseclass.
         super(SoftwareCitation_v3_1, self).__init__(sf)
 
+        # The category name.
+        self.tag_category_label = 'Software_citation'
+
 
 
 class Task_v3_1(Task):
@@ -94,6 +100,9 @@ class Task_v3_1(Task):
         # Initialise the baseclass.
         super(Task_v3_1, self).__init__(sf)
 
+        # The category name.
+        self.tag_category_label = 'Task'
+
 
 
 class Vendor_v3_1(Vendor):
@@ -108,3 +117,6 @@ class Vendor_v3_1(Vendor):
 
         # Initialise the baseclass.
         super(Vendor_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Vendor'

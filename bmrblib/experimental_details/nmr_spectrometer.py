@@ -56,9 +56,6 @@ class NMRSpectrometer(TagCategoryFree):
         # Initialise the baseclass.
         super(NMRSpectrometer, self).__init__(sf)
 
-        # The category name.
-        self.tag_category_label = 'NMR_spectrometer'
-
         # Add the tag info.
         self.add(key='SfFramecode',         tag_name='Sf_framecode',    var_name='name',            missing=False)
         self.add(key='NMRSpectrometerID',   tag_name='ID',              var_name='count_str')

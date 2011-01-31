@@ -53,6 +53,9 @@ class ExperimentList_v3_1(ExperimentList):
         # Initialise the baseclass.
         super(ExperimentList_v3_1, self).__init__(sf)
 
+        # The category name.
+        self.tag_category_label = 'Experiment_list'
+
         # Change tag names.
         self['SfCategory'].tag_name = 'Sf_category'
         self['SfFramecode'].tag_name = 'Sf_framecode'
@@ -71,3 +74,6 @@ class Experiment_v3_1(Experiment):
 
         # Initialise the baseclass.
         super(Experiment_v3_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'Experiment'

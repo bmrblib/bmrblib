@@ -56,9 +56,6 @@ class ExperimentList(TagCategoryFree):
         # Initialise the baseclass.
         super(ExperimentList, self).__init__(sf)
 
-        # The category name.
-        self.tag_category_label = 'Experiment_list'
-
         # Add the tag info.
         self.add(key='ExperimentListID',    tag_name='ID',      var_name='count_str',   format='int')
         self.add(key='Details',             tag_name='Details', var_name='details',     format='str')
@@ -77,9 +74,6 @@ class Experiment(TagCategory):
 
         # Initialise the baseclass.
         super(Experiment, self).__init__(sf)
-
-        # The category name.
-        self.tag_category_label = 'Experiment'
 
         # Add the tag info.
         self.add(key='ExperimentID',                tag_name='ID',                              var_name='data_ids',            format='int')
