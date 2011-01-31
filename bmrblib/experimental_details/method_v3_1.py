@@ -66,6 +66,9 @@ class Method_v3_1(Method):
         self['SfCategory'].tag_name = 'Sf_category'
         self['SfFramecode'].tag_name = 'Sf_framecode'
 
+        # Change the variable names.
+        self['SfFramecode'].var_name = 'name'
+
 
 
 class MethodCitation_v3_1(MethodCitation):

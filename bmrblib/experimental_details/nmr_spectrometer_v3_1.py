@@ -59,3 +59,6 @@ class NMRSpectrometer_v3_1(NMRSpectrometer):
         # Change tag names.
         self['SfCategory'].tag_name = 'Sf_category'
         self['SfFramecode'].tag_name = 'Sf_framecode'
+
+        # Change the variable name.
+        self['SfFramecode'].var_name = 'name'

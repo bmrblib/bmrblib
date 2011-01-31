@@ -60,7 +60,6 @@ class Method(TagCategoryFree):
         super(Method, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='SfFramecode', tag_name='Sf_framecode',    var_name='name',            missing=False)
         self.add(key='MethodID',    tag_name='ID',              var_name='count_str')
         self.add(key='Details',     tag_name='Details',         var_name='details')
 

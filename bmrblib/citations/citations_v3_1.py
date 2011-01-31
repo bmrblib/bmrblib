@@ -62,6 +62,10 @@ class Citations_v3_1(Citations):
         self['SfCategory'].tag_name = 'Sf_category'
         self['SfFramecode'].tag_name = 'Sf_framecode'
 
+        # Change variables.
+        self['SfFramecode'].tag_name = 'citation_label'
+
+
 
 
 class CitationsAuthor_v3_1(CitationsAuthor):

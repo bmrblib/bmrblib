@@ -59,7 +59,6 @@ class Citations(TagCategoryFree):
         super(Citations, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='SfFramecode',                 tag_name='Sf_framecode',                var_name='citation_label')
         self.add(key='CitationID',                  tag_name='ID',                          var_name='count_str')
         self.add(key='CASAbstractCode',             tag_name='CAS_abstract_code',           var_name='cas_abstract_code')
         self.add(key='MEDLINEUICode',               tag_name='MEDLINE_UI_code',             var_name='medline_ui_code')
