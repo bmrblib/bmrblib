@@ -32,6 +32,9 @@ from bmrblib.thermodynamics.model_free import ModelFreeSaveframe, ModelFreeList,
 class ModelFreeSaveframe_v3_1(ModelFreeSaveframe):
     """The v3.1 Model_free data saveframe class."""
 
+    # Class variables.
+    sf_label = 'model_free'
+
     def add_tag_categories(self):
         """Create the v3.1 tag categories."""
 
