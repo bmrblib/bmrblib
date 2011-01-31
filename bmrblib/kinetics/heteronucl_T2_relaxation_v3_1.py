@@ -33,7 +33,7 @@ class HeteronuclT2Saveframe_v3_1(HeteronuclT2Saveframe):
     """The v3.1 Heteronuclear T2 data saveframe class."""
 
     # Class variables.
-    sf_label = 'heteronuc_T2_relaxation'
+    sf_label = 'heteronucl_T2_relaxation'
 
     def add_tag_categories(self):
         """Create the v3.1 tag categories."""
