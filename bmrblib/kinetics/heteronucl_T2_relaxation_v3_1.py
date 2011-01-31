@@ -123,9 +123,9 @@ class T2_v3_1(T2):
         self.tag_category_label = 'T2'
 
         # Change tag names.
-        self['RxID'] =         'ID'
-        self['CompIndexID'] =  'Comp_index_ID'
-        self['CompID'] =       'Comp_ID'
-        self['AtomID'] =       'Atom_ID'
-        self['Val'] =          'Val'
-        self['ValErr'] =       'Val_err'
+        self['RxID'].tag_name =         'ID'
+        self['CompIndexID'].tag_name =  'Comp_index_ID'
+        self['CompID'].tag_name =       'Comp_ID'
+        self['AtomID'].tag_name =       'Atom_ID'
+        self['Val'].tag_name =          'Val'
+        self['ValErr'].tag_name =       'Val_err'
