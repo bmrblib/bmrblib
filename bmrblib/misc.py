@@ -84,6 +84,10 @@ def translate(data, format='str', reverse=False):
         else:
             new_data = str(data)
 
+    # The data is None.
+    elif data == None:
+        new_data = None
+
     # From NMR-STAR to Python.
     else:
         # Conversion function.
