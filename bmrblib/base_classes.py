@@ -182,7 +182,7 @@ class BaseSaveframe:
                 continue
 
             # Extract the data.
-            self.tag_categories[i].extract_tag_data(datanode.tagtables[mapping[i]])
+            self.tag_categories[mapping[i]].extract_tag_data(datanode.tagtables[i])
 
 
     def find_mapping(self, datanode):
@@ -197,28 +197,28 @@ class BaseSaveframe:
         # Init.
         N = len(self.tag_categories)
         M = len(datanode.tagtables)
-        counts = zeros((N, M), float64)
+        counts = zeros((M, N), float64)
         mapping = []
 
         # Count the tag name matches.
-        for i in range(N):
-            for j in range(M):
+        for table_ind in range(M):
+            for cat_ind in range(N):
                 # Alias.
-                cat = self.tag_categories[i]
-                table = datanode.tagtables[j]
+                cat = self.tag_categories[cat_ind]
+                table = datanode.tagtables[table_ind]
 
                 # Loop over the tags.
                 for key in cat.keys():
                     for name in table.tagnames:
                         # Check for a match.
                         if name == cat[key].tag_name_full():
-                            counts[i, j] += 1
+                            counts[table_ind, cat_ind] += 1
 
             # The index of the maximum count.
-            if not counts[i].sum():
+            if not counts[table_ind].sum():
                 index = None
             else:
-                index = counts[i].tolist().index(counts[i].max())
+                index = counts[table_ind].tolist().index(counts[table_ind].max())
             mapping.append(index)
 
         # Return the mapping.
