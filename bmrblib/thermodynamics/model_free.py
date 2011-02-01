@@ -62,9 +62,9 @@ class ModelFreeList(TagCategoryFree):
         self.add(key='ModelFreeListID',               tag_name='id',                            var_name='count_str',               format='int')
         self.add(key='SampleConditionListID',         tag_name='Sample_condition_list_ID',      var_name='sample_cond_list_id')
         self.add(key='SampleConditionListLabel',      tag_name='Sample_conditions_label',       var_name='sample_cond_list_label',  default='$conditions_1')
-        self.add(key='TaueValUnits',                  tag_name='Tau_e_val_units',               var_name='te_units',                default='s')
-        self.add(key='TaufValUnits',                  tag_name='Tau_f_val_units',               var_name='tf_units',                default='s')
-        self.add(key='TausValUnits',                  tag_name='Tau_s_val_units',               var_name='ts_units',                default='s')
+        self.add(key='TaueValUnits',                  tag_name='Tau_e_value_units',             var_name='te_units',                default='s')
+        self.add(key='TaufValUnits',                  tag_name='Tau_f_value_units',             var_name='tf_units',                default='s')
+        self.add(key='TausValUnits',                  tag_name='Tau_s_value_units',             var_name='ts_units',                default='s')
         self.add(key='GlobalChiSquaredFitVal',        tag_name='Global_chi_squared_fit_val',    var_name='global_chi2',             format='float')
         self.add(key='Details',                       tag_name='Details',                       var_name='details')
 
