@@ -611,6 +611,10 @@ class TagCategory(TagTranslationTable):
             if self[key].tag_name_full() not in tagtable.tagnames:
                 continue
 
+            # Currently no corresponding variable in the tag category.
+            if self[key].var_name == None:
+                continue
+
             # Find the index of the tag.
             index = tagtable.tagnames.index(self[key].tag_name_full())
 
