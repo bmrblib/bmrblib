@@ -71,10 +71,16 @@ class HeteronuclNOEList(HeteronuclRxList):
 
         # Add the tag info.
         self.add(key='HeteronuclNOEListID',         tag_name='ID',                          var_name='count_str')
+        self.add(key='DataFileName',                tag_name='Data_file_name ',             var_name=None)
         self.add(key='SampleConditionListID',       tag_name='Sample_condition_list_ID',    var_name='sample_cond_list_id')
         self.add(key='SampleConditionListLabel',    tag_name='Sample_conditions_label',     var_name='sample_cond_list_label',  default='$conditions_1')
         self.add(key='SpectrometerFrequency1H',     tag_name='Spectrometer_frequency_1H',   var_name='frq',                     format='float')
+        self.add(key='HeteronuclearNOEValType',     tag_name='Heteronuclear_NOE_val_type',  var_name=None)
+        self.add(key='NOERefVal',                   tag_name='NOE_ref_val',                 var_name=None)
+        self.add(key='NOERefDescription',           tag_name='NOE_ref_description',         var_name=None)
         self.add(key='Details',                     tag_name='Details',                     var_name='details')
+        self.add(key='TextDataFormat',              tag_name='Text_data_format',            var_name=None)
+        self.add(key='TextData',                    tag_name='Text_data',                   var_name=None)
 
 
 
@@ -92,20 +98,43 @@ class HeteronuclNOEExperiment(TagCategory):
         super(HeteronuclNOEExperiment, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='SampleLabel', tag_name='Sample_label',    var_name='sample_label',    default='$sample_1')
+        self.add(key='ExperimentID',        tag_name='Experiment_ID',           var_name=None)
+        self.add(key='ExperimentName',      tag_name='Experiment_label',        var_name=None)
+        self.add(key='SampleID',            tag_name='Sample_ID',               var_name=None)
+        self.add(key='SampleLabel',         tag_name='Sample_label',            var_name='sample_label',    default='$sample_1')
+        self.add(key='SampleState',         tag_name='Sample_state',            var_name=None)
+        self.add(key='EntryID',             tag_name='Entry_ID',                var_name=None)
+        self.add(key='HeteronuclNOEListID', tag_name='Heteronucl_NOE_list_ID',  var_name=None)
 
 
 
 class HeteronuclNOESoftware(TagCategory):
     """Base class for the HeteronuclNOESoftware tag category."""
 
+    def __init__(self, sf):
+        """Setup the HeteronuclNOESoftware tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(HeteronuclNOESoftware, self).__init__(sf)
+
+        # Add the tag info.
+        self.add(key='SoftwareID',          tag_name='Software_ID',             var_name=None)
+        self.add(key='SoftwareLabel',       tag_name='Software_label',          var_name=None)
+        self.add(key='MethodID',            tag_name='Method_ID',               var_name=None)
+        self.add(key='MethodLabel',         tag_name='Method_label',            var_name=None)
+        self.add(key='EntryID',             tag_name='Entry_ID',                var_name=None)
+        self.add(key='HeteronuclNOEListID', tag_name='Heteronucl_NOE_list_ID',  var_name=None)
 
 
 class HeteronuclNOE(Rx):
     """Base class for the HeteronuclNOE tag category."""
 
     def __init__(self, sf):
-        """Setup the HeteronuclNOEList tag category.
+        """Setup the HeteronuclNOE tag category.
 
         @param sf:  The saveframe object.
         @type sf:   saveframe instance
