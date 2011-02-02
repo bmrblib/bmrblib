@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2008-2009 Edward d'Auvergne                                 #
+# Copyright (C) 2008-2011 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,4 +26,5 @@
 __all__ = ['base_classes',
            'misc',
            'nmr_star_dict',
+           'nmr_star_dict_v2_1',
            'nmr_star_dict_v3_1']
