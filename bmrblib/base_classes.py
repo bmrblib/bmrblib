@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,10 +26,11 @@
 from numpy import float64, ndarray, zeros
 from warnings import warn
 
-# relax module imports.
-from bmrblib.misc import no_missing, translate
-from bmrblib.pystarlib.SaveFrame import SaveFrame
-from bmrblib.pystarlib.TagTable import TagTable
+# Bmrblib module imports.
+from misc import no_missing, translate
+from pystarlib.SaveFrame import SaveFrame
+from pystarlib.TagTable import TagTable
+from version import Star_version; version = Star_version()
 
 
 class BaseSaveframe:
@@ -183,6 +184,10 @@ class BaseSaveframe:
 
             # Extract the data.
             self.tag_categories[mapping[i]].extract_tag_data(datanode.tagtables[i])
+
+        # Add the framecode for v2.1 files.
+        if version.major == 2:
+            self.sf_framecode = datanode.title
 
 
     def find_mapping(self, datanode):
