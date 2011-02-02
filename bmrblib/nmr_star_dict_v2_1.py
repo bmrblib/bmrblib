@@ -41,7 +41,7 @@ from bmrblib.thermodynamics.model_free import ModelFreeSaveframe
 from bmrblib.pystarlib.File import File
 
 
-class NMR_STAR:
+class NMR_STAR_v2_1:
     """The base object for the NMR-STAR dictionary."""
 
     # Class extension string.
