@@ -24,6 +24,7 @@
 
 # Python module imports.
 from re import search
+from string import split
 
 
 class Star_version(object):
