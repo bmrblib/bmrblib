@@ -29,7 +29,12 @@ __all__ = ['base_classes',
            'nmr_star_dict_v2_1',
            'nmr_star_dict_v3_1']
 
-# Module imports.
+# Python module imports.
+from os import F_OK, access
+from re import search
+from string import split
+
+# Bmrblib module imports.
 from nmr_star_dict_v2_1 import NMR_STAR_v2_1
 from nmr_star_dict_v3_1 import NMR_STAR_v3_1
 
@@ -47,6 +52,10 @@ def create_nmr_star(title, file_path, version=None):
     @rtype:             class instance
     """
 
+    # Determine the version.
+    if not version and access(file_path, F_OK):
+        version = determine_version(file_path)
+
     # Initialise the NMR-STAR data object.
     if version == '3.1':
         star = NMR_STAR_v3_1('relax_model_free_results', file_path)
@@ -57,3 +66,28 @@ def create_nmr_star(title, file_path, version=None):
 
     # Return the object.
     return star
+
+
+def determine_version(file_path):
+    """Determine the version of the given NMR-STAR file.
+
+    @param file_path:   The full file path.
+    @type file_path:    str
+    @return:            The NMR-STAR version number.
+    @rtype:             str
+    """
+
+    # Read the file.
+    file = open(file_path)
+    lines = file.readlines()
+    file.close()
+
+    # Loop over the lines of the file.
+    for line in lines:
+        # Find the version line.
+        if search('\.NMR_STAR_version', line) or search('_NMR_STAR_version', line):
+            # Split the line.
+            row = split(line)
+
+            # Return the version number.
+            return row[1]
