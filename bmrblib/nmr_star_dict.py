@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -33,6 +33,7 @@ from bmrblib.citations.citations import CitationsSaveframe
 from bmrblib.experimental_details.experiment import ExperimentSaveframe
 from bmrblib.experimental_details.method import MethodSaveframe
 from bmrblib.experimental_details.nmr_spectrometer import NMRSpectrometerSaveframe
+from bmrblib.experimental_details.sample_conditions import SampleConditionsSaveframe
 from bmrblib.experimental_details.software import SoftwareSaveframe
 from bmrblib.kinetics.relaxation import Relaxation
 from bmrblib.NMR_parameters.chem_shift_anisotropy import ChemShiftAnisotropySaveframe
@@ -76,6 +77,7 @@ class NMR_STAR:
         self.experiment = ExperimentSaveframe(self.data.datanodes)
         self.method = MethodSaveframe(self.data.datanodes)
         self.nmr_spectrometer = NMRSpectrometerSaveframe(self.data.datanodes)
+        self.sample_conditions = SampleConditionsSaveframe(self.data.datanodes)
         self.software = SoftwareSaveframe(self.data.datanodes)
 
         # Initialise Supergroup 5:  The NMR parameters saveframe API.

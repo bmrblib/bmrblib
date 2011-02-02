@@ -32,6 +32,7 @@ from bmrblib.citations.citations_v3_1 import CitationsSaveframe_v3_1
 from bmrblib.experimental_details.experiment_v3_1 import ExperimentSaveframe_v3_1
 from bmrblib.experimental_details.method_v3_1 import MethodSaveframe_v3_1
 from bmrblib.experimental_details.nmr_spectrometer_v3_1 import NMRSpectrometerSaveframe_v3_1
+from bmrblib.experimental_details.sample_conditions_v3_1 import SampleConditionsSaveframe_v3_1
 from bmrblib.experimental_details.software_v3_1 import SoftwareSaveframe_v3_1
 from bmrblib.kinetics.relaxation import Relaxation_v3_1
 from bmrblib.NMR_parameters.chem_shift_anisotropy_v3_1 import ChemShiftAnisotropySaveframe_v3_1
@@ -60,6 +61,7 @@ class NMR_STAR_v3_1(NMR_STAR):
         self.experiment = ExperimentSaveframe_v3_1(self.data.datanodes)
         self.method = MethodSaveframe_v3_1(self.data.datanodes)
         self.nmr_spectrometer = NMRSpectrometerSaveframe_v3_1(self.data.datanodes)
+        self.sample_conditions = SampleConditionsSaveframe_v3_1(self.data.datanodes)
         self.software = SoftwareSaveframe_v3_1(self.data.datanodes)
 
         # Initialise Supergroup 5:  The NMR parameters saveframe API.
