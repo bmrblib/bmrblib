@@ -93,5 +93,3 @@ class Star_version(object):
         # The revision number.
         if len(nums) == 3:
             self.revision = int(nums[2])
-        else:
-            self.revision = 0
