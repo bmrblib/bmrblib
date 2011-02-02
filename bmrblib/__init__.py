@@ -67,7 +67,12 @@ def create_nmr_star(title, file_path, version=None):
     star_version.set_version(version)
 
     # Print out.
-    stdout.write("NMR-STAR version %s.%s.%s\n" % (star_version.major, star_version.minor, star_version.revision))
+    stdout.write("NMR-STAR version %s" % star_version.major)
+    if star_version.minor != None:
+        stdout.write(".%s" % (star_version.minor))
+    if star_version.revision != None:
+        stdout.write(".%s" % (star_version.revision))
+    stdout.write("\n")
 
     # Initialise the NMR-STAR data object.
     if star_version.major == 3:
