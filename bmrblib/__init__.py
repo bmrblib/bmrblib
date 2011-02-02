@@ -64,10 +64,7 @@ def create_nmr_star(title, file_path, version=None):
 
     # Store the version in the singleton.
     star_version = Star_version()
-    star_version.version = version
-
-    # Determine the major, minor, and revision numbers.
-    star_version.major, star_version.minor, star_version.revision = parse_version(version)
+    star_version.set_version(version)
 
     # Print out.
     stdout.write("NMR-STAR version %s.%s.%s\n" % (star_version.major, star_version.minor, star_version.revision))
@@ -107,29 +104,3 @@ def determine_version(file_path):
 
             # Return the version number.
             return row[1]
-
-
-def parse_version(version):
-    """Convert the version number string into the major, minor, and revision numbers.
-
-    @param version: The version number.
-    @type version:  str
-    @return:        The major, minor, and revision numbers.
-    @rtype:         tuple of int
-    """
-
-    # Split up the number.
-    nums = split(version, '.')
-
-    # The major and minor numbers.
-    major = int(nums[0])
-    minor = int(nums[1])
-
-    # The revision number.
-    if len(nums) == 3:
-        revision = int(nums[2])
-    else:
-        revision = 0
-
-    # Return the numbers.
-    return major, minor, revision
