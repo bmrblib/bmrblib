@@ -61,19 +61,23 @@ def create_nmr_star(title, file_path, version=None):
     if not version:
         version = '3.1'
 
+    # Store the version in the singleton.
+    version_obj = Star_version()
+    version_obj.version = version
+
     # Determine the major, minor, and revision numbers.
-    major, minor, revision = parse_version(version)
+    version_obj.major, version_obj.minor, version_obj.revision = parse_version(version)
 
     # Print out.
-    stdout.write("NMR-STAR version %s.%s.%s\n" % (major, minor, revision))
+    stdout.write("NMR-STAR version %s.%s.%s\n" % (version_obj.major, version_obj.minor, version_obj.revision))
 
     # Initialise the NMR-STAR data object.
-    if major == 3:
+    if version_obj.major == 3:
         star = NMR_STAR_v3_1('relax_model_free_results', file_path)
-    elif major == 2:
+    elif version_obj.major == 2:
         star = NMR_STAR_v2_1('relax_model_free_results', file_path)
     else:
-        raise NameError("The NMR-STAR version %s is unknown." % version)
+        raise NameError("The NMR-STAR version %s is unknown." % version_obj.version)
 
     # Return the object.
     return star
@@ -128,3 +132,21 @@ def parse_version(version):
 
     # Return the numbers.
     return major, minor, revision
+
+
+
+class Star_version(object):
+    """A singleton for storing the NMR-STAR version information."""
+
+    # Class variable for storing the class instance.
+    instance = None
+
+    def __new__(self, *args, **kargs):
+        """Replacement function for implementing the singleton design pattern."""
+
+        # First initialisation.
+        if self.instance is None:
+            self.instance = object.__new__(self, *args, **kargs)
+
+        # Already initialised, so return the instance.
+        return self.instance
