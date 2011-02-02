@@ -33,6 +33,7 @@ __all__ = ['base_classes',
 from os import F_OK, access
 from re import search
 from string import split
+from sys import stdout
 
 # Bmrblib module imports.
 from nmr_star_dict_v2_1 import NMR_STAR_v2_1
@@ -60,10 +61,16 @@ def create_nmr_star(title, file_path, version=None):
     if not version:
         version = '3.1'
 
+    # Determine the major, minor, and revision numbers.
+    major, minor, revision = parse_version(version)
+
+    # Print out.
+    stdout.write("NMR-STAR version %s.%s.%s\n" % (major, minor, revision))
+
     # Initialise the NMR-STAR data object.
-    if version == '3.1':
+    if major == 3:
         star = NMR_STAR_v3_1('relax_model_free_results', file_path)
-    elif version == '2.1':
+    elif major == 2:
         star = NMR_STAR_v2_1('relax_model_free_results', file_path)
     else:
         raise NameError("The NMR-STAR version %s is unknown." % version)
@@ -95,3 +102,29 @@ def determine_version(file_path):
 
             # Return the version number.
             return row[1]
+
+
+def parse_version(version):
+    """Convert the version number string into the major, minor, and revision numbers.
+
+    @param version: The version number.
+    @type version:  str
+    @return:        The major, minor, and revision numbers.
+    @rtype:         tuple of int
+    """
+
+    # Split up the number.
+    nums = split(version, '.')
+
+    # The major and minor numbers.
+    major = int(nums[0])
+    minor = int(nums[1])
+
+    # The revision number.
+    if len(nums) == 3:
+        revision = int(nums[2])
+    else:
+        revision = 0
+
+    # Return the numbers.
+    return major, minor, revision
