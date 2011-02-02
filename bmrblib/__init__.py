@@ -56,6 +56,10 @@ def create_nmr_star(title, file_path, version=None):
     if not version and access(file_path, F_OK):
         version = determine_version(file_path)
 
+    # The default version.
+    if not version:
+        version = '3.1'
+
     # Initialise the NMR-STAR data object.
     if version == '3.1':
         star = NMR_STAR_v3_1('relax_model_free_results', file_path)
