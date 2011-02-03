@@ -27,7 +27,7 @@ http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
 """
 
 # relax module imports.
-from bmrblib.assembly_supercategory.entity import EntitySaveframe
+from bmrblib.assembly_supercategory.entity_v2_1 import EntitySaveframe_v2_1
 from bmrblib.base_classes import MissingSaveframe
 from bmrblib.citations.citations import CitationsSaveframe
 from bmrblib.experimental_details.experiment import ExperimentSaveframe
@@ -71,7 +71,7 @@ class NMR_STAR_v2_1:
         self.citations = CitationsSaveframe(self.data.datanodes)
 
         # Initialise Supergroup 3:  The molecular assembly saveframe API.
-        self.entity = EntitySaveframe(self.data.datanodes)
+        self.entity = EntitySaveframe_v2_1(self.data.datanodes)
 
         # Initialise Supergroup 4:  The experimental descriptions saveframe API.
         self.experiment = ExperimentSaveframe(self.data.datanodes)

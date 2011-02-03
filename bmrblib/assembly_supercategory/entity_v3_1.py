@@ -58,8 +58,44 @@ class Entity_v3_1(Entity):
         self.tag_category_label = 'Entity'
 
         # Change tag names.
-        self['SfCategory'].tag_name = 'Sf_category'
-        self['SfFramecode'].tag_name = 'Sf_framecode'
+        self['SfCategory'].tag_name =                       'Sf_category'
+        self['SfFramecode'].tag_name =                      'Sf_framecode'
+        self['EntityID'].tag_name =                         'ID'
+        self['BMRBCode'].tag_name =                         'BMRB_code'
+        self['Name'].tag_name =                             'Name'
+        self['Type'].tag_name =                             'Type'
+        self['PolymerCommonType'].tag_name =                'Polymer_common_type'
+        self['PolymerType'].tag_name =                      'Polymer_type'
+        self['PolymerTypeDetails'].tag_name =               'Polymer_type_details'
+        self['PolymerStrandID'].tag_name =                  'Polymer_strand_ID'
+        self['PolymerSeqOneLetterCodeCan'].tag_name =       'Polymer_seq_one_letter_code_can'
+        self['PolymerSeqOneLetterCode'].tag_name =          'Polymer_seq_one_letter_code'
+        self['TargetIdentifier'].tag_name =                 'Target_identifier'
+        self['PolymerAuthorDefinedSeq'].tag_name =          'Polymer_author_defined_seq'
+        self['PolymerAuthorSeqDetails'].tag_name =          'Polymer_author_seq_details'
+        self['AmbiguousConformationalStates'].tag_name =    'Ambiguous_conformational_states'
+        self['AmbiguousChemCompSites'].tag_name =           'Ambiguous_chem_comp_sites'
+        self['NstdMonomer'].tag_name =                      'Nstd_monomer'
+        self['NstdChirality'].tag_name =                    'Nstd_chirality'
+        self['NstdLinkage'].tag_name =                      'Nstd_linkage'
+        self['NonpolymerCompID'].tag_name =                 'Nonpolymer_comp_ID'
+        self['NonpolymerCompLabel'].tag_name =              'Nonpolymer_comp_label'
+        self['NumberOfMonomers'].tag_name =                 'Number_of_monomers'
+        self['NumberOfNonpolymerComponents'].tag_name =     'Number_of_nonpolymer_components'
+        self['Paramagnetic'].tag_name =                     'Paramagnetic'
+        self['ThiolState'].tag_name =                       'Thiol_state'
+        self['SrcMethod'].tag_name =                        'Src_method'
+        self['ParentEntityID'].tag_name =                   'Parent_entity_ID'
+        self['Fragment'].tag_name =                         'Fragment'
+        self['Mutation'].tag_name =                         'Mutation'
+        self['ECNumber'].tag_name =                         'EC_number'
+        self['CalcIsoelectricPoint'].tag_name =             'Calc_isoelectric_point'
+        self['FormulaWeight'].tag_name =                    'Formula_weight'
+        self['FormulaWeightExptl'].tag_name =               'Formula_weight_exptl'
+        self['FormulaWeightExptlMeth'].tag_name =           'Formula_weight_exptl_meth'
+        self['Details'].tag_name =                          'Details'
+        self['DBQueryDate'].tag_name =                      'DB_query_date'
+        self['DBQueryRevisedLastDate'].tag_name =           'DB_query_revised_last_date'
 
 
 
@@ -78,3 +114,10 @@ class EntityCompIndex_v3_1(EntityCompIndex):
 
         # The category name.
         self.tag_category_label = 'Entity_comp_index'
+
+        # Change tag names.
+        self['EntityCompIndexID'].tag_name =    'ID'
+        self['AuthSeqID'].tag_name =            'Auth_seq_ID'
+        self['CompID'].tag_name =               'Comp_ID'
+        self['CompLabel'].tag_name =            'Comp_label'
+        self['EntityID'].tag_name =             'Entity_ID'

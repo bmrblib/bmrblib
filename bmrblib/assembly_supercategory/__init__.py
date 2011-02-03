@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,4 +26,6 @@ This is a collection of NMR-STAR dictionary saveframes as defined at, for exampl
 http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
 """
 
-__all__ = []
+__all__ = ['entity',
+           'entity_v2_1',
+           'entity_v3_1']
