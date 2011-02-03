@@ -69,6 +69,7 @@ class Star_version(object):
         self.major = None
         self.minor = None
         self.revision = None
+        self.sub_revision = None
 
         # Split up the number.
         nums = split(self.version, '.')
@@ -91,5 +92,9 @@ class Star_version(object):
         self.minor = int(nums[1])
 
         # The revision number.
-        if len(nums) == 3:
+        if len(nums) > 2:
             self.revision = int(nums[2])
+
+        # The sub-revision number.
+        if len(nums) > 3:
+            self.sub_revision = int(nums[3])
