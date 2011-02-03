@@ -64,6 +64,7 @@ class Entity_v2_1(Entity):
         self['PolymerType'].tag_name =              'Mol_polymer_class'
         self['ThiolState'].tag_name =               'Mol_thiol_state'
         self['PolymerSeqOneLetterCode'].tag_name =  'Mol_residue_sequence'
+        self['FormulaWeight'].tag_name =            'Molecular_mass'
         self['DBQueryDate'].tag_name =              'Sequence_homology_query_date'
         self['DBQueryRevisedLastDate'].tag_name =   'Sequence_homology_query_revised_last_date'
 
