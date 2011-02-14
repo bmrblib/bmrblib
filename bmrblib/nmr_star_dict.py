@@ -27,17 +27,6 @@ http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
 """
 
 # relax module imports.
-from bmrblib.assembly_supercategory.entity import EntitySaveframe
-from bmrblib.base_classes import MissingSaveframe
-from bmrblib.citations.citations import CitationsSaveframe
-from bmrblib.experimental_details.experiment import ExperimentSaveframe
-from bmrblib.experimental_details.method import MethodSaveframe
-from bmrblib.experimental_details.nmr_spectrometer import NMRSpectrometerSaveframe
-from bmrblib.experimental_details.sample_conditions import SampleConditionsSaveframe
-from bmrblib.experimental_details.software import SoftwareSaveframe
-from bmrblib.kinetics.relaxation import Relaxation
-from bmrblib.NMR_parameters.chem_shift_anisotropy import ChemShiftAnisotropySaveframe
-from bmrblib.thermodynamics.model_free import ModelFreeSaveframe
 from bmrblib.pystarlib.File import File
 
 
@@ -62,35 +51,6 @@ class NMR_STAR:
 
         # Create the class objects.
         self.create_saveframes()
-
-
-    def create_saveframes(self):
-        """Create all the saveframe objects."""
-
-        # Initialise Supergroup 2:  The citations.
-        self.citations = CitationsSaveframe(self.data.datanodes)
-
-        # Initialise Supergroup 3:  The molecular assembly saveframe API.
-        self.entity = EntitySaveframe(self.data.datanodes)
-
-        # Initialise Supergroup 4:  The experimental descriptions saveframe API.
-        self.experiment = ExperimentSaveframe(self.data.datanodes)
-        self.method = MethodSaveframe(self.data.datanodes)
-        self.nmr_spectrometer = NMRSpectrometerSaveframe(self.data.datanodes)
-        self.sample_conditions = SampleConditionsSaveframe(self.data.datanodes)
-        self.software = SoftwareSaveframe(self.data.datanodes)
-
-        # Initialise Supergroup 5:  The NMR parameters saveframe API.
-        self.chem_shift_anisotropy = ChemShiftAnisotropySaveframe(self.data.datanodes)
-
-        # Initialise Supergroup 6:  The kinetic data saveframe API.
-        self.relaxation = Relaxation(self.data.datanodes)
-
-        # Initialise Supergroup 7:  The thermodynamics saveframe API.
-        self.model_free = ModelFreeSaveframe(self.data.datanodes)
-
-        # Initialise Supergroup 8:  The structure determination saveframes.
-        self.tensor = MissingSaveframe('Tensor')
 
 
     def read(self):

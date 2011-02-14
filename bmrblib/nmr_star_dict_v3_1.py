@@ -44,10 +44,6 @@ from bmrblib.nmr_star_dict import NMR_STAR
 class NMR_STAR_v3_1(NMR_STAR):
     """The v3.1 NMR-STAR dictionary."""
 
-    # Class extension string.
-    ext = ''
-
-
     def create_saveframes(self):
         """Create all the saveframe objects."""
 

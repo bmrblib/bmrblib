@@ -42,27 +42,7 @@ from bmrblib.pystarlib.File import File
 
 
 class NMR_STAR_v2_1:
-    """The base object for the NMR-STAR dictionary."""
-
-    # Class extension string.
-    ext = ''
-
-
-    def __init__(self, title, file_path):
-        """Initialise the NMR-STAR dictionary object.
-
-        @param title:       The title of the NMR-STAR data.
-        @type title:        str
-        @param file_path:   The full file path.
-        @type file_path:    str
-        """
-
-        # Initialise the pystarlib File object.
-        self.data = File(title=title, filename=file_path)
-
-        # Create the class objects.
-        self.create_saveframes()
-
+    """The v2.1 NMR-STAR dictionary."""
 
     def create_saveframes(self):
         """Create all the saveframe objects."""
@@ -91,17 +71,3 @@ class NMR_STAR_v2_1:
 
         # Initialise Supergroup 8:  The structure determination saveframes.
         self.tensor = MissingSaveframe('Tensor')
-
-
-    def read(self):
-        """Read the data from a BMRB NMR-STAR formatted file."""
-
-        # Read the contents of the STAR formatted file.
-        self.data.read()
-
-
-    def write(self):
-        """Write the data to a BMRB NMR-STAR formatted file."""
-
-        # Write the contents to the STAR formatted file.
-        self.data.write()
