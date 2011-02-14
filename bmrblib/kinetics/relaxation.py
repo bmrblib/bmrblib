@@ -27,13 +27,13 @@
 from bmrblib.kinetics.auto_relaxation import AutoRelaxationSaveframe
 from bmrblib.kinetics.heteronucl_NOEs import HeteronuclNOESaveframe
 from bmrblib.kinetics.heteronucl_NOEs_v3_1 import HeteronuclNOESaveframe_v3_1
-from bmrblib.kinetics.heteronucl_T1_relaxation import HeteronuclT1Saveframe
+from bmrblib.kinetics.heteronucl_T1_relaxation_v2_1 import HeteronuclT1Saveframe_v2_1
 from bmrblib.kinetics.heteronucl_T1_relaxation_v3_1 import HeteronuclT1Saveframe_v3_1
 from bmrblib.kinetics.heteronucl_T2_relaxation import HeteronuclT2Saveframe
 from bmrblib.kinetics.heteronucl_T2_relaxation_v3_1 import HeteronuclT2Saveframe_v3_1
 
 
-class Relaxation:
+class Relaxation_v2_1:
     """Class for the relaxation data part of the BMRB API."""
 
     def __init__(self, datanodes):
@@ -45,7 +45,7 @@ class Relaxation:
 
         # Initialise the kinetic saveframe supergroups.
         self.heteronucl_NOEs = HeteronuclNOESaveframe(datanodes)
-        self.heteronucl_T1_relaxation = HeteronuclT1Saveframe(datanodes)
+        self.heteronucl_T1_relaxation = HeteronuclT1Saveframe_v2_1(datanodes)
         self.heteronucl_T2_relaxation = HeteronuclT2Saveframe(datanodes)
 
 
@@ -135,7 +135,7 @@ class Relaxation:
 
 
 
-class Relaxation_v3_0(Relaxation):
+class Relaxation_v3_0(Relaxation_v2_1):
     """Class for the relaxation data part of the BMRB API (v3.0)."""
 
     def __init__(self, datanodes):
