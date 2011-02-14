@@ -49,13 +49,17 @@ class HeteronuclT1List(HeteronuclRxList):
         super(HeteronuclT1List, self).__init__(sf)
 
         # Add the tag info.
+        self.add(key='EntryID',                     var_name='entry_id',                format='str')
         self.add(key='HeteronuclT1ListID',          var_name='count_str',               format='int')
-        self.add(key='SampleConditionListID',       var_name='sample_cond_list_id')
-        self.add(key='SampleConditionListLabel',    var_name='sample_cond_list_label',  default='$conditions_1')
+        self.add(key='DataFileName',                var_name='data_file_name',          format='str')
+        self.add(key='SampleConditionListID',       var_name='sample_cond_list_id',     format='int')
+        self.add(key='SampleConditionListLabel',    var_name='sample_cond_list_label',  format='str',  default='$conditions_1')
         self.add(key='SpectrometerFrequency1H',     var_name='frq',                     format='float')
-        self.add(key='T1CoherenceType',             var_name='coherence',               default='Nz')
-        self.add(key='T1ValUnits',                  var_name='units',                   default='1/s')
-        self.add(key='Details',                     var_name='details')
+        self.add(key='T1CoherenceType',             var_name='coherence',               format='str',  default='Nz')
+        self.add(key='T1ValUnits',                  var_name='units',                   format='str',  default='1/s')
+        self.add(key='Details',                     var_name='details',                 format='str')
+        self.add(key='TextDataFormat',              var_name='text_data_format',        format='str')
+        self.add(key='TextData',                    var_name='text_data',               format='str')
 
 
 
@@ -73,13 +77,36 @@ class HeteronuclT1Experiment(TagCategory):
         super(HeteronuclT1Experiment, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='SampleLabel',    var_name='sample_label',    default='$sample_1')
+        self.add(key='ExperimentID',        var_name='experiment_id',           format='int')
+        self.add(key='ExperimentName',      var_name='experiment_name',         format='str')
+        self.add(key='SampleID',            var_name='sample_id',               format='int')
+        self.add(key='SampleLabel',         var_name='sample_label',            format='str',    default='$sample_1')
+        self.add(key='SampleState',         var_name='sample_state',            format='str')
+        self.add(key='EntryID',             var_name='entry_id',                format='str')
+        self.add(key='HeteronuclT1ListID',  var_name='heteronucl_t1_list_id',   format='int')
 
 
 
 class HeteronuclT1Software(TagCategory):
     """Base class for the HeteronuclT1Software tag category."""
 
+    def __init__(self, sf):
+        """Setup the HeteronuclT1Software tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(HeteronuclT1Software, self).__init__(sf)
+
+        # Add the tag info.
+        self.add(key='SoftwareID',          var_name='software_id',             format='int')
+        self.add(key='SoftwareLabel',       var_name='software_label',          format='str')
+        self.add(key='MethodID',            var_name='method_id',               format='int')
+        self.add(key='MethodLabel',         var_name='method_label',            format='str')
+        self.add(key='EntryID',             var_name='entry_id',                format='str')
+        self.add(key='HeteronuclT1ListID',  var_name='heteronucl_t1_list_id',   format='int')
 
 
 class T1(Rx):
