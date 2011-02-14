@@ -35,7 +35,7 @@ from bmrblib.experimental_details.method import MethodSaveframe
 from bmrblib.experimental_details.nmr_spectrometer import NMRSpectrometerSaveframe
 from bmrblib.experimental_details.sample_conditions_v2_1 import SampleConditionsSaveframe_v2_1
 from bmrblib.experimental_details.software import SoftwareSaveframe
-from bmrblib.kinetics.relaxation import Relaxation
+from bmrblib.kinetics.relaxation import Relaxation_v2_1
 from bmrblib.NMR_parameters.chem_shift_anisotropy import ChemShiftAnisotropySaveframe
 from bmrblib.thermodynamics.model_free import ModelFreeSaveframe
 from bmrblib.pystarlib.File import File
@@ -84,7 +84,7 @@ class NMR_STAR_v2_1:
         self.chem_shift_anisotropy = ChemShiftAnisotropySaveframe(self.data.datanodes)
 
         # Initialise Supergroup 6:  The kinetic data saveframe API.
-        self.relaxation = Relaxation(self.data.datanodes)
+        self.relaxation = Relaxation_v2_1(self.data.datanodes)
 
         # Initialise Supergroup 7:  The thermodynamics saveframe API.
         self.model_free = ModelFreeSaveframe(self.data.datanodes)
