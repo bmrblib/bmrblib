@@ -104,5 +104,29 @@ class HeteronuclT1Software_v2_1(HeteronuclT1Software):
 
 class T1_v2_1(T1):
     """v2.1 T1 tag category."""
-    """Base class for the T1_v2_1 tag category."""
 
+    def __init__(self, sf):
+        """Setup the T1_v2_1 tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(T1_v2_1, self).__init__(sf)
+
+        # The category name.
+        self.tag_category_label = 'T1'
+
+        # Change tag names.
+        self['RxID'].tag_name =                 'id'
+        self['AssemblyAtomID'].tag_name =       'Assembly_atom_ID'
+        self['EntityAssemblyID'].tag_name =     'Entity_assembly_ID'
+        self['EntityID'].tag_name =             'Entity_ID'
+        self['SeqID'].tag_name =                'Seq_ID'
+        self['CompID'].tag_name =               'Residue_label'
+        self['AtomID'].tag_name =               'Atom_name'
+        self['AtomType'].tag_name =             'Atom_type'
+        self['AtomIsotopeNumber'].tag_name =    'Atom_isotope_number'
+        self['Val'].tag_name =                  self.sf.name+'_value'
+        self['ValErr'].tag_name =               self.sf.name+'_value_error'
