@@ -146,7 +146,7 @@ class Relaxation_v3_0(Relaxation_v2_1):
         """
 
         # Execute the base class __init__() method.
-        Relaxation.__init__(self, datanodes)
+        Relaxation_v2_1.__init__(self, datanodes)
 
 
 
