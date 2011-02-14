@@ -102,6 +102,7 @@ class HeteronuclT1Software_v2_1(HeteronuclT1Software):
 
 
 
-class T1(Rx):
-    """Base class for the T1 tag category."""
+class T1_v2_1(T1):
+    """v2.1 T1 tag category."""
+    """Base class for the T1_v2_1 tag category."""
 
