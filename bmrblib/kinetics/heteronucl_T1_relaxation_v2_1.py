@@ -69,13 +69,13 @@ class HeteronuclT1List_v2_1(HeteronuclT1List):
         super(HeteronuclT1List_v2_1, self).__init__(sf)
 
         # Add the tag info.
-        self['HeteronuclT1ListID'].tag_name =       'id'
-        self['SampleConditionListID'].tag_name =    'Sample_condition_list_ID'
+        self['Details'].tag_name =                  'Details'
         self['SampleConditionListLabel'].tag_name = 'Sample_conditions_label'
         self['SpectrometerFrequency1H'].tag_name =  'Spectrometer_frequency_1H'
         self['T1CoherenceType'].tag_name =          'T1_coherence_type'
         self['T1ValUnits'].tag_name =               'T1_value_units'
-        self['Details'].tag_name =                  'Details'
+        self['TextDataFormat'].tag_name =           'Text_data_format'
+        self['TextData'].tag_name =                 'Text_data'
 
 
 
@@ -93,12 +93,26 @@ class HeteronuclT1Experiment_v2_1(HeteronuclT1Experiment):
         super(HeteronuclT1Experiment_v2_1, self).__init__(sf)
 
         # Add the tag info.
+        self['ExperimentName'].tag_name = 'Experiment_label'
         self['SampleLabel'].tag_name = 'Sample_label'
 
 
 
 class HeteronuclT1Software_v2_1(HeteronuclT1Software):
     """v2.1 HeteronuclT1Software tag category."""
+
+    def __init__(self, sf):
+        """Setup the HeteronuclT1Software tag category.
+
+        @param sf:  The saveframe object.
+        @type sf:   saveframe instance
+        """
+
+        # Initialise the baseclass.
+        super(HeteronuclT1Software_v2_1, self).__init__(sf)
+
+        # Add the tag info.
+        self['SoftwareLabel'].tag_name =       'Software_label'
 
 
 
@@ -116,14 +130,8 @@ class T1_v2_1(T1):
         super(T1_v2_1, self).__init__(sf)
 
         # Change tag names.
-        self['RxID'].tag_name =                 'id'
-        self['AssemblyAtomID'].tag_name =       'Assembly_atom_ID'
-        self['EntityAssemblyID'].tag_name =     'Entity_assembly_ID'
-        self['EntityID'].tag_name =             'Entity_ID'
-        self['SeqID'].tag_name =                'Seq_ID'
+        self['SeqID'].tag_name =                'Residue_seq_code'
         self['CompID'].tag_name =               'Residue_label'
         self['AtomID'].tag_name =               'Atom_name'
-        self['AtomType'].tag_name =             'Atom_type'
-        self['AtomIsotopeNumber'].tag_name =    'Atom_isotope_number'
-        self['Val'].tag_name =                  self.sf.name+'_value'
-        self['ValErr'].tag_name =               self.sf.name+'_value_error'
+        self['Val'].tag_name =                  'T1_value'
+        self['ValErr'].tag_name =               'T1_value_error'

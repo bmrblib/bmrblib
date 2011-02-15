@@ -69,15 +69,11 @@ class HeteronuclNOEList_v2_1(HeteronuclNOEList):
         super(HeteronuclNOEList_v2_1, self).__init__(sf)
 
         # Add the tag info.
-        self['HeteronuclNOEListID'].tag_name =      'id'
-        self['DataFileName'].tag_name =             'Data_file_name'
-        self['SampleConditionListID'].tag_name =    'Sample_condition_list_ID'
         self['SampleConditionListLabel'].tag_name = 'Sample_conditions_label'
         self['SpectrometerFrequency1H'].tag_name =  'Spectrometer_frequency_1H'
-        self['HeteronuclearNOEValType'].tag_name =  'Heteronuclear_NOE_val_type'
-        self['NOERefVal'].tag_name =                'NOE_ref_val'
-        self['NOERefDescription'].tag_name =        'NOE_ref_description'
-        self['Details'].tag_name =                  'Details'
+        self['HeteronuclearNOEValType'].tag_name =  'Heteronuclear_NOE_value_type'
+        self['NOERefVal'].tag_name =                'NOE_reference_value'
+        self['NOERefDescription'].tag_name =        'NOE_reference_description'
         self['TextDataFormat'].tag_name =           'Text_data_format'
         self['TextData'].tag_name =                 'Text_data'
 
@@ -97,6 +93,7 @@ class HeteronuclNOEExperiment_v2_1(HeteronuclNOEExperiment):
         super(HeteronuclNOEExperiment_v2_1, self).__init__(sf)
 
         # Add the tag info.
+        self['ExperimentName'].tag_name = 'Experiment_label'
         self['SampleLabel'].tag_name = 'Sample_label'
 
 
@@ -115,12 +112,7 @@ class HeteronuclNOESoftware_v2_1(HeteronuclNOESoftware):
         super(HeteronuclNOESoftware_v2_1, self).__init__(sf)
 
         # Add the tag info.
-        self['SoftwareID'].tag_name =          'Software_ID'
         self['SoftwareLabel'].tag_name =       'Software_label'
-        self['MethodID'].tag_name =            'Method_ID'
-        self['MethodLabel'].tag_name =         'Method_label'
-        self['EntryID'].tag_name =             'Entry_ID'
-        self['HeteronuclNOEListID'].tag_name = 'Heteronucl_NOE_list_ID'
 
 
 class HeteronuclNOE_v2_1(HeteronuclNOE):
@@ -137,15 +129,7 @@ class HeteronuclNOE_v2_1(HeteronuclNOE):
         super(HeteronuclNOE_v2_1, self).__init__(sf)
 
         # Change tag names.
-        self['HeteronuclNOEID'].tag_name =      'id'
-        self['AssemblyAtomID1'].tag_name =      'Assembly_atom_ID'
-        self['EntityAssemblyID1'].tag_name =    'Entity_assembly_ID'
-        self['EntityID1'].tag_name =            'Entity_ID'
-        self['SeqID1'].tag_name =               'Seq_ID'
+        self['SeqID1'].tag_name =               'Residue_seq_code'
         self['CompID1'].tag_name =              'Residue_label'
-        self['AtomID1'].tag_name =              'Atom_name'
-        self['AtomType1'].tag_name =            'Atom_type'
-        self['AtomIsotopeNumber1'].tag_name =   'Atom_isotope_number'
-        self['Val'].tag_name =                  self.sf.name+'_value'
-        self['ValErr'].tag_name =               self.sf.name+'_value_error'
-        self['HeteronuclNOEListID'].tag_name =  'Heteronucl_NOE_list_ID'
+        self['Val'].tag_name =                  'Heteronuclear_NOE_value'
+        self['ValErr'].tag_name =               'Heteronuclear_NOE_value_error'
