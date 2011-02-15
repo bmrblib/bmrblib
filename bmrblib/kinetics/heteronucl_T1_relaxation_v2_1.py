@@ -130,7 +130,7 @@ class T1_v2_1(T1):
         super(T1_v2_1, self).__init__(sf)
 
         # Change tag names.
-        self['SeqID'].tag_name =                'Residue_seq_code'
+        self['CompIndexID'].tag_name =          'Residue_seq_code'
         self['CompID'].tag_name =               'Residue_label'
         self['AtomID'].tag_name =               'Atom_name'
         self['Val'].tag_name =                  'T1_value'

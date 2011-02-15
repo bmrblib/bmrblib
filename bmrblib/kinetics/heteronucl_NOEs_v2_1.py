@@ -129,7 +129,7 @@ class HeteronuclNOE_v2_1(HeteronuclNOE):
         super(HeteronuclNOE_v2_1, self).__init__(sf)
 
         # Change tag names.
-        self['SeqID1'].tag_name =               'Residue_seq_code'
+        self['CompIndexID1'].tag_name =         'Residue_seq_code'
         self['CompID1'].tag_name =              'Residue_label'
         self['Val'].tag_name =                  'Heteronuclear_NOE_value'
         self['ValErr'].tag_name =               'Heteronuclear_NOE_value_error'
