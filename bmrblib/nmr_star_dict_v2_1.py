@@ -37,11 +37,12 @@ from bmrblib.experimental_details.sample_conditions_v2_1 import SampleConditions
 from bmrblib.experimental_details.software import SoftwareSaveframe
 from bmrblib.kinetics.relaxation import Relaxation_v2_1
 from bmrblib.NMR_parameters.chem_shift_anisotropy import ChemShiftAnisotropySaveframe
+from bmrblib.nmr_star_dict import NMR_STAR
 from bmrblib.thermodynamics.model_free import ModelFreeSaveframe
 from bmrblib.pystarlib.File import File
 
 
-class NMR_STAR_v2_1:
+class NMR_STAR_v2_1(NMR_STAR):
     """The v2.1 NMR-STAR dictionary."""
 
     def create_saveframes(self):
