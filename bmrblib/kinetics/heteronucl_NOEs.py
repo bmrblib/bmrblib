@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -26,27 +26,11 @@ For example, see http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#
 """
 
 # relax module imports.
-from bmrblib.base_classes import TagCategory
-from bmrblib.kinetics.relax_base import HeteronuclRxList, RelaxSaveframe, Rx
+from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
 
 
-class HeteronuclNOESaveframe(RelaxSaveframe):
+class HeteronuclNOESaveframe(BaseSaveframe):
     """The Heteronuclear NOE data saveframe class."""
-
-    # Class variables.
-    name = 'Heteronuclear_NOE'
-    label = 'heteronucl_NOE'
-    sf_label = 'heteronuclear_NOE'
-
-    def add_tag_categories(self):
-        """Create the tag categories."""
-
-        # The tag category objects.
-        self.tag_categories.append(HeteronuclNOEList(self))
-        self.tag_categories.append(HeteronuclNOEExperiment(self))
-        self.tag_categories.append(HeteronuclNOESoftware(self))
-        self.tag_categories.append(HeteronuclNOE(self))
-
 
     def pre_ops(self):
         """Perform some saveframe specific operations prior to XML creation."""
@@ -56,7 +40,7 @@ class HeteronuclNOESaveframe(RelaxSaveframe):
 
 
 
-class HeteronuclNOEList(HeteronuclRxList):
+class HeteronuclNOEList(TagCategoryFree):
     """Base class for the HeteronuclNOEList tag category."""
 
     def __init__(self, sf):
@@ -70,17 +54,20 @@ class HeteronuclNOEList(HeteronuclRxList):
         super(HeteronuclNOEList, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='HeteronuclNOEListID',         tag_name='ID',                          var_name='count_str')
-        self.add(key='DataFileName',                tag_name='Data_file_name ',             var_name=None)
-        self.add(key='SampleConditionListID',       tag_name='Sample_condition_list_ID',    var_name='sample_cond_list_id')
-        self.add(key='SampleConditionListLabel',    tag_name='Sample_conditions_label',     var_name='sample_cond_list_label',  default='$conditions_1')
-        self.add(key='SpectrometerFrequency1H',     tag_name='Spectrometer_frequency_1H',   var_name='frq',                     format='float')
-        self.add(key='HeteronuclearNOEValType',     tag_name='Heteronuclear_NOE_val_type',  var_name=None)
-        self.add(key='NOERefVal',                   tag_name='NOE_ref_val',                 var_name=None)
-        self.add(key='NOERefDescription',           tag_name='NOE_ref_description',         var_name=None)
-        self.add(key='Details',                     tag_name='Details',                     var_name='details')
-        self.add(key='TextDataFormat',              tag_name='Text_data_format',            var_name=None)
-        self.add(key='TextData',                    tag_name='Text_data',                   var_name=None)
+        self.add(key='EntryID',                  var_name='entry_id',                   format='str')
+        self.add(key='HeteronuclNOEListID',      var_name='count_str',                  format='int')
+        self.add(key='DataFileName',             var_name='data_file_name',             format='str')
+        self.add(key='SampleConditionListID',    var_name='sample_cond_list_id',        format='int')
+        self.add(key='SampleConditionListLabel', var_name='sample_cond_list_label',     format='str',  default='$conditions_1')
+        self.add(key='SpectrometerFrequency1H',  var_name='frq',                        format='float')
+        self.add(key='TempCalibrationMethod',    var_name='temp_calibration',           format='str',  missing=False)
+        self.add(key='TempControlMethod',        var_name='temp_control',               format='str',  missing=False)
+        self.add(key='HeteronuclearNOEValType',  var_name='peak_intensity_type',        format='str')
+        self.add(key='NOERefVal',                var_name='noe_ref_val',                format='float')
+        self.add(key='NOERefDescription',        var_name='noe_ref_description',        format='str')
+        self.add(key='Details',                  var_name='details',                    format='str')
+        self.add(key='TextDataFormat',           var_name='text_data_format',           format='str')
+        self.add(key='TextData',                 var_name='text_data',                  format='str')
 
 
 
@@ -98,13 +85,13 @@ class HeteronuclNOEExperiment(TagCategory):
         super(HeteronuclNOEExperiment, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='ExperimentID',        tag_name='Experiment_ID',           var_name=None)
-        self.add(key='ExperimentName',      tag_name='Experiment_label',        var_name=None)
-        self.add(key='SampleID',            tag_name='Sample_ID',               var_name=None)
-        self.add(key='SampleLabel',         tag_name='Sample_label',            var_name='sample_label',    default='$sample_1')
-        self.add(key='SampleState',         tag_name='Sample_state',            var_name=None)
-        self.add(key='EntryID',             tag_name='Entry_ID',                var_name=None)
-        self.add(key='HeteronuclNOEListID', tag_name='Heteronucl_NOE_list_ID',  var_name=None)
+        self.add(key='ExperimentID',        var_name='experiment_id',          format='int')
+        self.add(key='ExperimentName',      var_name='experiment_name',        format='str')
+        self.add(key='SampleID',            var_name='sample_id',              format='int')
+        self.add(key='SampleLabel',         var_name='sample_label',           format='str', default='$sample_1')
+        self.add(key='SampleState',         var_name='sample_state',           format='str')
+        self.add(key='EntryID',             var_name='entry_id',               format='str')
+        self.add(key='HeteronuclNOEListID', var_name='heteronucl_noe_list_id', format='int')
 
 
 
@@ -122,15 +109,15 @@ class HeteronuclNOESoftware(TagCategory):
         super(HeteronuclNOESoftware, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='SoftwareID',          tag_name='Software_ID',             var_name=None)
-        self.add(key='SoftwareLabel',       tag_name='Software_label',          var_name=None)
-        self.add(key='MethodID',            tag_name='Method_ID',               var_name=None)
-        self.add(key='MethodLabel',         tag_name='Method_label',            var_name=None)
-        self.add(key='EntryID',             tag_name='Entry_ID',                var_name=None)
-        self.add(key='HeteronuclNOEListID', tag_name='Heteronucl_NOE_list_ID',  var_name=None)
+        self.add(key='SoftwareID',          var_name='software_id',            format='int')
+        self.add(key='SoftwareLabel',       var_name='software_label',         format='str')
+        self.add(key='MethodID',            var_name='method_id',              format='int')
+        self.add(key='MethodLabel',         var_name='method_label',           format='str')
+        self.add(key='EntryID',             var_name='entry_id',               format='str')
+        self.add(key='HeteronuclNOEListID', var_name='heteronucl_noe_list_id', format='int')
 
 
-class HeteronuclNOE(Rx):
+class HeteronuclNOE(TagCategory):
     """Base class for the HeteronuclNOE tag category."""
 
     def __init__(self, sf):
@@ -144,4 +131,36 @@ class HeteronuclNOE(Rx):
         super(HeteronuclNOE, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='HeteronuclNOEListID', tag_name='Heteronucl_NOE_list_ID',  var_name='count_str')
+        self.add(key='HeteronuclNOEListID',   var_name='count_str',                 format='int')
+        self.add(key='AssemblyAtomID1',       var_name='assembly_atom_ids',         format='int')
+        self.add(key='EntityAssemblyID1',     var_name='entity_assembly_ids',       format='int')
+        self.add(key='EntityID1',             var_name='entity_ids',                format='int')
+        self.add(key='CompIndexID1',          var_name='res_nums',                  format='int')
+        self.add(key='SeqID1',                var_name='seq_id',                    format='int')
+        self.add(key='CompID1',               var_name='res_names',                 format='str')
+        self.add(key='AtomID1',               var_name='atom_names',                format='str')
+        self.add(key='AtomType1',             var_name='atom_types',                format='str')
+        self.add(key='AtomIsotopeNumber1',    var_name='isotope',                   format='int')
+        self.add(key='AssemblyAtomID2',       var_name='assembly_atom_ids_2',       format='int')
+        self.add(key='EntityAssemblyID2',     var_name='entity_assembly_ids_2',     format='int')
+        self.add(key='EntityID2',             var_name='entity_ids_2',              format='int')
+        self.add(key='CompIndexID2',          var_name='res_nums_2',                format='int')
+        self.add(key='SeqID2',                var_name='seq_id_2',                  format='int')
+        self.add(key='CompID2',               var_name='res_names_2',               format='str')
+        self.add(key='AtomID2',               var_name='atom_names_2',              format='str')
+        self.add(key='AtomType2',             var_name='atom_types_2',              format='str')
+        self.add(key='AtomIsotopeNumber2',    var_name='isotope_2',                 format='int')
+        self.add(key='Val',                   var_name='data',                      format='float')
+        self.add(key='ValErr',                var_name='errors',                    format='float')
+        self.add(key='ResonanceID1',          var_name='resonance_id',              format='int')
+        self.add(key='ResonanceID2',          var_name='resonance_id_2',            format='int')
+        self.add(key='AuthEntityAssemblyID1', var_name='auth_entity_assembly_id',   format='str')
+        self.add(key='AuthSeqID1',            var_name='auth_seq_id',               format='str')
+        self.add(key='AuthCompID1',           var_name='auth_comp_id',              format='str')
+        self.add(key='AuthAtomID1',           var_name='auth_atom_id',              format='str')
+        self.add(key='AuthEntityAssemblyID2', var_name='auth_entity_assembly_id_2', format='str')
+        self.add(key='AuthSeqID2',            var_name='auth_seq_id_2',             format='str')
+        self.add(key='AuthCompID2',           var_name='auth_comp_id_2',            format='str')
+        self.add(key='AuthAtomID2',           var_name='auth_atom_id_2',            format='str')
+        self.add(key='EntryID',               var_name='entry_id',                  format='str')
+        self.add(key='HeteronuclNOEListID',   var_name='count_str',                 format='int')

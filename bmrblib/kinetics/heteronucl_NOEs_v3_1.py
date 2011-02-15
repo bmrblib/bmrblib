@@ -62,15 +62,22 @@ class HeteronuclNOEList_v3_1(HeteronuclNOEList):
         # The category name.
         self.tag_category_label = 'Heteronucl_NOE_list'
 
-        # Add the tag info.
-        self.add(key='TempCalibrationMethod',       tag_name='Temp_calibration_method',     var_name='temp_calibration',    missing=False)
-        self.add(key='TempControlMethod',           tag_name='Temp_control_method',         var_name='temp_control',        missing=False)
-        self.add(key='HeteronuclearNOEValType',     tag_name='Heteronuclear_NOE_val_type',  var_name='peak_intensity_type', missing=False)
-
         # Change tag names.
-        self['SfCategory'].tag_name = 'Sf_category'
-        self['SfFramecode'].tag_name = 'Sf_framecode'
+        self['SfCategory'].tag_name =               'Sf_category'
+        self['SfFramecode'].tag_name =              'Sf_framecode'
+        self['HeteronuclNOEListID'].tag_name =      'ID'
+        self['DataFileName'].tag_name =             'Data_file_name'
+        self['SampleConditionListID'].tag_name =    'Sample_condition_list_ID'
         self['SampleConditionListLabel'].tag_name = 'Sample_condition_list_label'
+        self['SpectrometerFrequency1H'].tag_name =  'Spectrometer_frequency_1H'
+        self['TempCalibrationMethod'].tag_name =    'Temp_calibration_method'
+        self['TempControlMethod'].tag_name =        'Temp_control_method'
+        self['HeteronuclearNOEValType'].tag_name =  'Heteronuclear_NOE_val_type'
+        self['NOERefVal'].tag_name =                'NOE_ref_val'
+        self['NOERefDescription'].tag_name =        'NOE_ref_description'
+        self['Details'].tag_name =                  'Details'
+        self['TextDataFormat'].tag_name =           'Text_data_format'
+        self['TextData'].tag_name =                 'Text_data'
 
 
 
@@ -90,6 +97,15 @@ class HeteronuclNOEExperiment_v3_1(HeteronuclNOEExperiment):
         # The category name.
         self.tag_category_label = 'Heteronucl_NOE_experiment'
 
+        # Change tag names.
+        self['ExperimentID'].tag_name =        'Experiment_ID'
+        self['ExperimentName'].tag_name =      'Experiment_name'
+        self['SampleID'].tag_name =            'Sample_ID'
+        self['SampleLabel'].tag_name =         'Sample_label'
+        self['SampleState'].tag_name =         'Sample_state'
+        self['EntryID'].tag_name =             'Entry_ID'
+        self['HeteronuclNOEListID'].tag_name = 'Heteronucl_NOE_list_ID'
+
 
 
 class HeteronuclNOESoftware_v3_1(HeteronuclNOESoftware):
@@ -107,6 +123,14 @@ class HeteronuclNOESoftware_v3_1(HeteronuclNOESoftware):
 
         # The category name.
         self.tag_category_label = 'Heteronucl_NOE_software'
+
+        # Change tag names.
+        self['SoftwareID'].tag_name =          'Software_ID'
+        self['SoftwareLabel'].tag_name =       'Software_label'
+        self['MethodID'].tag_name =            'Method_ID'
+        self['MethodLabel'].tag_name =         'Method_label'
+        self['EntryID'].tag_name =             'Entry_ID'
+        self['HeteronuclNOEListID'].tag_name = 'Heteronucl_NOE_list_ID'
 
 
 
@@ -127,25 +151,36 @@ class HeteronuclNOE_v3_1(HeteronuclNOE):
         self.tag_category_label = 'Heteronucl_NOE'
 
         # Add the tag info.
-        self.add(key='RxID',                tag_name='ID',                      var_name='data_ids',            format='int')
-        self.add(key='AssemblyAtomID',      tag_name='Assembly_atom_ID_1',      var_name='assembly_atom_ids')
-        self.add(key='EntityAssemblyID',    tag_name='Entity_assembly_ID_1',    var_name='entity_assembly_ids')
-        self.add(key='EntityID',            tag_name='Entity_ID_1',             var_name='entity_ids',          format='int',   missing=False)
-        self.add(key='CompIndexID',         tag_name='Comp_index_ID_1',         var_name='res_nums',            format='int',   missing=False)
-        self.add(key='SeqID',               tag_name='Seq_ID_1',                var_name='seq_id')
-        self.add(key='CompID',              tag_name='Comp_ID_1',               var_name='res_names',           missing=False)
-        self.add(key='AtomID',              tag_name='Atom_ID_1',               var_name='atom_names',          missing=False)
-        self.add(key='AtomType',            tag_name='Atom_type_1',             var_name='atom_types')
-        self.add(key='AtomIsotopeNumber',   tag_name='Atom_isotope_number_1',   var_name='isotope',             format='int')
-        self.add(key='AssemblyAtomID2',     tag_name='Assembly_atom_ID_2',      var_name='assembly_atom_ids_2')
-        self.add(key='EntityAssemblyID2',   tag_name='Entity_assembly_ID_2',    var_name='entity_assembly_ids_2')
-        self.add(key='EntityID2',           tag_name='Entity_ID_2',             var_name='entity_ids_2',        format='int')
-        self.add(key='CompIndexID2',        tag_name='Comp_index_ID_2',         var_name='res_nums_2',          format='int')
-        self.add(key='SeqID2',              tag_name='Seq_ID_2',                var_name='seq_id_2')
-        self.add(key='CompID2',             tag_name='Comp_ID_2',               var_name='res_names_2')
-        self.add(key='AtomID2',             tag_name='Atom_ID_2',               var_name='atom_names_2')
-        self.add(key='AtomType2',           tag_name='Atom_type_2',             var_name='atom_types_2')
-        self.add(key='AtomIsotopeNumber2',  tag_name='Atom_isotope_number_2',   var_name='isotope_2',           format='int')
-        self.add(key='Val',                 tag_name='Val',                     var_name='data',                format='float')
-        self.add(key='ValErr',              tag_name='Val_err',                 var_name='errors',              format='float')
-        self.add(key='HeteronuclNOEListID', tag_name='Heteronucl_NOE_list_ID',  var_name='count_str')
+        self['HeteronuclNOEID'].tag_name =       'ID'
+        self['AssemblyAtomID1'].tag_name =       'Assembly_atom_ID_1'
+        self['EntityAssemblyID1'].tag_name =     'Entity_assembly_ID_1'
+        self['EntityID1'].tag_name =             'Entity_ID_1'
+        self['CompIndexID1'].tag_name =          'Comp_index_ID_1'
+        self['SeqID1'].tag_name =                'Seq_ID_1'
+        self['CompID1'].tag_name =               'Comp_ID_1'
+        self['AtomID1'].tag_name =               'Atom_ID_1'
+        self['AtomType1'].tag_name =             'Atom_type_1'
+        self['AtomIsotopeNumber1'].tag_name =    'Atom_isotope_number_1'
+        self['AssemblyAtomID2'].tag_name =       'Assembly_atom_ID_2'
+        self['EntityAssemblyID2'].tag_name =     'Entity_assembly_ID_2'
+        self['EntityID2'].tag_name =             'Entity_ID_2'
+        self['CompIndexID2'].tag_name =          'Comp_index_ID_2'
+        self['SeqID2'].tag_name =                'Seq_ID_2'
+        self['CompID2'].tag_name =               'Comp_ID_2'
+        self['AtomID2'].tag_name =               'Atom_ID_2'
+        self['AtomType2'].tag_name =             'Atom_type_2'
+        self['AtomIsotopeNumber2'].tag_name =    'Atom_isotope_number_2'
+        self['Val'].tag_name =                   'Val'
+        self['ValErr'].tag_name =                'Val_err'
+        self['ResonanceID1'].tag_name =          'Resonance_ID_1'
+        self['ResonanceID2'].tag_name =          'Resonance_ID_2'
+        self['AuthEntityAssemblyID1'].tag_name = 'Auth_entity_assembly_ID_1'
+        self['AuthSeqID1'].tag_name =            'Auth_seq_ID_1'
+        self['AuthCompID1'].tag_name =           'Auth_comp_ID_1'
+        self['AuthAtomID1'].tag_name =           'Auth_atom_ID_1'
+        self['AuthEntityAssemblyID2'].tag_name = 'Auth_entity_assembly_ID_2'
+        self['AuthSeqID2'].tag_name =            'Auth_seq_ID_2'
+        self['AuthCompID2'].tag_name =           'Auth_comp_ID_2'
+        self['AuthAtomID2'].tag_name =           'Auth_atom_ID_2'
+        self['EntryID'].tag_name =               'Entry_ID'
+        self['HeteronuclNOEListID'].tag_name =   'Heteronucl_NOE_list_ID'
