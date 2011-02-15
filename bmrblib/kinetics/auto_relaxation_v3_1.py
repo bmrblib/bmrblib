@@ -26,7 +26,7 @@ See http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#auto_relaxati
 """
 
 # relax module imports.
-from bmrblib.kinetics.autro_relaxation import AutoRelaxationSaveframe, AutoRelaxationList, AutoRelaxationExperiment, AutoRelaxationSoftware, AutoRelaxation
+from bmrblib.kinetics.auto_relaxation import AutoRelaxationSaveframe, AutoRelaxationList, AutoRelaxationExperiment, AutoRelaxationSoftware, AutoRelaxation
 
 
 class AutoRelaxationSaveframe(AutoRelaxationSaveframe):
