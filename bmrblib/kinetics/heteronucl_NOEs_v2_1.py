@@ -112,7 +112,7 @@ class HeteronuclNOESoftware_v2_1(HeteronuclNOESoftware):
         """
 
         # Initialise the baseclass.
-        super(HeteronuclNOESoftware, self).__init__(sf)
+        super(HeteronuclNOESoftware_v2_1, self).__init__(sf)
 
         # Add the tag info.
         self['SoftwareID'].tag_name =          'Software_ID'
@@ -137,7 +137,7 @@ class HeteronuclNOE_v2_1(HeteronuclNOE):
         super(HeteronuclNOE_v2_1, self).__init__(sf)
 
         # Change tag names.
-        self['RxID'].tag_name =                 'id'
+        self['HeteronuclNOEID'].tag_name =      'id'
         self['AssemblyAtomID1'].tag_name =      'Assembly_atom_ID'
         self['EntityAssemblyID1'].tag_name =    'Entity_assembly_ID'
         self['EntityID1'].tag_name =            'Entity_ID'
