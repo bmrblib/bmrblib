@@ -116,13 +116,13 @@ class AutoRelaxationExperiment(TagCategory):
         self.tag_category_label = 'Auto_relaxation_experiment'
 
         # Add the tag info.
-        self.add(key='ExperimentID',       var_name='experiment_id',         format='int')
-        self.add(key='ExperimentName',     var_name='experiment_name',       format='str')
-        self.add(key='SampleID',           var_name='sample_id',             format='int')
-        self.add(key='SampleLabel',        var_name='sample_label',          format='str', default='$sample_1')
-        self.add(key='SampleState',        var_name='sample_state',          format='str')
-        self.add(key='EntryID',            var_name='entry_id',              format='str')
-        self.add(key='HeteronuclT1ListID', var_name='heteronucl_t1_list_id', format='int')
+        self.add(key='ExperimentID',         var_name='experiment_id',         format='int')
+        self.add(key='ExperimentName',       var_name='experiment_name',       format='str')
+        self.add(key='SampleID',             var_name='sample_id',             format='int')
+        self.add(key='SampleLabel',          var_name='sample_label',          format='str', default='$sample_1')
+        self.add(key='SampleState',          var_name='sample_state',          format='str')
+        self.add(key='EntryID',              var_name='entry_id',              format='str')
+        self.add(key='AutoRelaxationListID', var_name='heteronucl_t1_list_id', format='int')
 
 
 
