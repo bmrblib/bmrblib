@@ -24,7 +24,7 @@
 
 
 # relax module imports.
-from bmrblib.kinetics.auto_relaxation import AutoRelaxationSaveframe
+from bmrblib.kinetics.auto_relaxation_v3_1 import AutoRelaxationSaveframe_v3_1
 from bmrblib.kinetics.heteronucl_NOEs import HeteronuclNOESaveframe
 from bmrblib.kinetics.heteronucl_NOEs_v3_1 import HeteronuclNOESaveframe_v3_1
 from bmrblib.kinetics.heteronucl_T1_relaxation_v2_1 import HeteronuclT1Saveframe_v2_1
@@ -167,7 +167,7 @@ class Relaxation_v3_1(Relaxation_v3_0):
         self.heteronucl_NOEs = HeteronuclNOESaveframe_v3_1(datanodes)
         self.heteronucl_T1_relaxation = HeteronuclT1Saveframe_v3_1(datanodes)
         self.heteronucl_T2_relaxation = HeteronuclT2Saveframe_v3_1(datanodes)
-        self.auto_relaxation = AutoRelaxationSaveframe(datanodes)
+        self.auto_relaxation = AutoRelaxationSaveframe_v3_1(datanodes)
 
 
     def add(self, **keywords):
