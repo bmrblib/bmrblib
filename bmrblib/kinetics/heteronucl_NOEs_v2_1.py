@@ -26,7 +26,7 @@ See http://www.bmrb.wisc.edu/dictionary/htmldocs/nmr_star/dictionary_files/compl
 """
 
 # relax module imports.
-from bmrblib.kinetics.heteronucl_NOE import HeteronuclNOESaveframe, HeteronuclNOEList, HeteronuclNOEExperiment, HeteronuclNOESoftware, HeteronuclNOE
+from bmrblib.kinetics.heteronucl_NOEs import HeteronuclNOESaveframe, HeteronuclNOEList, HeteronuclNOEExperiment, HeteronuclNOESoftware, HeteronuclNOE
 
 
 class HeteronuclNOESaveframe_v2_1(HeteronuclNOESaveframe):
