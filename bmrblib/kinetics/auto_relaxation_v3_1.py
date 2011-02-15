@@ -29,7 +29,7 @@ See http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#auto_relaxati
 from bmrblib.kinetics.auto_relaxation import AutoRelaxationSaveframe, AutoRelaxationList, AutoRelaxationExperiment, AutoRelaxationSoftware, AutoRelaxation
 
 
-class AutoRelaxationSaveframe(AutoRelaxationSaveframe):
+class AutoRelaxationSaveframe_v3_1(AutoRelaxationSaveframe):
     """The v3.1 Auto relaxation data saveframe class."""
 
     # Class variables.
