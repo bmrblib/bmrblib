@@ -20,9 +20,9 @@
 #############################################################################
 
 # Module docstring.
-"""The Heteronuclear T1 data saveframe category.
+"""The v2.1 Heteronuclear T1 data saveframe category.
 
-For example, see http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#heteronucl_T1_relaxation.
+See http://www.bmrb.wisc.edu/dictionary/htmldocs/nmr_star/dictionary_files/complete_form_v21.txt.
 """
 
 # relax module imports.
@@ -114,9 +114,6 @@ class T1_v2_1(T1):
 
         # Initialise the baseclass.
         super(T1_v2_1, self).__init__(sf)
-
-        # The category name.
-        self.tag_category_label = 'T1'
 
         # Change tag names.
         self['RxID'].tag_name =                 'id'
