@@ -131,7 +131,7 @@ class HeteronuclNOE(TagCategory):
         super(HeteronuclNOE, self).__init__(sf)
 
         # Add the tag info.
-        self.add(key='HeteronuclNOEID',       var_name='count_str',                 format='int')
+        self.add(key='HeteronuclNOEID',       var_name='data_ids',                  format='int')
         self.add(key='AssemblyAtomID1',       var_name='assembly_atom_ids',         format='int')
         self.add(key='EntityAssemblyID1',     var_name='entity_assembly_ids',       format='int')
         self.add(key='EntityID1',             var_name='entity_ids',                format='int')
