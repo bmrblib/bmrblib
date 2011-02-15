@@ -83,32 +83,26 @@ class HeteronuclNOEList_v2_1(HeteronuclNOEList):
 
 
 
-class HeteronuclNOEExperiment(TagCategory):
-    """Base class for the HeteronuclNOEExperiment tag category."""
+class HeteronuclNOEExperiment_v2_1(HeteronuclNOEExperiment):
+    """v2.1 HeteronuclNOEExperiment tag category."""
 
     def __init__(self, sf):
-        """Setup the HeteronuclNOEExperiment tag category.
+        """Setup the HeteronuclNOEExperiment_v2_1 tag category.
 
         @param sf:  The saveframe object.
         @type sf:   saveframe instance
         """
 
         # Initialise the baseclass.
-        super(HeteronuclNOEExperiment, self).__init__(sf)
+        super(HeteronuclNOEExperiment_v2_1, self).__init__(sf)
 
         # Add the tag info.
-        self['ExperimentID'].tag_name =        'Experiment_ID'
-        self['ExperimentName'].tag_name =      'Experiment_label'
-        self['SampleID'].tag_name =            'Sample_ID'
-        self['SampleLabel'].tag_name =         'Sample_label'
-        self['SampleState'].tag_name =         'Sample_state'
-        self['EntryID'].tag_name =             'Entry_ID'
-        self['HeteronuclNOEListID'].tag_name = 'Heteronucl_NOE_list_ID'
+        self['SampleLabel'].tag_name = 'Sample_label'
 
 
 
-class HeteronuclNOESoftware(TagCategory):
-    """Base class for the HeteronuclNOESoftware tag category."""
+class HeteronuclNOESoftware_v2_1(HeteronuclNOESoftware):
+    """v2.1 HeteronuclNOESoftware tag category."""
 
     def __init__(self, sf):
         """Setup the HeteronuclNOESoftware tag category.
