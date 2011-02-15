@@ -29,7 +29,7 @@ from bmrblib.kinetics.heteronucl_NOEs import HeteronuclNOESaveframe
 from bmrblib.kinetics.heteronucl_NOEs_v3_1 import HeteronuclNOESaveframe_v3_1
 from bmrblib.kinetics.heteronucl_T1_relaxation_v2_1 import HeteronuclT1Saveframe_v2_1
 from bmrblib.kinetics.heteronucl_T1_relaxation_v3_1 import HeteronuclT1Saveframe_v3_1
-from bmrblib.kinetics.heteronucl_T2_relaxation import HeteronuclT2Saveframe
+from bmrblib.kinetics.heteronucl_T2_relaxation_v2_1 import HeteronuclT2Saveframe_v2_1
 from bmrblib.kinetics.heteronucl_T2_relaxation_v3_1 import HeteronuclT2Saveframe_v3_1
 
 
@@ -46,7 +46,7 @@ class Relaxation_v2_1:
         # Initialise the kinetic saveframe supergroups.
         self.heteronucl_NOEs = HeteronuclNOESaveframe(datanodes)
         self.heteronucl_T1_relaxation = HeteronuclT1Saveframe_v2_1(datanodes)
-        self.heteronucl_T2_relaxation = HeteronuclT2Saveframe(datanodes)
+        self.heteronucl_T2_relaxation = HeteronuclT2Saveframe_v2_1(datanodes)
 
 
     def add(self, **keywords):
