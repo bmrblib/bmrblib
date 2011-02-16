@@ -33,7 +33,6 @@ __all__ = ['base_classes',
 from os import F_OK, access
 from re import search
 from string import split
-from sys import stdout
 
 # Bmrblib module imports.
 from nmr_star_dict_v2_1 import NMR_STAR_v2_1
@@ -67,7 +66,7 @@ def create_nmr_star(title, file_path, version=None):
     star_version.set_version(version)
 
     # Print out.
-    stdout.write("NMR-STAR version %s\n" % star_version.version)
+    sys.stdout.write("NMR-STAR version %s\n" % star_version.version)
 
     # Initialise the NMR-STAR data object.
     if star_version.major == 3:
