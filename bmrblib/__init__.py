@@ -33,6 +33,7 @@ __all__ = ['base_classes',
 from os import F_OK, access
 from re import search
 from string import split
+import sys
 
 # Bmrblib module imports.
 from nmr_star_dict_v2_1 import NMR_STAR_v2_1
