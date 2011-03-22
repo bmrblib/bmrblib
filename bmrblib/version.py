@@ -75,7 +75,7 @@ class Star_version(object):
         nums = split(self.version, '.')
 
         # Catch development versions.
-        if search('^Dev', self.version):
+        if search('^Dev', self.version) or search('^dev', self.version):
             # Assume a version 2.1 file.
             self.major = 2
             self.minor = 1
