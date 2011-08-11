@@ -59,11 +59,7 @@ class Star_version(object):
 
 
     def parse_version(self):
-        """Convert the version number string into the major, minor, and revision numbers.
-
-        @param version: The version number.
-        @type version:  str
-        """
+        """Convert the version number string into the major, minor, and revision numbers."""
 
         # Initialise.
         self.major = None
