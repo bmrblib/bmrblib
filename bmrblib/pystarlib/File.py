@@ -280,9 +280,17 @@ class File (Lister):
         if not self.filename:
             print('ERROR: no filename in STARFile with title:', self.title)
             return 1
-        f = open(self.filename, 'w')
-        f.write(self.star_text())
-        f.close()
+
+        # A file path to open.
+        if isinstance(self.filename, str):
+            f = open(self.filename, 'w')
+            f.write(self.star_text())
+            f.close()
+
+        # An already opened file handle.
+        else:
+            self.filename.write(self.star_text())
+
         if self.verbosity > 2:
             print('DEBUG: Written STAR file:', self.filename)
 
