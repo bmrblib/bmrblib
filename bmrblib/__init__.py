@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2008-2011 Edward d'Auvergne                                 #
+# Copyright (C) 2008-2012 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -36,9 +36,16 @@ from string import split
 import sys
 
 # Bmrblib module imports.
-from nmr_star_dict_v2_1 import NMR_STAR_v2_1
-from nmr_star_dict_v3_1 import NMR_STAR_v3_1
-from version import Star_version
+try:
+    # Python 3 imports.
+    from .nmr_star_dict_v2_1 import NMR_STAR_v2_1
+    from .nmr_star_dict_v3_1 import NMR_STAR_v3_1
+    from .version import Star_version
+except ImportError.
+    # Python 2 imports.
+    from nmr_star_dict_v2_1 import NMR_STAR_v2_1
+    from nmr_star_dict_v3_1 import NMR_STAR_v3_1
+    from version import Star_version
 
 
 def create_nmr_star(title, file_path, version=None):

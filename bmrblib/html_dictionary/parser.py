@@ -1,5 +1,8 @@
 # Python module imports.
-from HTMLParser import HTMLParser
+try:
+    from html.parser import HTMLParser    # Python 3 import.
+except ImportError:
+    from HTMLParser import HTMLParser    # Python 2 import.
 from os import sep
 from string import ascii_uppercase, lower, replace, split, strip
 

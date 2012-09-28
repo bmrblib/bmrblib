@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2012 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -27,10 +27,18 @@ from numpy import float64, ndarray, zeros
 from warnings import warn
 
 # Bmrblib module imports.
-from misc import no_missing, translate
-from pystarlib.SaveFrame import SaveFrame
-from pystarlib.TagTable import TagTable
-from version import Star_version; version = Star_version()
+try:
+    # Python 3 imports.
+    from .misc import no_missing, translate
+    from .pystarlib.SaveFrame import SaveFrame
+    from .pystarlib.TagTable import TagTable
+    from .version import Star_version; version = Star_version()
+except ImportError:
+    # Python 2 imports.
+    from misc import no_missing, translate
+    from pystarlib.SaveFrame import SaveFrame
+    from pystarlib.TagTable import TagTable
+    from version import Star_version; version = Star_version()
 
 
 class BaseSaveframe:
