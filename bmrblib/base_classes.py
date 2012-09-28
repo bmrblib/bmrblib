@@ -657,7 +657,7 @@ class TagCategory(TagTranslationTable):
             return
 
         # The data ID values.
-        return range(1, N+1)
+        return list(range(1, N+1))
 
 
     def is_empty(self):
