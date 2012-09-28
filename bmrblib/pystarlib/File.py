@@ -1,20 +1,39 @@
 """
 Classes for dealing with STAR syntax
 """
-import Utils
-from Utils import Lister
-from TagTable import TagTable
-from Text import comments_strip
-from Text import semicolon_block_collapse
-from Text import nmrView_compress
-from Text import pattern_save_begin
-from Text import pattern_save_end
-from Text import pattern_tagtable_loop
-from Text import pattern_save_begin_nws
-from Text import pattern_save_end_nws
-from Text import pattern_tag_name_nws
-from Text import pattern_tagtable_loop_nws
-from SaveFrame import SaveFrame
+try:
+    # Python 3 imports.
+    from . import Utils
+    from .Utils import Lister
+    from .TagTable import TagTable
+    from .Text import comments_strip
+    from .Text import semicolon_block_collapse
+    from .Text import nmrView_compress
+    from .Text import pattern_save_begin
+    from .Text import pattern_save_end
+    from .Text import pattern_tagtable_loop
+    from .Text import pattern_save_begin_nws
+    from .Text import pattern_save_end_nws
+    from .Text import pattern_tag_name_nws
+    from .Text import pattern_tagtable_loop_nws
+    from .SaveFrame import SaveFrame
+except ImportError:
+    # Python 2 imports.
+    import Utils
+    from Utils import Lister
+    from TagTable import TagTable
+    from Text import comments_strip
+    from Text import semicolon_block_collapse
+    from Text import nmrView_compress
+    from Text import pattern_save_begin
+    from Text import pattern_save_end
+    from Text import pattern_tagtable_loop
+    from Text import pattern_save_begin_nws
+    from Text import pattern_save_end_nws
+    from Text import pattern_tag_name_nws
+    from Text import pattern_tagtable_loop_nws
+    from SaveFrame import SaveFrame
+
 import os
 import re
 #import profile

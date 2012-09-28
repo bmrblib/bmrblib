@@ -2,10 +2,16 @@
 Unit test for SaveFrameTest.py
 Setup taken from "Dive Into Python"
 """
-from TagTable import TagTable
 import unittest
 from unittest import TestCase
-from SaveFrame import SaveFrame
+try:
+    # Python 3 imports.
+    from .TagTable import TagTable
+    from .SaveFrame import SaveFrame
+except ImportError:
+    # Python 2 imports.
+    from TagTable import TagTable
+    from SaveFrame import SaveFrame
 
 
 class AllChecks(TestCase):

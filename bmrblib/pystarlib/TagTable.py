@@ -1,21 +1,41 @@
 """
 Classes for dealing with STAR syntax
 """
-from Text import pattern_quotes_needed
-from Text import quotes_add
-from Text import pattern_quotes_needed_2
-from Text import pattern_quoted
-from Text import tag_value_quoted_parse
-from Text import pattern_tags_loop
-from Text import pattern_tags_loop_2
-from Text import pattern_tagname_2
-from Text import pattern_tagtable_stop_2
-from Text import pattern_tagtable_loop_2
-from Text import pattern_unquoted_find
-from Text import pattern_tag_name
-from Text import tag_value_parse
-from Utils import Lister
-from Utils import transpose
+try:
+    # Python 3 imports.
+    from .Text import pattern_quotes_needed
+    from .Text import quotes_add
+    from .Text import pattern_quotes_needed_2
+    from .Text import pattern_quoted
+    from .Text import tag_value_quoted_parse
+    from .Text import pattern_tags_loop
+    from .Text import pattern_tags_loop_2
+    from .Text import pattern_tagname_2
+    from .Text import pattern_tagtable_stop_2
+    from .Text import pattern_tagtable_loop_2
+    from .Text import pattern_unquoted_find
+    from .Text import pattern_tag_name
+    from .Text import tag_value_parse
+    from .Utils import Lister
+    from .Utils import transpose
+except ImportError:
+    # Python 2 imports.
+    from Text import pattern_quotes_needed
+    from Text import quotes_add
+    from Text import pattern_quotes_needed_2
+    from Text import pattern_quoted
+    from Text import tag_value_quoted_parse
+    from Text import pattern_tags_loop
+    from Text import pattern_tags_loop_2
+    from Text import pattern_tagname_2
+    from Text import pattern_tagtable_stop_2
+    from Text import pattern_tagtable_loop_2
+    from Text import pattern_unquoted_find
+    from Text import pattern_tag_name
+    from Text import tag_value_parse
+    from Utils import Lister
+    from Utils import transpose
+
 import string
 import types
 import re

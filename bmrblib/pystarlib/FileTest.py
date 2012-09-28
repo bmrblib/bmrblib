@@ -1,7 +1,14 @@
 """Unit test
 """
-from File import File
-import Utils
+try:
+    # Python 3 imports.
+    from .File import File
+    import .Utils
+except ImportError:
+    # Python 2 imports.
+    from File import File
+    import Utils
+
 import __init__
 
 import os   

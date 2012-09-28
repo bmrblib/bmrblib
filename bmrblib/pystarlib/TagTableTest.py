@@ -1,9 +1,17 @@
 from unittest import TestCase
-from TagTable import TagTable
 import __init__
-#from TagTable import *
-#from SaveFrame import *
 import unittest
+
+try:
+    # Python 3 imports.
+    from .TagTable import TagTable
+    #from .TagTable import *
+    #from .SaveFrame import *
+except ImportError:
+    # Python 2 imports.
+    from TagTable import TagTable
+    #from TagTable import *
+    #from SaveFrame import *
 
 
 class AllChecks(TestCase):

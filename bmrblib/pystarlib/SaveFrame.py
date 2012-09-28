@@ -1,7 +1,12 @@
 """
 Classes for dealing with STAR syntax
 """
-from Utils import Lister
+try:
+    # Python 3 imports.
+    from .Utils import Lister
+except ImportError:
+    # Python 2 imports.
+    from Utils import Lister
 
 
 """

@@ -1,6 +1,11 @@
 from unittest import TestCase
-from Text import comments_strip
 import unittest
+try:
+    # Python 3 imports.
+    from .Text import comments_strip
+except ImportError:
+    # Python 2 imports.
+    from Text import comments_strip
 
 
 class AllChecks(TestCase):
