@@ -24,7 +24,6 @@
 
 # Python module imports.
 from re import search
-from string import split
 
 
 class Star_version(object):
@@ -68,7 +67,7 @@ class Star_version(object):
         self.sub_revision = None
 
         # Split up the number.
-        nums = split(self.version, '.')
+        nums = self.version.split('.')
 
         # Catch development versions.
         if search('^Dev', self.version) or search('^dev', self.version):

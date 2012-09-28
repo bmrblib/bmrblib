@@ -32,7 +32,6 @@ __all__ = ['base_classes',
 # Python module imports.
 from os import F_OK, access
 from re import search
-from string import split
 import sys
 
 # Bmrblib module imports.
@@ -107,7 +106,7 @@ def determine_version(file_path):
         # Find the version line.
         if search('\.NMR_STAR_version', line) or search('_NMR_STAR_version', line):
             # Split the line.
-            row = split(line)
+            row = line.split()
 
             # Return the version number.
             return row[1]

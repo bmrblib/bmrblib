@@ -4,7 +4,7 @@ try:
 except ImportError:
     from HTMLParser import HTMLParser    # Python 2 import.
 from os import sep
-from string import ascii_uppercase, lower, replace, split, strip
+from string import ascii_uppercase, lower, replace
 
 
 class Create:
@@ -105,21 +105,21 @@ class Sf_parser(HTMLParser):
         """Handle the supergroup title data."""
 
         # Process the name.
-        self.supergroup_name = strip(data)
+        self.supergroup_name = data.strip()
 
 
     def _process_tag_cats(self, data):
         """Handle the saveframe category title data."""
 
         # The name.
-        name = split(data, '(')[1][:-1]
+        name = data.split('(')[1][:-1]
 
         # Add the container.
         self.supergroups[self.supergroup_name].sf_cats.ordered_keys.append(name)
         self.supergroups[self.supergroup_name].sf_cats[name] = Sf_cat()
 
         # The name.
-        var_name = split(data)[0]
+        var_name = data.split()[0]
         self.supergroups[self.supergroup_name].sf_cats[name].name = var_name
 
 
@@ -127,7 +127,7 @@ class Sf_parser(HTMLParser):
         """Handle the saveframe category data."""
 
         # Process the name.
-        self.sf_cat_name = strip(split(data, ':')[1])
+        self.sf_cat_name = data.split(':')[1].strip()
 
 
     def handle_starttag(self, tag, attrs):
@@ -174,7 +174,7 @@ class Sf_parser(HTMLParser):
         """Handling of the HTML data."""
 
         # Strip the data.
-        data = strip(data)
+        data = data.strip()
 
         # No data.
         if not data:
@@ -234,21 +234,21 @@ class Super_parser(HTMLParser):
         """Handle the saveframe category title data."""
 
         # Strip the data.
-        data = strip(data)
+        data = data.strip()
 
         # No data.
         if not data:
             return
 
         # The name.
-        name = split(data, '(')[1][:-1]
+        name = data.split('(')[1][:-1]
 
         # Add the container.
         self.supergroups[self.supergroup_name].sf_cats.ordered_keys.append(name)
         self.supergroups[self.supergroup_name].sf_cats[name] = Sf_cat()
 
         # The name.
-        var_name = split(data)[0]
+        var_name = data.split()[0]
         self.supergroups[self.supergroup_name].sf_cats[name].name = var_name
 
 
@@ -256,7 +256,7 @@ class Super_parser(HTMLParser):
         """Handle the supergroup title data."""
 
         # Process the name.
-        self.supergroup_name = strip(split(data, ':')[1])
+        self.supergroup_name = data.split(':')[1].strip()
 
         # Add a supergroup container.
         self.supergroups.ordered_keys.append(self.supergroup_name)
