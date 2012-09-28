@@ -121,8 +121,8 @@ class TagTable (Lister):
             
         col_count = len( self.tagnames )
         row_count = len( self.tagvalues[0] )
-        col_range = range( col_count )
-        row_range = range( row_count )
+        col_range = list(range( col_count))
+        row_range = list(range( row_count))
 
         str_row = []
         row_id = 0
@@ -210,8 +210,8 @@ class TagTable (Lister):
                 return 1
 
         if check_type >= 9:
-            cols = range( names_length )
-            rows = range( column_length_first )
+            cols = list(range( names_length))
+            rows = list(range( column_length_first))
             for row_id in rows:
                 for col_id in cols:
                     val_type = type(self.tagvalues[col_id][row_id])
