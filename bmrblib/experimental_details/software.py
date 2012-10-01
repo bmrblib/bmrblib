@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2012 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -24,9 +24,6 @@
 
 For example, see http://www.bmrb.wisc.edu/dictionary/3.1html_frame/frame_SaveFramePage.html#software
 """
-
-# Python module imports.
-from string import lower
 
 # relax module imports.
 from bmrblib.base_classes import BaseSaveframe, TagCategory, TagCategoryFree
@@ -55,7 +52,7 @@ class SoftwareSaveframe(BaseSaveframe):
         @rtype:     str
         """
 
-        return lower(self.name) + '_' + self.sf_label + '_' + self.count_str
+        return self.name.lower() + '_' + self.sf_label + '_' + self.count_str
 
 
 class Software(TagCategoryFree):

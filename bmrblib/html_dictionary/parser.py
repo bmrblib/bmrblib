@@ -4,7 +4,7 @@ try:
 except ImportError:
     from HTMLParser import HTMLParser    # Python 2 import.
 from os import sep
-from string import ascii_uppercase, lower, replace
+from string import ascii_uppercase
 
 
 class Create:
@@ -265,8 +265,8 @@ class Super_parser(HTMLParser):
         # The directory name.
         dir_name = self.supergroup_name
         if not self.supergroup_name[2] in ascii_uppercase:
-            dir_name = lower(dir_name)
-        dir_name = replace(dir_name, ' ', '_')
+            dir_name = dir_name.lower()
+        dir_name = dir_name.replace(' ', '_')
         self.supergroups[self.supergroup_name].dir_name = dir_name
 
 
