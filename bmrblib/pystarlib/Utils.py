@@ -48,6 +48,8 @@ class Lister:
 """
 A fast transposing algorithm from the python mailing list
 Used in TagTable.
+
+This algorithm fails in Python 3, so has been replaced!
 """
 def transpose ( matrix ):
     if len( matrix ) < 1:
@@ -61,7 +63,31 @@ def transpose ( matrix ):
         else:
             return [(y,) for y in matrix[0]]
     else:
-        return list(map(*[None,] + list(matrix)))
+        # Init the transposed list of tuples (mxn) (the original matrix has dimensions nxm).
+        result = []
+
+        # Find the maximum length of the original second dimension.
+        max_len = 0
+        for i in range(len(matrix)):
+            max_len = max(max_len, len(matrix[i]))
+
+        # Loop over the second dimension.
+        for j in range(max_len):
+            # Initialise a new list to be later converted to a tuple.
+            row = []
+
+            # Loop over the first dimension.
+            for i in range(len(matrix)):
+                # Extend the row, padding with None.
+                if j > len(matrix[i]) - 1:
+                    row.append(None)
+                else:
+                    row.append(matrix[i][j])
+
+            # Append the row as a tuple.
+            result.append(tuple(row))
+
+        return result
 
 
 """
