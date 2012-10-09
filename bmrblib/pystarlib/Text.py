@@ -9,9 +9,6 @@ ___date__     = "$Date: 2007-08-22 20:59:28 +0200 (Wed, 22 Aug 2007) $"
 ## Standard modules
 import string, re
 
-## BMRB modules
-import bmrblib.pystarlib.__init__ # Actually the current package
-
 """
 Some handy patterns and functions for dealing with text in the STAR syntax.
 Some are complicated because in Python the none-greedy pattern matching
@@ -373,7 +370,7 @@ def semicolon_block_collapse( text ):
    
     # Original code: can't handle re matches that are too long
     #text, count = pattern_semicolon_block.subn( semicolon_block_replace, text )
-    if __init__.verbosity >= 9:
+    if verbosity >= 9:
         print('Done [%s] subs with semicolon blocks' % count)
     return text
 
@@ -490,7 +487,7 @@ def comments_strip( text ):
                 count += 1
         i += 1
 
-    if __init__.verbosity >= 9:
+    if verbosity >= 9:
         print('Done [%s] comment subs' % count)
     text = string.join(lines, "\n")
     return text
