@@ -10,7 +10,7 @@ ___date__     = "$Date: 2007-08-22 20:59:28 +0200 (Wed, 22 Aug 2007) $"
 import string, re
 
 ## BMRB modules
-import __init__ # Actually the current package
+import bmrblib.pystarlib.__init__ # Actually the current package
 
 """
 Some handy patterns and functions for dealing with text in the STAR syntax.

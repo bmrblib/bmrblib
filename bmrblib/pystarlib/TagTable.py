@@ -1,40 +1,21 @@
 """
 Classes for dealing with STAR syntax
 """
-try:
-    # Python 3 imports.
-    from .Text import pattern_quotes_needed
-    from .Text import quotes_add
-    from .Text import pattern_quotes_needed_2
-    from .Text import pattern_quoted
-    from .Text import tag_value_quoted_parse
-    from .Text import pattern_tags_loop
-    from .Text import pattern_tags_loop_2
-    from .Text import pattern_tagname_2
-    from .Text import pattern_tagtable_stop_2
-    from .Text import pattern_tagtable_loop_2
-    from .Text import pattern_unquoted_find
-    from .Text import pattern_tag_name
-    from .Text import tag_value_parse
-    from .Utils import Lister
-    from .Utils import transpose
-except ImportError:
-    # Python 2 imports.
-    from Text import pattern_quotes_needed
-    from Text import quotes_add
-    from Text import pattern_quotes_needed_2
-    from Text import pattern_quoted
-    from Text import tag_value_quoted_parse
-    from Text import pattern_tags_loop
-    from Text import pattern_tags_loop_2
-    from Text import pattern_tagname_2
-    from Text import pattern_tagtable_stop_2
-    from Text import pattern_tagtable_loop_2
-    from Text import pattern_unquoted_find
-    from Text import pattern_tag_name
-    from Text import tag_value_parse
-    from Utils import Lister
-    from Utils import transpose
+from bmrblib.pystarlib.Text import pattern_quotes_needed
+from bmrblib.pystarlib.Text import quotes_add
+from bmrblib.pystarlib.Text import pattern_quotes_needed_2
+from bmrblib.pystarlib.Text import pattern_quoted
+from bmrblib.pystarlib.Text import tag_value_quoted_parse
+from bmrblib.pystarlib.Text import pattern_tags_loop
+from bmrblib.pystarlib.Text import pattern_tags_loop_2
+from bmrblib.pystarlib.Text import pattern_tagname_2
+from bmrblib.pystarlib.Text import pattern_tagtable_stop_2
+from bmrblib.pystarlib.Text import pattern_tagtable_loop_2
+from bmrblib.pystarlib.Text import pattern_unquoted_find
+from bmrblib.pystarlib.Text import pattern_tag_name
+from bmrblib.pystarlib.Text import tag_value_parse
+from bmrblib.pystarlib.Utils import Lister
+from bmrblib.pystarlib.Utils import transpose
 
 import string
 import types

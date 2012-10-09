@@ -1,13 +1,7 @@
 """Unit test
 """
-try:
-    # Python 3 imports.
-    from .File import File
-    import .Utils
-except ImportError:
-    # Python 2 imports.
-    from File import File
-    import Utils
+from bmrblib.pystarlib.File import File
+from bmrblib.pystarlib import Utils
 
 import __init__
 

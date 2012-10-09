@@ -1,11 +1,6 @@
 from unittest import TestCase
 import unittest
-try:
-    # Python 3 imports.
-    from .Text import comments_strip
-except ImportError:
-    # Python 2 imports.
-    from Text import comments_strip
+from bmrblib.pystarlib.Text import comments_strip
 
 
 class AllChecks(TestCase):

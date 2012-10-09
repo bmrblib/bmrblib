@@ -1,11 +1,6 @@
 from unittest import TestCase
 import unittest
-try:
-    # Python 3 imports.
-    import .Utils
-except ImportError:
-    # Python 2 imports.
-    import Utils
+import bmrblib.pystarlib.Utils
 
 
 class AllChecks(TestCase):

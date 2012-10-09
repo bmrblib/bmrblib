@@ -1,38 +1,20 @@
 """
 Classes for dealing with STAR syntax
 """
-try:
-    # Python 3 imports.
-    from . import Utils
-    from .Utils import Lister
-    from .TagTable import TagTable
-    from .Text import comments_strip
-    from .Text import semicolon_block_collapse
-    from .Text import nmrView_compress
-    from .Text import pattern_save_begin
-    from .Text import pattern_save_end
-    from .Text import pattern_tagtable_loop
-    from .Text import pattern_save_begin_nws
-    from .Text import pattern_save_end_nws
-    from .Text import pattern_tag_name_nws
-    from .Text import pattern_tagtable_loop_nws
-    from .SaveFrame import SaveFrame
-except ImportError:
-    # Python 2 imports.
-    import Utils
-    from Utils import Lister
-    from TagTable import TagTable
-    from Text import comments_strip
-    from Text import semicolon_block_collapse
-    from Text import nmrView_compress
-    from Text import pattern_save_begin
-    from Text import pattern_save_end
-    from Text import pattern_tagtable_loop
-    from Text import pattern_save_begin_nws
-    from Text import pattern_save_end_nws
-    from Text import pattern_tag_name_nws
-    from Text import pattern_tagtable_loop_nws
-    from SaveFrame import SaveFrame
+from bmrblib.pystarlib import Utils
+from bmrblib.pystarlib.Utils import Lister
+from bmrblib.pystarlib.TagTable import TagTable
+from bmrblib.pystarlib.Text import comments_strip
+from bmrblib.pystarlib.Text import semicolon_block_collapse
+from bmrblib.pystarlib.Text import nmrView_compress
+from bmrblib.pystarlib.Text import pattern_save_begin
+from bmrblib.pystarlib.Text import pattern_save_end
+from bmrblib.pystarlib.Text import pattern_tagtable_loop
+from bmrblib.pystarlib.Text import pattern_save_begin_nws
+from bmrblib.pystarlib.Text import pattern_save_end_nws
+from bmrblib.pystarlib.Text import pattern_tag_name_nws
+from bmrblib.pystarlib.Text import pattern_tagtable_loop_nws
+from bmrblib.pystarlib.SaveFrame import SaveFrame
 
 import os
 import re

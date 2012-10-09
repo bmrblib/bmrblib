@@ -35,16 +35,9 @@ from re import search
 import sys
 
 # Bmrblib module imports.
-try:
-    # Python 3 imports.
-    from .nmr_star_dict_v2_1 import NMR_STAR_v2_1
-    from .nmr_star_dict_v3_1 import NMR_STAR_v3_1
-    from .version import Star_version
-except ImportError:
-    # Python 2 imports.
-    from nmr_star_dict_v2_1 import NMR_STAR_v2_1
-    from nmr_star_dict_v3_1 import NMR_STAR_v3_1
-    from version import Star_version
+from bmrblib.nmr_star_dict_v2_1 import NMR_STAR_v2_1
+from bmrblib.nmr_star_dict_v3_1 import NMR_STAR_v3_1
+from bmrblib.version import Star_version
 
 
 def create_nmr_star(title, file_path, version=None):

@@ -27,18 +27,10 @@ from numpy import float64, ndarray, zeros
 from warnings import warn
 
 # Bmrblib module imports.
-try:
-    # Python 3 imports.
-    from .misc import no_missing, translate
-    from .pystarlib.SaveFrame import SaveFrame
-    from .pystarlib.TagTable import TagTable
-    from .version import Star_version; version = Star_version()
-except ImportError:
-    # Python 2 imports.
-    from misc import no_missing, translate
-    from pystarlib.SaveFrame import SaveFrame
-    from pystarlib.TagTable import TagTable
-    from version import Star_version; version = Star_version()
+from bmrblib.misc import no_missing, translate
+from bmrblib.pystarlib.SaveFrame import SaveFrame
+from bmrblib.pystarlib.TagTable import TagTable
+from bmrblib.version import Star_version; version = Star_version()
 
 
 class BaseSaveframe:

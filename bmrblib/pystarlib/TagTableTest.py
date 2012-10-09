@@ -2,16 +2,9 @@ from unittest import TestCase
 import __init__
 import unittest
 
-try:
-    # Python 3 imports.
-    from .TagTable import TagTable
-    #from .TagTable import *
-    #from .SaveFrame import *
-except ImportError:
-    # Python 2 imports.
-    from TagTable import TagTable
-    #from TagTable import *
-    #from SaveFrame import *
+from bmrblib.pystarlib.TagTable import TagTable
+#from bmrblib.pystarlib.TagTable import *
+#from bmrblib.pystarlib.SaveFrame import *
 
 
 class AllChecks(TestCase):
