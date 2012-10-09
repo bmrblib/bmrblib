@@ -117,7 +117,7 @@ class TagTable (Lister):
         
         for row_id in row_range:
 
-            str_tmp = tagvalues_tr[row_id].join(',')
+            str_tmp = ','.join(tagvalues_tr[row_id])
 
             ## Are quotes needed? Do it per row first to get some speed perhaps
             match_quotes_needed_2 = pattern_quotes_needed_2.search( str_tmp )
@@ -130,7 +130,7 @@ class TagTable (Lister):
                     else:
                         str_tmp = str_tmp + '%s ' % self.tagvalues[col_id][row_id]
             else:
-                str_tmp = tagvalues_tr[row_id].join()
+                str_tmp = ' '.join(tagvalues_tr[row_id])
 
             str_row.append( str_tmp )
 
@@ -145,7 +145,7 @@ class TagTable (Lister):
         if show_stop_tag:
             str_row.append( '\n' + loop_ident_size * ' ' + 'stop_\n' )
 
-        str = str + str_row.join('\n')
+        str = str + '\n'.join(str_row)
 
         # Save some space
         del tagvalues_tr
@@ -159,7 +159,8 @@ class TagTable (Lister):
     def set_title ( self ):
         if self.verbosity >= 9:
             print('Setting title of tagtable')
-        self.title = self.tagnames.join()
+        print(repr(self.tagnames))
+        self.title = ''.join(self.tagnames)
 
                 
     """

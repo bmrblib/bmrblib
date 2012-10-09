@@ -489,7 +489,7 @@ def comments_strip( text ):
 
     if verbosity >= 9:
         print('Done [%s] comment subs' % count)
-    text = lines.join("\n")
+    text = "\n".join(lines)
     return text
 
 """
