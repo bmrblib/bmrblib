@@ -17,7 +17,6 @@ from bmrblib.pystarlib.Text import tag_value_parse
 from bmrblib.pystarlib.Utils import Lister
 from bmrblib.pystarlib.Utils import transpose
 
-import string
 import types
 import re
 
@@ -118,7 +117,7 @@ class TagTable (Lister):
         
         for row_id in row_range:
 
-            str_tmp = string.join( tagvalues_tr[row_id], ',' )
+            str_tmp = tagvalues_tr[row_id].join(',')
 
             ## Are quotes needed? Do it per row first to get some speed perhaps
             match_quotes_needed_2 = pattern_quotes_needed_2.search( str_tmp )
@@ -131,7 +130,7 @@ class TagTable (Lister):
                     else:
                         str_tmp = str_tmp + '%s ' % self.tagvalues[col_id][row_id]
             else:
-                str_tmp = string.join( tagvalues_tr[row_id] )
+                str_tmp = tagvalues_tr[row_id].join()
 
             str_row.append( str_tmp )
 
@@ -146,7 +145,7 @@ class TagTable (Lister):
         if show_stop_tag:
             str_row.append( '\n' + loop_ident_size * ' ' + 'stop_\n' )
 
-        str = str + string.join( str_row, '\n')
+        str = str + str_row.join('\n')
 
         # Save some space
         del tagvalues_tr
@@ -160,7 +159,7 @@ class TagTable (Lister):
     def set_title ( self ):
         if self.verbosity >= 9:
             print('Setting title of tagtable')
-        self.title = string.join( self.tagnames )
+        self.title = self.tagnames.join()
 
                 
     """
@@ -413,8 +412,8 @@ class TagTable (Lister):
                     bc = text[idxstart-1]
                     if (c == "'" or c == '"') and bc != " ":
                         # JFD the next line takes an expensive slice of the pie?
-#                        tempendpos = idxstart + string.find(text[idxstart:],' ')                      
-                        tempendpos = string.find(text, ' ', idxstart)
+#                        tempendpos = idxstart + text[idxstart:].find(' ')                      
+                        tempendpos = text.find(' ', idxstart)
                     else:                    
                         tempendpos = idxstart
 
