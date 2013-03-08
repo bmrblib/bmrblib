@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2008-2012 Edward d'Auvergne                                 #
+# Copyright (C) 2008-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -20,7 +20,10 @@
 #############################################################################
 
 # Module docstring.
-"""Package for interfacing with the BMRB (http://www.bmrb.wisc.edu/) by handling NMR-STAR formatted files."""
+"""Package for interfacing with the U{BioMagResBank<http://www.bmrb.wisc.edu/>}.
+
+The Biological Magnetic Resonance Data Bank, or BioMagResBank and BMRB for short, is a repository for data from NMR spectroscopy on proteins, peptides, nucleic acids, and other biomolecules.  This U{bmrblib library<https://gna.org/projects/bmrblib/>} handles the U{NMR-STAR formatted files<http://www.bmrb.wisc.edu/dictionary/>}, the base format of all BMRB data.  It can both read and write NMR-STAR files.
+"""
 
 # The list of all modules and packages.
 __all__ = ['base_classes',
