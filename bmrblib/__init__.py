@@ -25,6 +25,9 @@
 The Biological Magnetic Resonance Data Bank, or BioMagResBank and BMRB for short, is a repository for data from NMR spectroscopy on proteins, peptides, nucleic acids, and other biomolecules.  This U{bmrblib library<https://gna.org/projects/bmrblib/>} handles the U{NMR-STAR formatted files<http://www.bmrb.wisc.edu/dictionary/>}, the base format of all BMRB data.  It can both read and write NMR-STAR files.
 """
 
+# The version number.
+__version__ = 'trunk'
+
 # The list of all modules and packages.
 __all__ = ['base_classes',
            'misc',
