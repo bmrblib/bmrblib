@@ -1,0 +1,3 @@
+To install bmrblib, simply type:
+
+    $ python setup.py install
