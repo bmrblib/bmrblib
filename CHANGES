@@ -1,0 +1,30 @@
+Version 1.0.1
+(9 March 2013, from /trunk)
+http://svn.gna.org/svn/bmrblib/tags/1.0.1
+
+    Features:
+        * Full Python 3 support.
+
+
+    Changes:
+        * Modified pystarlib to be able to write to file objects.  The old behaviour was to call the builtin Python open() function to open the file.  Now this only occurs when the filename class variable is a string.
+        * Converted the pystarlib imports to be both Python 2 and 3 compatible.
+        * Pystarlib is now fully Python 2 and 3 compatible.  The conversion command used was:
+2to3 -w -f except -f long -f numliterals -f xrange .
+        * Import changes to support both Python 2 and 3.
+        * The bmrblib library is now fully Python 2 and 3 compatible.  The command used to convert all files was:  2to3 -w -f except -f long -f numliterals -f xrange .
+        * Python 3 preparations - all usage of string.split() and string.strip() has been eliminated.
+        * Python 3 - fixes for the now missing string module functions.
+        * Another set of Python 3 import fixes - the absolute module path with 'bmrblib' is now used.
+        * Converted the pystarlib Utils.transpose() function to support all Python versions.  The 'fast transposing algorithm' is not compatible with Python 3, so a standard slow manual algorithm which supports all Python versions has been implemented.
+        * Eliminated the use of string module functions in pystarlib which do not exist in Python 3.
+        * Expanded the bmrblib package docstring.
+        * Created the bmrblib.__version__ constant.
+        * Created a release checklist document to facilitate the release of new bmrblib versions - this is a copy and modification of the release checklist file from the minfx project (https://gna.org/projects/minfx/).
+        * Created an empty CHANGES file for listing the details of future bmrblib releases.
+        * Created a basic installation instruction file.
+        * Created the MANIFEST.in to make sure that all relevant files are installed in the site-package.
+
+
+    Bugfixes:
+        * Removed some nasty import of pystablib.__init__ code that was failing.
