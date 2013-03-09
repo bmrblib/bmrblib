@@ -26,7 +26,7 @@ The Biological Magnetic Resonance Data Bank, or BioMagResBank and BMRB for short
 """
 
 # The version number.
-__version__ = 'trunk'
+__version__ = '1.0.1'
 
 # The list of all modules and packages.
 __all__ = ['base_classes',
