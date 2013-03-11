@@ -1,3 +1,20 @@
+Version 1.0.2
+(11 March 2013, from /trunk)
+http://svn.gna.org/svn/bmrblib/tags/1.0.2
+
+    Features:
+        N/A
+
+
+    Changes:
+        * Updated the release checklist document.
+
+
+    Bugfixes:
+        * Removed a very verbose and nasty debugging printout.
+
+
+
 Version 1.0.1
 (9 March 2013, from /trunk)
 http://svn.gna.org/svn/bmrblib/tags/1.0.1
