@@ -159,7 +159,6 @@ class TagTable (Lister):
     def set_title ( self ):
         if self.verbosity >= 9:
             print('Setting title of tagtable')
-        print(repr(self.tagnames))
         self.title = ''.join(self.tagnames)
 
                 
