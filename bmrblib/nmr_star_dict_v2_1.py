@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -22,8 +22,7 @@
 # Module docstring.
 """The base classes for the NMR-STAR dictionary support within relax.
 
-The most up to date NMR-STAR dictionary relax uses is the v3.1 version documented at
-http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
 """
 
 # relax module imports.

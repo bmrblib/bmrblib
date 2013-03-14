@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2012 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -20,7 +20,10 @@
 #############################################################################
 
 # Module docstring.
-"""The TagCategory base class."""
+"""The BMRB library base classes.
+
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
+"""
 
 # Python module imports.
 from numpy import float64, ndarray, zeros

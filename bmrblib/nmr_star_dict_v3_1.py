@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -22,8 +22,9 @@
 # Module docstring.
 """The NMR-STAR dictionary API for version 3.1.
 
-The v3.1 NMR-STAR dictionary is documented at
-http://www.bmrb.wisc.edu/dictionary/3.1html/SuperGroupPage.html.
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
+
+The v3.1 NMR-STAR dictionary is documented at U{http://www.bmrb.wisc.edu/dictionary/}.
 """
 
 # relax module imports.

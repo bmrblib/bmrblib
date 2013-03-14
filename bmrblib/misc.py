@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -20,7 +20,10 @@
 #############################################################################
 
 # Module docstring.
-"""Functions for manipulating NMR-STAR dictionary data."""
+"""Functions for manipulating NMR-STAR dictionary data.
+
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
+"""
 
 # Python module imports.
 from numpy import ndarray

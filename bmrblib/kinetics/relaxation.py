@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -20,7 +20,10 @@
 #############################################################################
 
 # Module docstring.
-"""The relaxation data BMRB API interface."""
+"""The relaxation data BMRB API interface.
+
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
+"""
 
 
 # relax module imports.

@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2011 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -21,6 +21,8 @@
 
 # Module docstring.
 """The model_free saveframe category (used to be called order_parameters).
+
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
 
 For example, see http://www.bmrb.wisc.edu/dictionary/htmldocs/nmr_star/dictionary_files/complete_form_v21.txt
 """

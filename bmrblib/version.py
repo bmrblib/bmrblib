@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2008-2011 Edward d'Auvergne                                 #
+# Copyright (C) 2008-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -20,7 +20,10 @@
 #############################################################################
 
 # Module docstring.
-"""The NMR-STAR version singleton object."""
+"""The NMR-STAR version singleton object.
+
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
+"""
 
 # Python module imports.
 from re import search

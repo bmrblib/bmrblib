@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2010 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -21,6 +21,8 @@
 
 # Module docstring.
 """The citations saveframe category.
+
+This file is part of the U{BMRB library<https://gna.org/projects/bmrblib>}.
 
 For example, see http://www.bmrb.wisc.edu/dictionary/3.1html/SaveFramePage.html#citations.
 """
