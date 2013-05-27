@@ -1,3 +1,20 @@
+Version 1.0.3
+(27 May 2013, from /trunk)
+http://svn.gna.org/svn/bmrblib/tags/1.0.3
+
+    Features:
+        N/A
+
+
+    Changes:
+        * Updated all of the BMRB package and module docstrings to include a link to the website.  This uses epydoc markup to link https://gna.org/projects/bmrblib in all of the API documentation, for example at http://www.nmr-relax.com/api/bmrblib-module.html.
+
+
+    Bugfixes:
+        N/A
+
+
+
 Version 1.0.2
 (11 March 2013, from /trunk)
 http://svn.gna.org/svn/bmrblib/tags/1.0.2
