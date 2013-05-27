@@ -3,7 +3,7 @@ from distutils.core import setup
 
 # Setup for distutils.
 setup(name='bmrblib',
-      version='trunk',
+      version='1.0.3',
       description='The BMRB library',
       author="Edward d'Auvergne",
       author_email='edward@nmr-relax.com',
