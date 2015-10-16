@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2009-2013 Edward d'Auvergne                                 #
+# Copyright (C) 2009-2015 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -50,7 +50,7 @@ def no_missing(data, name):
                 missing = True
 
     # None.
-    if data == None:
+    if data is None:
         missing = True
 
     # Fail.
