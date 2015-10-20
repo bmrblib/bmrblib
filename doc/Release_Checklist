@@ -47,13 +47,11 @@ $ rsync --delete -av --no-perms --rsh="ssh" . bugman@download.gna.org:/upload/bm
 
 
 
-* Post the release message to the bmrblib-users mailing list, as a news item on the bmrblib Gna! website, and on the Freecode website.
+* Post the release message to the bmrblib-users mailing list and as a news item on the bmrblib Gna! website.
 
 On the bmrblib-users mailing list, write a detailed and full description of the release.  Also add a paragraph with links for downloading the release.  At the end, add a section titled 'The full list of changes is:' and cut and paste the part of the CHANGES file for this release.  Include links to the trackers in the full list of changes.
 
 For the news item, firstly cut and paste the mailing list message.  Create three sections using the Savane markup (recipe #236).  Call these = Description =, = Download =, and = Full list of changes =.  For the last section, use the subtitles == Features == ,  == Changes == , and  == Bugfixes ==.  The items in this section start with '* ' to create an unnumbered list.  Strip all leading whitespace from the full list of changes and remove all the links to the trackers (as these will be automatically created).
-
-For Freecode (http://freecode.com, formally Freshmeat), go to the bmrblib project page at http://freecode.com/projects/bmrblib.  Click on 'All releases' in the 'Recent releases' section, then on 'Submit new release'.  If this is the first release of a new minor number 'x.x.0', a branch will need to be created first by clicking on 'add branch'.  Add the version number, a brief and concise summary of the release, select the release focus category, and update the Tar/BZ2 and Zip URLs.
 
 
 
