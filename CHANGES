@@ -1,3 +1,21 @@
+Version 1.0.5
+(04 June 2024, from master)
+https://sourceforge.net/p/bmrblib/code/ci/1.0.5/tree/
+
+    Features:
+        * Switch from the depreciated distutils to setuptools.
+
+
+    Changes:
+        * Distribution: Switching to setuptools to fix the depreciation of distutils.  From Python 3.12, the distutils package is no longer supported. 
+        * Package documentation: Updated the copyright year to 2024, and changed the version number.  The previous version number of 'trunk' was for the ancient SVN repository.
+
+
+    Bugfixes:
+        N/A
+
+
+
 Version 1.0.4
 (20 October 2015, from /trunk)
 http://svn.gna.org/svn/bmrblib/tags/1.0.4
