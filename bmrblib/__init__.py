@@ -2,7 +2,7 @@
 #                                                                           #
 # The BMRB library.                                                         #
 #                                                                           #
-# Copyright (C) 2008-2013 Edward d'Auvergne                                 #
+# Copyright (C) 2008-2024 Edward d'Auvergne                                 #
 #                                                                           #
 # This program is free software: you can redistribute it and/or modify      #
 # it under the terms of the GNU General Public License as published by      #
@@ -28,7 +28,7 @@ The Biological Magnetic Resonance Data Bank, or BioMagResBank and BMRB for short
 """
 
 # The version number.
-__version__ = 'trunk'
+__version__ = 'master'
 
 # The list of all modules and packages.
 __all__ = ['base_classes',
