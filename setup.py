@@ -1,4 +1,4 @@
 from setuptools import setup
 
 
-setup(version='master')
+setup(version='1.0.5')
